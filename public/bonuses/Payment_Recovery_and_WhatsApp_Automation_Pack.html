@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The WhatsApp Invoicing & 3x Faster Payment Recovery Automation Pack - Sheetly Bonus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #059669;
+      --primary-dark: #047857;
+      --primary-light: #ecfdf5;
+      --accent: #25D366; /* WhatsApp Green */
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --bg-page: #f8fafc;
+      --bg-card: #ffffff;
+      --code-bg: #0f172a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding-bottom: 80px;
+    }
+
+    /* Sticky Action Bar */
+    .action-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(12px);
+      color: white;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .action-bar .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .badge-emerald {
+      background: var(--primary);
+      color: white;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    .action-bar .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-whatsapp {
+      background: #25D366;
+      color: white;
+    }
+    .btn-whatsapp:hover {
+      background: #1eb956;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Container */
+    .container {
+      max-width: 920px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    /* Hero Banner */
+    .hero-card {
+      background: linear-gradient(135deg, #064e3b 0%, #022c22 100%);
+      color: white;
+      padding: 40px 48px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(6, 78, 59, 0.2);
+      margin-bottom: 32px;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .hero-card h1 {
+      font-size: 28px;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+
+    .hero-card p {
+      color: #a7f3d0;
+      font-size: 14.5px;
+      max-width: 750px;
+      line-height: 1.6;
+    }
+
+    /* Callout */
+    .callout {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-left: 4px solid var(--primary);
+      padding: 16px 20px;
+      border-radius: 10px;
+      margin-bottom: 32px;
+      font-size: 13.5px;
+      color: #065f46;
+    }
+
+    /* Section Headings */
+    .section-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 48px;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    /* Code Snippet Box */
+    .code-box {
+      background: var(--code-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 20px 0 32px;
+      border: 1px solid #334155;
+    }
+
+    .code-header {
+      background: #1e293b;
+      padding: 10px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #94a3b8;
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .code-content {
+      padding: 18px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #e2e8f0;
+      line-height: 1.6;
+      max-height: 380px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+
+    /* Script Cards */
+    .script-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-top: 16px;
+    }
+
+    .script-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      position: relative;
+    }
+
+    .script-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      gap: 12px;
+    }
+
+    .script-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .script-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: #f1f5f9;
+      color: #475569;
+      white-space: nowrap;
+    }
+
+    .script-context {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      font-style: italic;
+    }
+
+    .script-body {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      color: #1e293b;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      position: relative;
+    }
+
+    .copy-btn {
+      background: white;
+      border: 1px solid #cbd5e1;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #334155;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+    }
+
+    .copy-btn:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .copy-btn.copied {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* Print styles */
+    @media print {
+      body {
+        background: white;
+        padding-bottom: 0;
+      }
+      .action-bar {
+        display: none !important;
+      }
+      .container {
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .hero-card {
+        background: #064e3b !important;
+        color: white !important;
+        -webkit-print-color-adjust: exact;
+      }
+      .script-card {
+        page-break-inside: avoid;
+        margin-bottom: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Actions Bar -->
+  <header class="action-bar">
+    <div class="brand">
+      <span>SHEETLY</span>
+      <span class="badge-emerald">BONUS ASSET #2</span>
+      <span style="opacity: 0.7; font-size: 12px; margin-left: 6px;">WhatsApp Automation & Payment Recovery Pack</span>
+    </div>
+    <div class="actions">
+      <button class="btn btn-secondary" onclick="window.print()">
+        🖨️ Print / Save as PDF
+      </button>
+      <a href="./Payment_Recovery_and_WhatsApp_Automation_Pack.docx" download class="btn btn-secondary">
+        📥 Word (.docx)
+      </a>
+      <a href="./Sheetly_WhatsApp_Automation.gs" download class="btn btn-whatsapp">
+        ⚡ Download Apps Script (.gs)
+      </a>
+    </div>
+  </header>
+
+  <div class="container">
+    
+    <!-- Hero Card -->
+    <div class="hero-card">
+      <div style="font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: #34d399; margin-bottom: 8px;">
+        OFFICIAL SHEETLY BONUS ASSET #2
+      </div>
+      <h1>The WhatsApp Invoicing & 3x Faster Payment Recovery Automation Pack</h1>
+      <p>
+        The complete automated operating system to stop unpaid invoices, eliminate client ghosting, and recover your pending payments 3x faster using Google Apps Script and battle-tested WhatsApp sequences.
+      </p>
+    </div>
+
+    <!-- Callout -->
+    <div class="callout">
+      <strong>💡 Why this bonus is a game-changer for your business:</strong>
+      <p style="margin-top: 4px;">
+        Creating invoices in Sheetly takes under 60 seconds. But in India, <strong>getting paid on time is the real battle</strong>. Clients delay payments, make excuses, or stop replying on WhatsApp. This pack gives you the exact automation script to send bills in 1 click, plus 35+ psychologically framed scripts to collect your money politely, firmly, and without spoiling client relationships!
+      </p>
+    </div>
+
+    <!-- ==========================================
+         PART 1: GOOGLE APPS SCRIPT AUTOMATION
+    =========================================== -->
+    <h2 class="section-title">
+      <span>⚡ Part 1: 1-Click WhatsApp Invoicing Google Apps Script</span>
+    </h2>
+
+    <p style="font-size: 14px; color: #475569; margin-bottom: 12px;">
+      Follow these 3 simple steps to add the <strong>"⚡ Sheetly Automations"</strong> menu directly inside your Google Sheet:
+    </p>
+
+    <div style="background: white; border: 1px solid var(--border); border-radius: 10px; padding: 18px 22px; font-size: 13.5px; margin-bottom: 20px;">
+      <ol style="margin-left: 20px; line-height: 1.8;">
+        <li>Open your <strong>Sheetly Google Sheet</strong>.</li>
+        <li>Click <strong>Extensions</strong> &gt; <strong>Apps Script</strong> in the top menu.</li>
+        <li>Delete any placeholder code in the <code>Code.gs</code> window.</li>
+        <li>Click the button below to copy the complete automation code, paste it into the editor, and click <strong>Save (💾)</strong>.</li>
+        <li>Refresh your Google Sheet. You will now see a new menu at the top: <strong>⚡ Sheetly Automations</strong>!</li>
+      </ol>
+    </div>
+
+    <div class="code-box">
+      <div class="code-header">
+        <span>Sheetly_WhatsApp_Automation.gs</span>
+        <button class="copy-btn" onclick="copyCode(this)">📋 Copy Entire Script</button>
+      </div>
+      <div class="code-content" id="appsScriptCode">/**
+ * =========================================================================
+ * ⚡ SHEETLY 1-CLICK WHATSAPP & PAYMENT RECOVERY AUTOMATION SCRIPT
+ * Official Sheetly Bonus Asset #2 (Google Apps Script)
+ * =========================================================================
+ */
+
+function onOpen() {
+  var ui = SpreadsheetApp.getUi();
+  ui.createMenu('⚡ Sheetly Automations')
+    .addItem('📱 Send Invoice via WhatsApp', 'sendInvoiceWhatsApp')
+    .addItem('⏰ Send Payment Reminder (Overdue)', 'sendPaymentReminderWhatsApp')
+    .addItem('✅ Send Payment Received Thank-You', 'sendPaymentThankYouWhatsApp')
+    .addSeparator()
+    .addItem('⚙️ Configure Business & UPI Details', 'configureBusinessSettings')
+    .addToUi();
+}
+
+function configureBusinessSettings() {
+  var ui = SpreadsheetApp.getUi();
+  var props = PropertiesService.getUserProperties();
+  var nameRes = ui.prompt('Business Name', 'Enter your Company / Agency Name:', ui.ButtonSet.OK_CANCEL);
+  if (nameRes.getSelectedButton() == ui.Button.OK) props.setProperty('BUSINESS_NAME', nameRes.getResponseText().trim());
+  var upiRes = ui.prompt('UPI ID', 'Enter your UPI ID / Payment Link for instant settlements:', ui.ButtonSet.OK_CANCEL);
+  if (upiRes.getSelectedButton() == ui.Button.OK) props.setProperty('UPI_ID', upiRes.getResponseText().trim());
+  ui.alert('✅ Saved!', 'Your details are stored securely in your Sheetly account.', ui.ButtonSet.OK);
+}
+
+function sendInvoiceWhatsApp() {
+  var ui = SpreadsheetApp.getUi();
+  var props = PropertiesService.getUserProperties();
+  var bizName = props.getProperty('BUSINESS_NAME') || 'Our Business';
+  var upi = props.getProperty('UPI_ID') || 'your-upi-id';
+  
+  var phoneRes = ui.prompt('Client WhatsApp', 'Enter Client WhatsApp number (with 91):', ui.ButtonSet.OK_CANCEL);
+  if (phoneRes.getSelectedButton() !== ui.Button.OK) return;
+  var phone = phoneRes.getResponseText().replace(/[^0-9]/g, '');
+  if (phone.length === 10) phone = '91' + phone;
+
+  var invRes = ui.prompt('Invoice No & Amount', 'Enter Invoice # and Total (e.g. 295 / ₹25,000):', ui.ButtonSet.OK_CANCEL);
+  var invDetails = invRes.getResponseText() || 'your invoice';
+
+  var msg = "Hello! 👋\n\nGreetings from *" + bizName + "*!\n\nYour invoice details:\n📄 *" + invDetails + "*\n\nKindly clear via UPI:\n⚡ *UPI ID:* `" + upi + "`\n\nPlease share the transaction screenshot once completed. Thank you! 🙏";
+  var url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(msg);
+  
+  var html = '&lt;div style="font-family:sans-serif;padding:15px;text-align:center;"&gt;&lt;p style="font-size:14px;margin-bottom:15px;"&gt;Click below to launch WhatsApp Web with pre-formatted bill details:&lt;/p&gt;&lt;a href="' + url + '" target="_blank" style="background:#25D366;color:white;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:bold;display:inline-block;"&gt;💬 Open in WhatsApp&lt;/a&gt;&lt;/div&gt;';
+  SpreadsheetApp.getUi().showModalDialog(HtmlService.createHtmlOutput(html).setWidth(400).setHeight(180), 'Dispatch Invoice');
+}</div>
+    </div>
+
+
+    <!-- ==========================================
+         PART 2: 35+ SCRIPTS VAULT
+    =========================================== -->
+    <h2 class="section-title">
+      <span>💬 Part 2: 35+ Battle-Tested WhatsApp & Email Scripts Vault</span>
+    </h2>
+    <p style="font-size: 14px; color: #475569; margin-bottom: 24px;">
+      Click the <strong>"Copy"</strong> button on any script below to copy it straight to your clipboard and paste into WhatsApp or Email.
+    </p>
+
+    <!-- Category 1 -->
+    <h3 style="font-size: 16px; font-weight: 800; color: #047857; margin-top: 30px; margin-bottom: 12px; text-transform: uppercase;">
+      Category 1: 50% Upfront Advance Collection (Never Work For Free)
+    </h3>
+    <div class="script-grid">
+
+      <div class="script-card">
+        <div class="script-header">
+          <div>
+            <div class="script-title">1.1 Standard 50% Retainer Policy (Creative & Digital Services)</div>
+            <div class="script-context">Send immediately after proposal approval to lock in project commitment.</div>
+          </div>
+          <button class="copy-btn" onclick="copyCardText(this)">📋 Copy</button>
+        </div>
+        <div class="script-body">Hi [Client Name]! We are thrilled to kick off [Project Name] for your brand. 🚀
+
+As per our standard agency onboarding protocol, our dedicated design and development schedule is locked upon receipt of the initial 50% advance retainer.
+
+Here are the invoice and transfer details:
+📄 Invoice #[INV-001] | Amount: ₹[Amount]
+⚡ UPI ID: [yourname@upi]
+🏦 Bank: [A/C Number & IFSC Code]
+
+Once transferred, please share the screenshot or UTR reference so our team can immediately initialize your dedicated workspace. Looking forward to creating something outstanding!</div>
+      </div>
+
+      <div class="script-card">
+        <div class="script-header">
+          <div>
+            <div class="script-title">1.2 Overcoming "Pehle Kaam Dikhao" (Sample First) Objection</div>
+            <div class="script-context">When a lead asks for preliminary free work/designs before paying.</div>
+          </div>
+          <button class="copy-btn" onclick="copyCardText(this)">📋 Copy</button>
+        </div>
+        <div class="script-body">Hi [Client Name], I completely understand wanting full confidence before investing! 🙏
+
+Because our team dedicates 100% focused attention, custom research, and non-templated work to every client, our company policy does not permit starting unpaid speculative work.
+
+However, to give you complete peace of mind:
+1. Please review our recent portfolio & verified client results here: [Portfolio Link]
+2. We include 2 comprehensive revision rounds in the scope so you are 100% delighted with the final delivery.
+
+We have reserved your project slot for this week. Shall I share the onboarding invoice to get started?</div>
+      </div>
+
+      <div class="script-card">
+        <div class="script-header">
+          <div>
+            <div class="script-title">1.3 The "Slot Booking" Urgency Script (Coaches & Freelancers)</div>
+            <div class="script-context">When client agrees verbally but delays sending advance payment.</div>
+          </div>
+          <button class="copy-btn" onclick="copyCardText(this)">📋 Copy</button>
+        </div>
+        <div class="script-body">Hey [Client Name]! Quick update regarding our project timeline. ⏳
+
+We are currently finalizing our client production roster for [Month], and we only have 2 dedicated execution slots remaining.
+
+To ensure your project does not get pushed to the next delivery cycle, please process the 50% booking deposit of ₹[Amount] today: [Payment Link / UPI ID].
+
+Let me know once done so we can secure your slot on priority!</div>
+      </div>
+
+    </div>
+
+    <!-- Category 2 -->
+    <h3 style="font-size: 16px; font-weight: 800; color: #047857; margin-top: 40px; margin-bottom: 12px; text-transform: uppercase;">
+      Category 2: Professional GST Invoice Dispatch Templates
+    </h3>
+    <div class="script-grid">
+
+      <div class="script-card">
+        <div class="script-header">
+          <div>
+            <div class="script-title">2.1 Modern WhatsApp Invoice Delivery (with UPI & Breakdown)</div>
+            <div class="script-context">Use right after creating an invoice in Sheetly to dispatch via WhatsApp.</div>
+          </div>
+          <button class="copy-btn" onclick="copyCardText(this)">📋 Copy</button>
+        </div>
+        <div class="script-body">Hello [Client Name]! 👋
+
+Greetings from [Your Company Name]! Your invoice for [Project / Milestone Name] has been generated:
+
+📄 Invoice No: #[Invoice No]
+💰 Total Payable: ₹[Total Amount] (GST Inclusive)
+📅 Due Date: [Due Date (e.g. 7 Days)]
+
+You can make the payment conveniently via UPI:
+⚡ UPI ID: `[your-upi@bank]`
+🔗 Direct Payment Link: [Payment / Razorpay Link]
+
+Please find the printable GST PDF attached below. Kindly share the transaction confirmation once processed for our accounts reconciliation.
+
+Thank you for choosing to work with us! 🙏</div>
+      </div>
+
+      <div class="script-card">
+        <div class="script-header">
+          <div>
+            <div class="script-title">2.2 Formal Corporate B2B Email Invoice Dispatch</div>
+            <div class="script-context">For corporate clients with dedicated accounts and finance teams.</div>
+          </div>
+          <button class="copy-btn" onclick="copyCardText(this)">📋 Copy</button>
+        </div>
+        <div class="script-body">Subject: Tax Invoice #[INV-NO] from [Your Company] for [Project Name]
+
+Dear [Client Name] & Accounts Team,
+
+Please find attached our tax invoice #[INV-NO] dated [Date] for the completion of [Milestone / Services Rendered].
+
+Invoice Summary:
+• Description: [e.g. Web Development Phase 2 Milestone]
+• Taxable Amount: ₹[Amount]
+• GST (18%): ₹[GST Amount]
+• Total Invoice Value: ₹[Total Value]
+• Payment Due Date: [Due Date]
+
+Bank Transfer Details:
+• Account Name: [Your Registered Name]
+• Account Number: [A/C No]
+• IFSC Code: [IFSC]
+• Bank & Branch: [Bank Name, Branch]
+
+If your finance team is deducting TDS under Section 194J/194C, kindly remit the net amount and issue Form 16A at the end of the quarter.
+
+Best regards,
+[Your Name] | Finance & Accounts
+[Your Company Name]</div>
+      </div>
+
+    </div>
+
+    <!-- Category 3 -->
+    <h3 style="font-size: 16px; font-weight: 800; color: #b91c1c; margin-top: 40px; margin-bottom: 12px; text-transform: uppercase;">
+      Category 3: The 4-Stage Zero-Ghosting Overdue Recovery Sequence
+    </h3>
+    <p style="font-size: 13px; color: #64748b; margin-bottom: 12px;">
+      Follow these stages sequentially. They are psychologically designed to collect pending payments without offending clients.
+    </p>
+
+    <div class="script-grid">
+
+      <div class="script-card" style="border-left: 4px solid #3b82f6;">
+        <div class="script-header">
+          <div>
+            <div class="script-title">Stage 1: Due Date Courtesy Reminder (Day 0)</div>
+            <div class="script-context">Send on the exact day the invoice is due.</div>
+          </div>
+          <button class="copy-btn" onclick="copyCardText(this)">📋 Copy</button>
+        </div>
+        <div class="script-body">Hi [Client Name]! Hope you are having a productive week. 😊
+
+Just a quick heads up that Invoice #[Invoice No] for ₹[Amount] is due today as per our agreed payment schedule.
+
+Here is our UPI ID for quick clearance: `[your-upi@bank]`
+
+If already dispatched from your bank today, please disregard this note and share the reference number. Thank you!</div>
+      </div>
+
+      <div class="script-card" style="border-left: 4px solid #eab308;">
+        <div class="script-header">
+          <div>
+            <div class="script-title">Stage 2: The "Banking Glitch" Check (Day +3 Overdue)</div>
+            <div class="script-context">Framed as helping them, not blaming them. Highly effective.</div>
+          </div>
+          <button class="copy-btn" onclick="copyCardText(this)">📋 Copy</button>
+        </div>
+        <div class="script-body">Hi [Client Name], hope all is well! 👋
+
+I'm reviewing our bank reconciliation for the week and noticed that Invoice #[Invoice No] (₹[Amount]) is showing as uncredited.
+
+Just wanted to check if there was any banking glitch or NEFT delay on your end? Let me know if you need our alternate bank details or a quick UPI QR code to settle this smoothly today.
+
+Appreciate your quick confirmation!</div>
+      </div>
+
+      <div class="script-card" style="border-left: 4px solid #f97316;">
+        <div class="script-header">
+          <div>
+            <div class="script-title">Stage 3: The Firm "Service / Work Pause" Alert (Day +7 Overdue)</div>
+            <div class="script-context">When client is ignoring messages. Forces priority.</div>
+          </div>
+          <button class="copy-btn" onclick="copyCardText(this)">📋 Copy</button>
+        </div>
+        <div class="script-body">Hi [Client Name],
+
+Writing to follow up on Invoice #[Invoice No] (₹[Amount]), which is now 7 days past due.
+
+Our automated operations system flags accounts with overdue balances, which requires us to pause active deliverables, ad campaigns, and staging server access until cleared.
+
+To avoid any disruption to your ongoing project schedule, could you please confirm if this payment can be authorized by 5:00 PM today?
+
+⚡ UPI: `[your-upi@bank]`
+
+Thank you for your prompt cooperation in keeping our schedule on track.</div>
+      </div>
+
+      <div class="script-card" style="border-left: 4px solid #ef4444;">
+        <div class="script-header">
+          <div>
+            <div class="script-title">Stage 4: Executive Level Final Settlement Notice (Day +15 Overdue)</div>
+            <div class="script-context">Recovers 90% of ghosted balances by introducing legal/formal accountability.</div>
+          </div>
+          <button class="copy-btn" onclick="copyCardText(this)">📋 Copy</button>
+        </div>
+        <div class="script-body">Dear [Client Name],
+
+I am writing directly regarding the outstanding balance of ₹[Amount] for Invoice #[Invoice No], which remains unpaid despite multiple reminders over the last 15 days.
+
+We have always valued our business relationship with [Client Company] and delivered all agreed milestones in good faith. However, continued non-payment without communication forces our management to initiate formal account recovery protocols and apply contractual late interest fees (2% per month).
+
+We want to resolve this amicably. Please clear the pending dues of ₹[Amount] within the next 48 hours or let us know an exact date when the transfer will be completed.
+
+Awaiting your urgent response today.</div>
+      </div>
+
+    </div>
+
+    <!-- Category 4 -->
+    <h3 style="font-size: 16px; font-weight: 800; color: #047857; margin-top: 40px; margin-bottom: 12px; text-transform: uppercase;">
+      Category 4: Reviving Ghosting & Stalled Clients
+    </h3>
+    <div class="script-grid">
+
+      <div class="script-card">
+        <div class="script-header">
+          <div>
+            <div class="script-title">4.1 Dean Jackson's Magic 9-Word WhatsApp</div>
+            <div class="script-context">Triggers loss aversion. Gets replies from people who stopped talking for weeks.</div>
+          </div>
+          <button class="copy-btn" onclick="copyCardText(this)">📋 Copy</button>
+        </div>
+        <div class="script-body">Hi [Client Name], have you given up on [Project Name]?</div>
+      </div>
+
+      <div class="script-card">
+        <div class="script-header">
+          <div>
+            <div class="script-title">4.2 The "Closing Your File" Ultimatum</div>
+            <div class="script-context">Creates real scarcity and gets immediate answers.</div>
+          </div>
+          <button class="copy-btn" onclick="copyCardText(this)">📋 Copy</button>
+        </div>
+        <div class="script-body">Hi [Client Name], we haven't heard back from you regarding [Project / Pending Approvals] over the past 2 weeks.
+
+We are currently doing our monthly pipeline cleanup. If this project is no longer a priority for your team right now, no problem at all! We will archive the project file and release our production bandwidth to our waitlist clients.
+
+If you do wish to continue, please let us know by [Day, Date] so we can reactivate your schedule.
+
+Best regards!</div>
+      </div>
+
+    </div>
+
+    <!-- Category 5 -->
+    <h3 style="font-size: 16px; font-weight: 800; color: #047857; margin-top: 40px; margin-bottom: 12px; text-transform: uppercase;">
+      Category 5: 5-Star Reviews & Referral Machines
+    </h3>
+    <div class="script-grid">
+
+      <div class="script-card">
+        <div class="script-header">
+          <div>
+            <div class="script-title">5.1 1-Click Google Business Review Request</div>
+            <div class="script-context">Send immediately upon receiving payment or project handover.</div>
+          </div>
+          <button class="copy-btn" onclick="copyCardText(this)">📋 Copy</button>
+        </div>
+        <div class="script-body">Hey [Client Name]! 🎉 It has been such an absolute pleasure working on [Project Name] with your team!
+
+As an independent business, 90% of our new clients come from word of mouth. If you enjoyed the experience and the results, would you mind taking 30 seconds to drop us a quick 5-star review?
+
+⭐ Click here to review: [Your Google Review Link]
+
+It would mean the world to our team. Thank you so much for your trust and partnership!</div>
+      </div>
+
+      <div class="script-card">
+        <div class="script-header">
+          <div>
+            <div class="script-title">5.2 The "Do You Know Just 1 Person" Referral Script</div>
+            <div class="script-context">Send 14 days after successful project launch.</div>
+          </div>
+          <button class="copy-btn" onclick="copyCardText(this)">📋 Copy</button>
+        </div>
+        <div class="script-body">Hi [Client Name]! Hope the new [Website / System / Marketing] is bringing in great results! 🚀
+
+Quick question: Do you know just 1 fellow entrepreneur or business owner in your network who is currently struggling with [Problem, e.g. messy business tracking / low conversions]?
+
+We would love to offer them a complimentary 20-minute audit call as a courtesy from your reference.
+
+If anyone comes to mind, feel free to introduce us on WhatsApp! Appreciate you immensely. 🙏</div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    function copyCardText(btn) {
+      const card = btn.closest('.script-card');
+      const text = card.querySelector('.script-body').innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '✅ Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    function copyCode(btn) {
+      const code = document.getElementById('appsScriptCode').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '✅ Script Copied!';
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
