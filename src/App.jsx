@@ -462,7 +462,7 @@ export default function App() {
       {/* ========================================================
           3. HERO SECTION
       ======================================================== */}
-      <section className="relative pt-8 pb-16 md:pt-16 md:pb-28 overflow-hidden">
+      <section className="relative pt-6 pb-12 sm:pt-12 sm:pb-20 md:pt-16 md:pb-28 overflow-hidden">
         {/* Glow Effects */}
         <div className={`absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[350px] rounded-full blur-[140px] pointer-events-none ${
           isDark ? 'bg-emerald-500/15' : 'bg-emerald-400/20'
@@ -470,41 +470,25 @@ export default function App() {
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           
-          {/* Eyebrow Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-600 dark:text-emerald-400 text-xs sm:text-sm font-bold mb-5 shadow-sm max-w-full">
-            <Sparkles className="w-4 h-4 flex-shrink-0" />
-            <span className="truncate">Built Specifically for Indian Agencies, Freelancers & Service Businesses</span>
+          {/* Eyebrow Badge (No truncation, tight mobile fit) */}
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-600 dark:text-emerald-400 text-[11px] sm:text-xs md:text-sm font-bold mb-3.5 sm:mb-5 shadow-sm max-w-full">
+            <Sparkles className="w-3.5 h-3.5 flex-shrink-0 text-emerald-500" />
+            <span className="leading-tight">Built for Indian Agencies, Freelancers & Businesses</span>
           </div>
 
           {/* Main Headline */}
-          <h1 className={`text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight ${textPrimary} max-w-5xl mx-auto leading-[1.18] mb-5`}>
+          <h1 className={`text-[23px] sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight ${textPrimary} max-w-5xl mx-auto leading-[1.2] mb-3.5 sm:mb-5`}>
             Stop Paying ₹5,000/Month on 5 Tools.{' '}
             <span className="gradient-text">Run Your Entire Business In One Spreadsheet.</span>
           </h1>
 
           {/* Subtitle */}
-          <p className={`text-sm sm:text-lg md:text-xl ${textSecondary} max-w-3xl mx-auto leading-relaxed mb-7`}>
+          <p className={`text-xs sm:text-base md:text-lg ${textSecondary} max-w-3xl mx-auto leading-relaxed mb-5 sm:mb-7`}>
             Replace Notion, ClickUp & QuickBooks. Track clients, auto-generate GST invoices, manage project deadlines, and monitor your cashflow in real-time. <strong className={`${textPrimary} font-bold`}>One-time {CONFIG.price}. Zero monthly subscriptions.</strong>
           </p>
 
-          {/* Feature Highlights Pills */}
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-8 text-xs sm:text-sm font-semibold">
-            <span className={`flex items-center gap-1.5 ${cardClass} px-3 py-1.5 rounded-xl`}>
-              <Check className="w-3.5 h-3.5 text-emerald-500" /> 10-Minute Setup
-            </span>
-            <span className={`flex items-center gap-1.5 ${cardClass} px-3 py-1.5 rounded-xl`}>
-              <Check className="w-3.5 h-3.5 text-emerald-500" /> Indian GST Auto-Calculated
-            </span>
-            <span className={`flex items-center gap-1.5 ${cardClass} px-3 py-1.5 rounded-xl`}>
-              <Check className="w-3.5 h-3.5 text-emerald-500" /> Google Sheets & Excel
-            </span>
-            <span className={`flex items-center gap-1.5 ${cardClass} px-3 py-1.5 rounded-xl`}>
-              <Check className="w-3.5 h-3.5 text-emerald-500" /> Lifetime Updates Included
-            </span>
-          </div>
-
-          {/* Main Hero CTA */}
-          <div className="flex flex-col items-center justify-center gap-3.5 max-w-md mx-auto mb-10">
+          {/* Main Hero CTA (Placed above pills so it's 100% above-the-fold on mobile) */}
+          <div className="flex flex-col items-center justify-center gap-3 max-w-md mx-auto mb-5 sm:mb-7">
             <a
               href={CONFIG.checkoutUrl}
               className="w-full relative group overflow-hidden bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-400 text-white font-extrabold text-base sm:text-xl px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl shadow-2xl shadow-emerald-500/35 transition-all duration-300 transform hover:-translate-y-0.5 flex items-center justify-center gap-2.5 border border-emerald-400/30"
@@ -513,7 +497,7 @@ export default function App() {
               <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1.5 transition-transform" />
             </a>
 
-            <div className={`flex items-center justify-center gap-3 sm:gap-4 text-[11px] sm:text-xs ${textMuted} flex-wrap`}>
+            <div className={`flex items-center justify-center gap-2.5 sm:gap-4 text-[10px] sm:text-xs ${textMuted} flex-wrap`}>
               <span className="flex items-center gap-1">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" /> 100% Secure UPI / Cards
               </span>
@@ -524,6 +508,22 @@ export default function App() {
                 <CheckCircle className="w-3.5 h-3.5 text-emerald-500" /> 7-Day Money Back
               </span>
             </div>
+          </div>
+
+          {/* Feature Highlights Pills */}
+          <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-3 mb-8 sm:mb-10 text-[11px] sm:text-sm font-semibold">
+            <span className={`flex items-center gap-1.5 ${cardClass} px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg sm:rounded-xl border ${borderSubtle}`}>
+              <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500" /> 10-Minute Setup
+            </span>
+            <span className={`flex items-center gap-1.5 ${cardClass} px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg sm:rounded-xl border ${borderSubtle}`}>
+              <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500" /> Indian GST Auto-Calculated
+            </span>
+            <span className={`flex items-center gap-1.5 ${cardClass} px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg sm:rounded-xl border ${borderSubtle}`}>
+              <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500" /> Google Sheets & Excel
+            </span>
+            <span className={`flex items-center gap-1.5 ${cardClass} px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg sm:rounded-xl border ${borderSubtle}`}>
+              <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500" /> Lifetime Updates Included
+            </span>
           </div>
 
           {/* Hero Visual Mockup */}
@@ -1589,36 +1589,24 @@ export default function App() {
       {/* ========================================================
           17. MOBILE STICKY FLOATING CTA BAR (OPTIMIZED)
       ======================================================== */}
-      <div className={`md:hidden fixed bottom-0 left-0 right-0 z-50 ${
+      <div className={`md:hidden fixed bottom-0 left-0 right-0 z-40 ${
         isDark ? 'bg-[#090e18]/95' : 'bg-white/95'
-      } backdrop-blur-lg border-t ${borderSubtle} p-3 px-4 flex items-center justify-between gap-3 shadow-2xl`}>
+      } backdrop-blur-lg border-t ${borderSubtle} py-2.5 px-4 flex items-center justify-between gap-3 shadow-2xl`}>
         <div>
-          <div className={`text-[10px] ${textMuted} font-medium`}>One-Time Offer</div>
-          <div className="text-base font-black text-emerald-500 flex items-center gap-1.5">
+          <div className={`text-[10px] ${textMuted} font-semibold uppercase tracking-wider`}>One-Time Offer</div>
+          <div className="text-base font-black text-emerald-500 flex items-center gap-1.5 leading-tight">
             {CONFIG.price}
             <span className={`text-xs ${textMuted} line-through font-normal`}>{CONFIG.originalPrice}</span>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          {/* Mobile Theme Switcher Icon */}
-          <button
-            onClick={toggleTheme}
-            className={`p-2 rounded-xl border ${borderSubtle} ${
-              isDark ? 'bg-slate-900 text-amber-300' : 'bg-slate-100 text-slate-700'
-            }`}
-          >
-            {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-          </button>
-
-          <a
-            href={CONFIG.checkoutUrl}
-            className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold text-xs px-4 sm:px-5 py-2.5 rounded-xl shadow-lg shadow-emerald-500/20 flex items-center gap-1"
-          >
-            <span>Get Sheetly</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </a>
-        </div>
+        <a
+          href={CONFIG.checkoutUrl}
+          className="flex-1 max-w-[210px] bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-400 text-white font-extrabold text-xs py-2.5 px-4 rounded-xl shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-1.5 transition-transform active:scale-95"
+        >
+          <span>Get Sheetly Now</span>
+          <ArrowRight className="w-3.5 h-3.5" />
+        </a>
       </div>
 
     </div>

@@ -209,10 +209,10 @@ export default function SheetlyAiChatbot({ config, isDark, textPrimary, textSeco
       {/* ========================================================
           FLOATING AI CHAT LAUNCHER BUTTON (Bottom Right)
       ======================================================== */}
-      <div className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-40">
+      <div className="fixed bottom-[66px] sm:bottom-6 right-3 sm:right-6 z-40">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="relative group flex items-center gap-2.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-400 text-white font-bold py-3.5 px-4 sm:px-5 rounded-full shadow-2xl shadow-emerald-950/50 hover:scale-105 transition-all duration-300 border border-emerald-400/30"
+          className="relative group flex items-center gap-2 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-400 text-white font-bold p-3 sm:py-3.5 sm:px-5 rounded-full shadow-2xl shadow-emerald-950/50 hover:scale-105 transition-all duration-300 border border-emerald-400/30"
           title="Ask Sheetly AI Assistant"
         >
           {/* Notification ping badge if unopened */}
@@ -225,11 +225,11 @@ export default function SheetlyAiChatbot({ config, isDark, textPrimary, textSeco
             </span>
           )}
 
-          <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
+          <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
             {isOpen ? <X className="w-4 h-4 text-white" /> : <Bot className="w-4 h-4 text-white animate-pulse" />}
           </div>
 
-          <span className="text-xs sm:text-sm font-extrabold tracking-tight">
+          <span className="hidden sm:inline-block text-xs sm:text-sm font-extrabold tracking-tight">
             {isOpen ? 'Close Chat' : 'Ask Sheetly AI'}
           </span>
 
@@ -242,7 +242,7 @@ export default function SheetlyAiChatbot({ config, isDark, textPrimary, textSeco
       ======================================================== */}
       {isOpen && (
         <div
-          className={`fixed bottom-24 sm:bottom-20 right-3 sm:right-6 z-50 w-[94vw] sm:w-[420px] max-w-full h-[540px] max-h-[82vh] rounded-3xl shadow-2xl border ${borderSubtle} flex flex-col overflow-hidden animate-slideUp backdrop-blur-xl ${
+          className={`fixed bottom-[72px] sm:bottom-20 right-2 sm:right-6 z-50 w-[calc(100vw-16px)] sm:w-[420px] max-w-full h-[520px] max-h-[75vh] sm:max-h-[82vh] rounded-2xl sm:rounded-3xl shadow-2xl border ${borderSubtle} flex flex-col overflow-hidden animate-slideUp backdrop-blur-xl ${
             isDark ? 'bg-slate-950/95 text-slate-100' : 'bg-white/95 text-slate-900'
           }`}
           style={{ boxShadow: '0 25px 60px -15px rgba(0, 0, 0, 0.45)' }}
