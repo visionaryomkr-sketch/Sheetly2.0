@@ -371,40 +371,40 @@ export default function App() {
       />
 
       {/* ========================================================
-          1. TOP URGENCY ANNOUNCEMENT BAR
+          1. TOP URGENCY ANNOUNCEMENT BAR (COMPACT & 1-LINE)
       ======================================================== */}
-      <div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 text-white text-[11px] sm:text-sm font-semibold py-2.5 px-3 sm:px-4 text-center sticky top-0 z-50 shadow-md">
-        <div className="max-w-7xl mx-auto flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap">
-          <span className="inline-flex items-center gap-1.5 bg-black/25 px-2.5 py-0.5 rounded-full text-emerald-100 text-[10px] sm:text-xs uppercase tracking-wide">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            Special Launch Deal
+      <div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 text-white text-[11px] sm:text-xs font-semibold px-3 text-center sticky top-0 z-50 shadow-sm h-8 sm:h-9 flex items-center justify-center">
+        <div className="max-w-7xl mx-auto flex items-center justify-center gap-1.5 sm:gap-2.5 whitespace-nowrap overflow-hidden">
+          <span className="hidden xs:inline-flex items-center gap-1 bg-black/25 px-2 py-0.5 rounded-full text-emerald-100 text-[10px] uppercase tracking-wide flex-shrink-0">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+            Special Deal
           </span>
-          <span>Save 92% Today + 2 Free Bonuses Included</span>
-          <span className="bg-black/30 px-2 py-0.5 rounded font-mono text-emerald-200 text-xs">
+          <span className="truncate">Save 92% Today + 2 Free Bonuses Included</span>
+          <span className="bg-black/30 px-2 py-0.5 rounded font-mono text-emerald-200 text-[11px] flex-shrink-0">
             {String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}
           </span>
         </div>
       </div>
 
       {/* ========================================================
-          2. NAVBAR WITH THEME TOGGLE
+          2. NAVBAR WITH THEME TOGGLE (100% RESPONSIVE NO-WRAP)
       ======================================================== */}
-      <nav className={`border-b ${borderSubtle} sticky top-[33px] sm:top-[41px] z-40 transition-all ${
+      <nav className={`border-b ${borderSubtle} sticky top-8 sm:top-9 z-40 transition-all ${
         isDark ? 'bg-[#070b14]/90' : 'bg-[#f8fafc]/90'
       } backdrop-blur-md`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-2">
           
           {/* Logo */}
-          <div className="flex items-center gap-2.5 sm:gap-3">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white shadow-lg shadow-emerald-500/20">
-              <FileSpreadsheet className="w-5 h-5 sm:w-6 sm:h-6" />
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white shadow-lg shadow-emerald-500/20 flex-shrink-0">
+              <FileSpreadsheet className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <span className={`text-lg sm:text-xl font-black tracking-tight ${textPrimary} flex items-center gap-1.5`}>
+            <div className="flex items-center gap-1.5 flex-shrink-0">
+              <span className={`text-base sm:text-xl font-black tracking-tight ${textPrimary}`}>
                 {CONFIG.productName}
-                <span className="text-[10px] sm:text-xs font-bold px-1.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-                  2.0 OS
-                </span>
+              </span>
+              <span className="text-[9px] sm:text-xs font-bold px-1.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 whitespace-nowrap flex-shrink-0">
+                2.0 OS
               </span>
             </div>
           </div>
@@ -424,36 +424,37 @@ export default function App() {
           </div>
 
           {/* Right Action: Theme Switcher & Buy CTA */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
             
             {/* Light / Dark Mode Toggle Button */}
             <button
               onClick={toggleTheme}
               title={`Switch to ${isDark ? 'Light' : 'Dark'} Mode`}
-              className={`p-2 rounded-xl border ${borderSubtle} ${
+              className={`w-8 h-8 sm:w-auto sm:h-auto p-1.5 sm:p-2 rounded-xl border ${borderSubtle} ${
                 isDark ? 'bg-slate-900 text-amber-300 hover:bg-slate-800' : 'bg-white text-slate-700 hover:bg-slate-100 shadow-sm'
-              } transition-all duration-200 flex items-center gap-1.5 text-xs font-medium`}
+              } transition-all duration-200 flex items-center justify-center gap-1.5 text-xs font-medium flex-shrink-0`}
             >
               {isDark ? (
                 <>
-                  <Sun className="w-4 h-4 text-amber-400" />
+                  <Sun className="w-4 h-4 text-amber-400 flex-shrink-0" />
                   <span className="hidden sm:inline">Light</span>
                 </>
               ) : (
                 <>
-                  <Moon className="w-4 h-4 text-slate-700" />
+                  <Moon className="w-4 h-4 text-slate-700 flex-shrink-0" />
                   <span className="hidden sm:inline">Dark</span>
                 </>
               )}
             </button>
 
-            {/* Navbar CTA */}
+            {/* Navbar CTA (Compact on mobile, full on desktop - NEVER WRAPS) */}
             <a
               href={CONFIG.checkoutUrl}
-              className="relative group overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-bold text-xs sm:text-sm px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl shadow-lg shadow-emerald-500/25 transition-all duration-200 flex items-center gap-1.5"
+              className="relative group overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-bold text-xs sm:text-sm px-2.5 sm:px-5 py-1.5 sm:py-2.5 rounded-xl shadow-lg shadow-emerald-500/25 transition-all duration-200 flex items-center gap-1 whitespace-nowrap flex-shrink-0"
             >
-              <span>Get Access • {CONFIG.price}</span>
-              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
+              <span className="hidden sm:inline">Get Access • {CONFIG.price}</span>
+              <span className="sm:hidden font-extrabold">Get {CONFIG.price}</span>
+              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform flex-shrink-0" />
             </a>
           </div>
         </div>
@@ -510,19 +511,19 @@ export default function App() {
             </div>
           </div>
 
-          {/* Feature Highlights Pills */}
-          <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-3 mb-8 sm:mb-10 text-[11px] sm:text-sm font-semibold">
-            <span className={`flex items-center gap-1.5 ${cardClass} px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg sm:rounded-xl border ${borderSubtle}`}>
-              <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500" /> 10-Minute Setup
+          {/* Feature Highlights Pills (Clean 2x2 symmetric grid on mobile, flex row on desktop) */}
+          <div className="grid grid-cols-2 gap-2 max-w-xs mx-auto sm:max-w-none sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-3 mb-6 sm:mb-10 text-[11px] sm:text-xs font-semibold">
+            <span className={`flex items-center justify-center gap-1.5 ${cardClass} px-2 py-1.5 rounded-lg sm:rounded-xl border ${borderSubtle} whitespace-nowrap`}>
+              <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500 flex-shrink-0" /> 10-Minute Setup
             </span>
-            <span className={`flex items-center gap-1.5 ${cardClass} px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg sm:rounded-xl border ${borderSubtle}`}>
-              <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500" /> Indian GST Auto-Calculated
+            <span className={`flex items-center justify-center gap-1.5 ${cardClass} px-2 py-1.5 rounded-lg sm:rounded-xl border ${borderSubtle} whitespace-nowrap`}>
+              <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500 flex-shrink-0" /> GST Auto-Calculated
             </span>
-            <span className={`flex items-center gap-1.5 ${cardClass} px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg sm:rounded-xl border ${borderSubtle}`}>
-              <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500" /> Google Sheets & Excel
+            <span className={`flex items-center justify-center gap-1.5 ${cardClass} px-2 py-1.5 rounded-lg sm:rounded-xl border ${borderSubtle} whitespace-nowrap`}>
+              <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500 flex-shrink-0" /> Sheets & Excel
             </span>
-            <span className={`flex items-center gap-1.5 ${cardClass} px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg sm:rounded-xl border ${borderSubtle}`}>
-              <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500" /> Lifetime Updates Included
+            <span className={`flex items-center justify-center gap-1.5 ${cardClass} px-2 py-1.5 rounded-lg sm:rounded-xl border ${borderSubtle} whitespace-nowrap`}>
+              <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500 flex-shrink-0" /> Lifetime Updates
             </span>
           </div>
 

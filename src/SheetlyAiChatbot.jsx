@@ -212,21 +212,21 @@ export default function SheetlyAiChatbot({ config, isDark, textPrimary, textSeco
       <div className="fixed bottom-[66px] sm:bottom-6 right-3 sm:right-6 z-40">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="relative group flex items-center gap-2 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-400 text-white font-bold p-3 sm:py-3.5 sm:px-5 rounded-full shadow-2xl shadow-emerald-950/50 hover:scale-105 transition-all duration-300 border border-emerald-400/30"
+          className="relative group flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-400 text-white font-bold w-10 h-10 sm:w-auto sm:h-auto p-0 sm:py-3.5 sm:px-5 rounded-full shadow-2xl shadow-emerald-950/50 hover:scale-105 transition-all duration-300 border border-emerald-400/30"
           title="Ask Sheetly AI Assistant"
         >
           {/* Notification ping badge if unopened */}
           {unreadBadge && (
-            <span className="absolute -top-1 -right-1 flex h-4 w-4">
+            <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5 sm:h-4 sm:w-4">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-4 w-4 bg-emerald-500 border-2 border-white dark:border-slate-900 text-[9px] font-black items-center justify-center text-white">
+              <span className="relative inline-flex rounded-full h-3.5 w-3.5 sm:h-4 sm:w-4 bg-emerald-500 border-2 border-white dark:border-slate-900 text-[8px] sm:text-[9px] font-black items-center justify-center text-white">
                 1
               </span>
             </span>
           )}
 
-          <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-            {isOpen ? <X className="w-4 h-4 text-white" /> : <Bot className="w-4 h-4 text-white animate-pulse" />}
+          <div className="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center flex-shrink-0">
+            {isOpen ? <X className="w-4 h-4 text-white" /> : <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-white animate-pulse" />}
           </div>
 
           <span className="hidden sm:inline-block text-xs sm:text-sm font-extrabold tracking-tight">
