@@ -33,7 +33,7 @@ export default function SheetlyAiChatbot({ config, isDark, textPrimary, textSeco
         "💰 Is it one-time or monthly?",
         "🧾 How does GST invoicing work?",
         "📱 Will it work on Google Sheets & mobile?",
-        "⚡ What if I don't know Excel formulas?",
+        "⚡ What if I don't know spreadsheet formulas?",
         "🛡️ What is the refund policy?"
       ]
     }
@@ -94,8 +94,8 @@ export default function SheetlyAiChatbot({ config, isDark, textPrimary, textSeco
       },
       {
         intent: 'COMPATIBILITY',
-        keywords: ['google sheet', 'excel', 'mac', 'windows', 'phone', 'mobile', 'android', 'iphone', 'ios', 'ipad', 'laptop', 'offline', 'drive'],
-        response: `Sheetly works seamlessly on all your devices: 💻📱\n\n• **Google Sheets:** 100% cloud-synced. Open on Chrome, Safari, iPad, or Android/iPhone mobile apps.\n• **Microsoft Excel:** Compatible with Excel 2019, 2021, and Office 365 on Mac & Windows.\n\nYou receive both files instantly so you can choose whichever you prefer!`
+        keywords: ['google sheet', 'excel', 'mac', 'windows', 'phone', 'mobile', 'android', 'iphone', 'ios', 'ipad', 'laptop', 'offline', 'drive', 'software', 'pc', 'cloud'],
+        response: `Sheetly is built natively on **Google Sheets (India GST Edition)**: 💻📱\n\n• **100% Free Forever:** Runs directly in Google Sheets — you don't need any paid Microsoft Office or Excel subscriptions.\n• **Every Device Supported:** Open on Chrome, Safari, Android & iPhone mobile apps, Mac, and Windows PC.\n• **Real-Time Auto-Save:** Every edit is instantly backed up to your personal Google Drive automatically.\n• **One-Click Excel Export:** If you ever want an offline copy, you can export it anytime via File > Download > Microsoft Excel (.xlsx)!`
       },
       {
         intent: 'SKILL_LEVEL',
@@ -110,7 +110,7 @@ export default function SheetlyAiChatbot({ config, isDark, textPrimary, textSeco
       {
         intent: 'DELIVERY',
         keywords: ['delivery', 'deliver', 'receive', 'download', 'milega', 'kaise mile', 'access link', 'instant email', 'after payment'],
-        response: `Delivery is **instant**! ⚡\n\nWithin 10 seconds of payment confirmation, you will receive an automated email with:\n1. Direct Google Sheets Copy Link\n2. Microsoft Excel (.xlsx) Download File\n3. 5-Minute Video Setup Masterclass\n4. Two Fast-Action Bonuses\n\nYou can set it up and start managing clients in under 5 minutes!`
+        response: `Delivery is **instant**! ⚡\n\nWithin 10 seconds of payment confirmation, you will receive an automated email with:\n1. 1-Click Google Sheets Master Copy Link (India GST Edition)\n2. 5-Minute Video Setup Masterclass\n3. Two Fast-Action Bonuses (Service Pricing Calculator + WhatsApp Invoicing Automation Pack)\n\nYou make one private copy into your personal Google Drive and you're ready to manage clients in under 5 minutes!`
       },
       {
         intent: 'BONUSES',
@@ -160,7 +160,7 @@ export default function SheetlyAiChatbot({ config, isDark, textPrimary, textSeco
 
     // Default Fallback
     return {
-      text: `Sheetly is an all-in-one business management operating system (18 pre-linked tabs) in Google Sheets & Excel. For a one-time payment of **${config.price}**, it replaces Notion, ClickUp, and QuickBooks with zero monthly fees!\n\nWould you like to know about:\n• **Pricing & Lifetime Access**\n• **GST Invoicing & 1-Click PDF Bills**\n• **Device & Mobile Support**\n• **Or chat directly with our human team on WhatsApp?**`,
+      text: `Sheetly is an all-in-one business operating system (18 pre-linked tabs) in cloud Google Sheets (India Edition). For a one-time payment of **${config.price}**, it replaces Notion, ClickUp, and QuickBooks with zero monthly fees!\n\nWould you like to know about:\n• **Pricing & Lifetime Access**\n• **GST Invoicing & 1-Click PDF Bills**\n• **Device & Mobile Support**\n• **Or chat directly with our human team on WhatsApp?**`,
       cta: {
         type: 'whatsapp',
         label: 'Chat With Team on WhatsApp',

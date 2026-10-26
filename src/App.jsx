@@ -13,6 +13,8 @@ import {
   TrendingUp,
   HelpCircle,
   DollarSign,
+  IndianRupee,
+  Smartphone,
   AlertTriangle,
   Layers,
   Sparkles,
@@ -236,7 +238,7 @@ export default function App() {
       id: 'finances',
       sheetTabName: "🟢 Income, 🔴 Expense, 📅 Monthly & 1️⃣2️⃣-Month Views",
       label: 'Cashflow & Profit Analytics',
-      icon: DollarSign,
+      icon: IndianRupee,
       title: 'Master Income, Expense & P&L Suite',
       tagline: 'Complete financial clarity. Eliminate tax season chaos forever.',
       desc: 'Comprehensive financial suite featuring dedicated Income & Expense ledgers, bank reconciliation, monthly category breakdowns, 12-month annual growth trends, and custom date range analyzers.',
@@ -288,12 +290,12 @@ export default function App() {
   // FAQs List (In Professional English)
   const faqs = [
     {
-      q: "Will this work on both Google Sheets and Microsoft Excel?",
-      a: "Yes! Sheetly is fully optimized for both Google Sheets and Microsoft Excel (2019 or later, and Office 365). You can access and manage your business from Mac, Windows, iPad, or any smartphone device."
+      q: "Do I need any paid software or Microsoft Office to use Sheetly?",
+      a: "No! Sheetly is built 100% natively on Google Sheets (India Edition), which is completely free forever. You never need to pay for Microsoft Office or Excel licenses. It syncs in real-time across your laptop, Mac, Windows PC, Android, and iPhone. (You can also export it to Excel anytime via File > Download > Microsoft Excel if needed)."
     },
     {
-      q: "I am not an Excel expert. Can I still use this?",
-      a: "Absolutely! Sheetly is 100% plug-and-play. All formulas, lookups, GST calculations, and automated linkages are pre-configured behind the scenes. You simply type in your data or pick from dropdowns. A step-by-step video setup guide is also included."
+      q: "I am not a spreadsheet or formulas expert. Can I still use this?",
+      a: "Absolutely! Sheetly is 100% plug-and-play. All formulas, lookups, GST calculations, and automated linkages are pre-configured behind the scenes. You simply type in your data or pick from dropdowns. A step-by-step 5-minute video setup guide is also included."
     },
     {
       q: "Is this a monthly subscription or a one-time payment?",
@@ -301,7 +303,7 @@ export default function App() {
     },
     {
       q: "How do I receive the product after payment?",
-      a: "Within 10 seconds of completing payment, you will receive an instant email and on-screen download link with both the Google Sheets copy link and the Microsoft Excel (.xlsx) file. You can set it up and start using it in under 5 minutes."
+      a: "Within 10 seconds of completing payment, you will receive an instant email and on-screen access link with the Google Sheets 1-Click Copy Link (India GST Edition), complete Video Setup Walkthrough, and your 2 Free Fast-Action Bonuses. You make a private copy into your personal Google Drive in 1 click and you're ready to go!"
     },
     {
       q: "Can I customize the templates with my own company logo and colors?",
@@ -520,7 +522,7 @@ export default function App() {
               <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500 flex-shrink-0" /> GST Auto-Calculated
             </span>
             <span className={`flex items-center justify-center gap-1.5 ${cardClass} px-2 py-1.5 rounded-lg sm:rounded-xl border ${borderSubtle} whitespace-nowrap`}>
-              <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500 flex-shrink-0" /> Sheets & Excel
+              <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500 flex-shrink-0" /> Cloud Google Sheets
             </span>
             <span className={`flex items-center justify-center gap-1.5 ${cardClass} px-2 py-1.5 rounded-lg sm:rounded-xl border ${borderSubtle} whitespace-nowrap`}>
               <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500 flex-shrink-0" /> Lifetime Updates
@@ -539,7 +541,7 @@ export default function App() {
                     <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-500/80"></div>
                   </div>
                   <div className={`text-[11px] sm:text-xs ${textMuted} font-mono px-2 sm:px-3 py-0.5 sm:py-1 rounded-md ${isDark ? 'bg-black/30' : 'bg-white/70'}`}>
-                    sheetly-master-business-os.xlsx (Google Sheets Live)
+                    sheetly-master-business-os (Google Sheets India Edition)
                   </div>
                   <div className="w-8"></div>
                 </div>
@@ -725,7 +727,7 @@ export default function App() {
               <div className="space-y-3.5 sm:space-y-4 text-xs sm:text-sm">
                 {[
                   "One-time ₹899 payment for lifetime access — zero monthly subscription fees ever.",
-                  "Your complete business command center in one single Google Sheet & Excel spreadsheet.",
+                  "Your complete business command center in one cloud-synced Google Sheets spreadsheet (India GST Edition).",
                   "Auto-calculated 18% GST — generate compliant, branded PDF invoices with tax breakdown in 1 click.",
                   "Send sleek, numbered, professional invoices that command respect and prompt payments.",
                   "Real-time visual dashboard with color-coded alerts showing who has paid and what is overdue.",
@@ -1075,29 +1077,29 @@ export default function App() {
                   <FileSpreadsheet className="w-5 h-5" />
                 </div>
                 <div className="text-xs font-bold text-emerald-500 mb-1">ASSET #1</div>
-                <h4 className={`text-sm font-bold ${textPrimary} mb-1.5`}>Google Sheets Live Copy</h4>
+                <h4 className={`text-sm font-bold ${textPrimary} mb-1.5`}>Google Sheets Master OS (India Edition)</h4>
                 <p className={`text-xs ${textSecondary} leading-relaxed`}>
-                  1-Click duplicate straight into your private Google Drive. Works on browser & mobile app.
+                  1-Click duplicate straight into your private Google Drive. 18 pre-linked tabs, 18% GST engine, and auto P&L.
                 </p>
               </div>
               <div className="mt-4 pt-3 border-t border-gray-800 text-[11px] font-semibold text-emerald-500 flex items-center gap-1">
-                <Check className="w-3.5 h-3.5" /> Cloud Auto-Synced
+                <Check className="w-3.5 h-3.5" /> 100% Free Forever
               </div>
             </div>
 
             <div className={`${cardClass} p-5 rounded-2xl border ${borderSubtle} flex flex-col justify-between`}>
               <div>
                 <div className="w-10 h-10 rounded-xl bg-teal-500/10 text-teal-500 flex items-center justify-center mb-3">
-                  <Download className="w-5 h-5" />
+                  <Smartphone className="w-5 h-5" />
                 </div>
                 <div className="text-xs font-bold text-teal-500 mb-1">ASSET #2</div>
-                <h4 className={`text-sm font-bold ${textPrimary} mb-1.5`}>Microsoft Excel (.xlsx) File</h4>
+                <h4 className={`text-sm font-bold ${textPrimary} mb-1.5`}>Multi-Device Cloud Access</h4>
                 <p className={`text-xs ${textSecondary} leading-relaxed`}>
-                  Offline compatible with Excel 2019, 2021 & Office 365 on Mac, Windows, and iPad.
+                  Real-time auto-sync across your Android phone, iPhone, Mac, and Windows laptop. Zero Microsoft license needed.
                 </p>
               </div>
               <div className="mt-4 pt-3 border-t border-gray-800 text-[11px] font-semibold text-teal-500 flex items-center gap-1">
-                <Check className="w-3.5 h-3.5" /> 100% Offline Ready
+                <Check className="w-3.5 h-3.5" /> Real-Time Auto-Save
               </div>
             </div>
 
@@ -1408,7 +1410,7 @@ export default function App() {
               </div>
               <div className="flex items-center justify-between text-xs sm:text-sm">
                 <span className={`flex items-center gap-2 ${textPrimary} font-medium`}>
-                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Google Sheets & Excel Compatible
+                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Native Google Sheets (India Edition with 18% GST)
                 </span>
                 <span className={`text-xs ${textMuted} line-through`}>₹999</span>
               </div>
