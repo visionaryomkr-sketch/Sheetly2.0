@@ -49,7 +49,7 @@ import SheetlyAiChatbot from './SheetlyAiChatbot.jsx';
 const CONFIG = {
   productName: "Sheetly",
   price: "₹899",
-  originalPrice: "₹2,499",
+  originalPrice: "₹4,999",
   totalValue: "₹11,496",
   checkoutUrl: "https://superprofile.bio/vp/tj9_xpSO",
   whatsappNumber: "916201530733",
@@ -62,20 +62,38 @@ export default function App() {
     return localStorage.getItem('sheetly-theme') || 'dark';
   });
 
-  // Countdown Timer State
-  const [timeLeft, setTimeLeft] = useState({ minutes: 14, seconds: 48 });
+  // Persistent Countdown Timer (stored in localStorage so refresh never resets to 15m)
+  const [timeLeft, setTimeLeft] = useState(() => {
+    const getDeadline = () => {
+      const stored = localStorage.getItem('sheetly-timer-deadline');
+      const now = Date.now();
+      if (stored && Number(stored) > now) {
+        return Number(stored);
+      }
+      const newDeadline = now + (11 * 3600 + 42 * 60 + 19) * 1000;
+      localStorage.setItem('sheetly-timer-deadline', String(newDeadline));
+      return newDeadline;
+    };
+    const diff = Math.max(0, Math.floor((getDeadline() - Date.now()) / 1000));
+    return {
+      hours: Math.floor(diff / 3600),
+      minutes: Math.floor((diff % 3600) / 60),
+      seconds: diff % 60,
+    };
+  });
+  const [legalModal, setLegalModal] = useState(null); // 'terms' | 'privacy' | 'refund' | null
   const [activeTab, setActiveTab] = useState('dashboard');
   const [activeSubViewIndex, setActiveSubViewIndex] = useState(0);
   const [zoomImage, setZoomImage] = useState(null);
   const [openFaq, setOpenFaq] = useState(null);
 
-  // Savings Calculator State
+  // Savings Calculator State (Default 2 tools selected for realistic initial savings)
   const [tools, setTools] = useState({
     notion: true,
     clickup: true,
-    quickbooks: true,
+    quickbooks: false,
     calendly: false,
-    airtable: true,
+    airtable: false,
   });
 
   // Save theme changes
@@ -90,16 +108,21 @@ export default function App() {
     setActiveSubViewIndex(0);
   }, [activeTab]);
 
-  // Countdown effect
+  // Countdown effect (ticks accurately against persistent timestamp)
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev.seconds > 0) {
-          return { ...prev, seconds: prev.seconds - 1 };
-        } else if (prev.minutes > 0) {
-          return { minutes: prev.minutes - 1, seconds: 59 };
-        }
-        return { minutes: 15, seconds: 0 };
+      const stored = localStorage.getItem('sheetly-timer-deadline');
+      let deadline = stored ? Number(stored) : Date.now() + 3600000;
+      let diff = Math.max(0, Math.floor((deadline - Date.now()) / 1000));
+      if (diff <= 0) {
+        deadline = Date.now() + (12 * 3600) * 1000;
+        localStorage.setItem('sheetly-timer-deadline', String(deadline));
+        diff = Math.floor((deadline - Date.now()) / 1000);
+      }
+      setTimeLeft({
+        hours: Math.floor(diff / 3600),
+        minutes: Math.floor((diff % 3600) / 60),
+        seconds: diff % 60,
       });
     }, 1000);
     return () => clearInterval(timer);
@@ -303,7 +326,7 @@ export default function App() {
     },
     {
       q: "How do I receive the product after payment?",
-      a: "Within 10 seconds of completing payment, you will receive an instant email and on-screen access link with the Google Sheets 1-Click Copy Link (India GST Edition), complete Video Setup Walkthrough, and your 2 Free Fast-Action Bonuses. You make a private copy into your personal Google Drive in 1 click and you're ready to go!"
+      a: "Immediately after completing payment (and within 1 to 5 minutes via email), you will receive on-screen access and an email containing your Google Sheets 1-Click Copy Link (India GST Edition), complete Video Setup Walkthrough, and your 2 Free Fast-Action Bonuses. You make a private copy into your personal Google Drive in 1 click and you're ready to go!"
     },
     {
       q: "Can I customize the templates with my own company logo and colors?",
@@ -381,9 +404,9 @@ export default function App() {
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
             Special Deal
           </span>
-          <span className="truncate">Save 92% Today + 2 Free Bonuses Included</span>
+          <span className="truncate">Save 82% Today (₹4,999 → ₹899) • 2 Free Bonuses Included</span>
           <span className="bg-black/30 px-2 py-0.5 rounded font-mono text-emerald-200 text-[11px] flex-shrink-0">
-            {String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}
+            {String(timeLeft.hours).padStart(2, '0')}:{String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}
           </span>
         </div>
       </div>
@@ -511,6 +534,16 @@ export default function App() {
                 <CheckCircle className="w-3.5 h-3.5 text-emerald-500" /> 7-Day Money Back
               </span>
             </div>
+
+            <a
+              href={`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent("Hi! I have a question about Sheetly 2.0 before purchasing.")}`}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 transition-colors pt-0.5"
+            >
+              <MessageCircle className="w-3.5 h-3.5" />
+              <span>Have a question? Chat with us on WhatsApp</span>
+            </a>
           </div>
 
           {/* Feature Highlights Pills (Clean 2x2 symmetric grid on mobile, flex row on desktop) */}
@@ -551,6 +584,10 @@ export default function App() {
                   src="/Images/hero-images.webp"
                   alt="Sheetly Business Spreadsheet OS Preview"
                   className="w-full h-auto object-cover"
+                  fetchPriority="high"
+                  loading="eager"
+                  width="941"
+                  height="1672"
                 />
               </div>
             </div>
@@ -1388,7 +1425,7 @@ export default function App() {
             
             {/* Top Ribbon */}
             <div className="absolute top-0 right-0 bg-gradient-to-l from-emerald-500 to-teal-500 text-white text-[10px] sm:text-xs font-black px-5 sm:px-6 py-1 sm:py-1.5 rounded-bl-xl uppercase tracking-wider shadow-md">
-              Save 92% Limited Offer
+              Save 82% Limited Offer
             </div>
 
             <div className="max-w-2xl mx-auto mb-6 sm:mb-8">
@@ -1503,6 +1540,79 @@ export default function App() {
       </section>
 
       {/* ========================================================
+          14.1 WHO IS SHEETLY FOR & NOT FOR (HONEST QUALIFICATION)
+      ======================================================== */}
+      <section className="py-12 sm:py-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8 sm:mb-10">
+            <span className="text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/25">
+              Honest Fit Guide
+            </span>
+            <h2 className={`text-xl sm:text-3xl font-black ${textPrimary} mt-2.5 mb-2`}>
+              Is Sheetly 2.0 Right For Your Business?
+            </h2>
+            <p className={`text-xs sm:text-sm ${textSecondary} max-w-xl mx-auto`}>
+              We believe in 100% transparency. Please review who Sheetly is built for before purchasing:
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+            {/* Who is it for */}
+            <div className={`${cardClass} p-5 sm:p-6 rounded-2xl border border-emerald-500/35 relative`}>
+              <div className="flex items-center gap-2 mb-3.5">
+                <div className="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-500 flex items-center justify-center font-black text-sm">
+                  ✓
+                </div>
+                <h3 className={`text-base font-bold ${textPrimary}`}>Sheetly is PERFECT for you if:</h3>
+              </div>
+              <ul className={`space-y-2.5 text-xs sm:text-sm ${textSecondary}`}>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>You are an Indian freelancer, marketing agency, consultant, or service firm with 1 to 50 active clients.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>You are tired of burning ₹5,000+ every single month on Notion, ClickUp, or accounting software you barely use.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>You want clean 18% GST invoices (CGST/SGST/IGST breakdown) that download to client-ready PDFs in 60 seconds.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span>You want real-time cloud auto-sync across your laptop, Mac, Windows, Android, and iPhone without software licenses.</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Who is it NOT for */}
+            <div className={`${cardClass} p-5 sm:p-6 rounded-2xl border border-rose-500/35 relative`}>
+              <div className="flex items-center gap-2 mb-3.5">
+                <div className="w-7 h-7 rounded-lg bg-rose-500/20 text-rose-500 flex items-center justify-center font-black text-sm">
+                  ✕
+                </div>
+                <h3 className={`text-base font-bold ${textPrimary}`}>Please DO NOT buy if:</h3>
+              </div>
+              <ul className={`space-y-2.5 text-xs sm:text-sm ${textSecondary}`}>
+                <li className="flex items-start gap-2">
+                  <span className="text-rose-500 font-bold flex-shrink-0">✕</span>
+                  <span>You run a heavy manufacturing warehouse that requires physical barcode scanning and hardware POS scanners.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-rose-500 font-bold flex-shrink-0">✕</span>
+                  <span>You already have a dedicated full-time accountant handling complex Tally ERP setups and you never check your cashflow.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-rose-500 font-bold flex-shrink-0">✕</span>
+                  <span>You want a native offline iOS/Android app rather than a Google Sheets cloud workspace.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================
           15. OBJECTION-KILLER FAQS
       ======================================================== */}
       <section id="faqs" className="py-16 sm:py-24 md:py-28 relative">
@@ -1580,10 +1690,13 @@ export default function App() {
             </div>
           </div>
 
-          <div className={`flex items-center gap-5 sm:gap-6 font-medium ${textSecondary} text-xs`}>
+          <div className={`flex items-center gap-4 sm:gap-6 font-medium ${textSecondary} text-xs flex-wrap justify-center sm:justify-end`}>
             <a href="#pricing" className="hover:text-emerald-500 transition-colors">Pricing</a>
             <a href="#features" className="hover:text-emerald-500 transition-colors">Features</a>
             <a href="#faqs" className="hover:text-emerald-500 transition-colors">Support & FAQs</a>
+            <button onClick={() => setLegalModal('terms')} className="hover:text-emerald-500 transition-colors underline-offset-4 hover:underline">Terms</button>
+            <button onClick={() => setLegalModal('privacy')} className="hover:text-emerald-500 transition-colors underline-offset-4 hover:underline">Privacy</button>
+            <button onClick={() => setLegalModal('refund')} className="hover:text-emerald-500 transition-colors underline-offset-4 hover:underline">Refund Policy</button>
             <a href={`mailto:${CONFIG.supportEmail}`} className="hover:text-emerald-500 transition-colors">Email Us</a>
           </div>
         </div>
@@ -1594,7 +1707,7 @@ export default function App() {
       ======================================================== */}
       <div className={`md:hidden fixed bottom-0 left-0 right-0 z-40 ${
         isDark ? 'bg-[#090e18]/95' : 'bg-white/95'
-      } backdrop-blur-lg border-t ${borderSubtle} py-2.5 px-4 flex items-center justify-between gap-3 shadow-2xl`}>
+      } backdrop-blur-lg border-t ${borderSubtle} py-2.5 px-3.5 flex items-center justify-between gap-2 shadow-2xl`}>
         <div>
           <div className={`text-[10px] ${textMuted} font-semibold uppercase tracking-wider`}>One-Time Offer</div>
           <div className="text-base font-black text-emerald-500 flex items-center gap-1.5 leading-tight">
@@ -1603,14 +1716,101 @@ export default function App() {
           </div>
         </div>
 
-        <a
-          href={CONFIG.checkoutUrl}
-          className="flex-1 max-w-[210px] bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-400 text-white font-extrabold text-xs py-2.5 px-4 rounded-xl shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-1.5 transition-transform active:scale-95"
-        >
-          <span>Get Sheetly Now</span>
-          <ArrowRight className="w-3.5 h-3.5" />
-        </a>
+        <div className="flex items-center gap-2">
+          <a
+            href={`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent("Hi! I have a question about Sheetly 2.0 before purchasing.")}`}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Chat on WhatsApp"
+            className="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-500 flex items-center justify-center hover:bg-emerald-500/25 transition-colors"
+          >
+            <MessageCircle className="w-4 h-4" />
+          </a>
+          <a
+            href={CONFIG.checkoutUrl}
+            className="bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-400 text-white font-extrabold text-xs py-2.5 px-3.5 rounded-xl shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-1.5 transition-transform active:scale-95"
+          >
+            <span>Get Sheetly Now</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </a>
+        </div>
       </div>
+
+      {/* ========================================================
+          18. LEGAL & COMPLIANCE MODAL (TERMS / PRIVACY / REFUND)
+      ======================================================== */}
+      {legalModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in">
+          <div className={`${cardClass} max-w-2xl w-full max-h-[85vh] rounded-2xl border ${borderSubtle} p-6 sm:p-8 flex flex-col shadow-2xl overflow-hidden relative`}>
+            {/* Header */}
+            <div className="flex items-center justify-between pb-4 border-b border-gray-800">
+              <h3 className={`text-lg sm:text-xl font-black ${textPrimary}`}>
+                {legalModal === 'terms' && "Terms & Conditions"}
+                {legalModal === 'privacy' && "Privacy Policy"}
+                {legalModal === 'refund' && "7-Day 100% Money-Back Refund Policy"}
+              </h3>
+              <button
+                onClick={() => setLegalModal(null)}
+                className={`p-1.5 rounded-lg ${cardClass} border ${borderSubtle} text-gray-400 hover:text-white transition-colors`}
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className={`overflow-y-auto py-5 space-y-4 text-xs sm:text-sm ${textSecondary} leading-relaxed`}>
+              {legalModal === 'terms' && (
+                <>
+                  <p><strong>Last Updated: October 2026</strong></p>
+                  <p>Welcome to Sheetly 2.0. By purchasing and downloading our Google Sheets business operating system, you agree to these Terms and Conditions.</p>
+                  <h4 className={`font-bold ${textPrimary}`}>1. License & Commercial Usage</h4>
+                  <p>When you purchase Sheetly 2.0 for a one-time fee of ₹899, you receive a non-exclusive, perpetual, single-user license to use the system for your personal business, freelance work, or internal company operations. You may customize, duplicate, and modify the sheets freely for your own business.</p>
+                  <h4 className={`font-bold ${textPrimary}`}>2. Restrictions</h4>
+                  <p>You may NOT re-sell, redistribute, sublicense, lease, or publicly share access to Sheetly 2.0 or its bonus templates as a standalone digital product or course asset.</p>
+                  <h4 className={`font-bold ${textPrimary}`}>3. Support & Updates</h4>
+                  <p>We provide email and WhatsApp support for setup guidance and formula inquiries. Future tab updates and refinements are provided free of charge.</p>
+                </>
+              )}
+
+              {legalModal === 'privacy' && (
+                <>
+                  <p><strong>Last Updated: October 2026</strong></p>
+                  <p>At Sheetly, your privacy is our top priority. This policy outlines how your data is handled.</p>
+                  <h4 className={`font-bold ${textPrimary}`}>1. 100% Private Business Data</h4>
+                  <p>Sheetly 2.0 operates entirely inside your private Google Drive account. We NEVER have access to your spreadsheet, financial figures, client records, or invoices. Your business data remains completely confidential under your own Google Workspace security.</p>
+                  <h4 className={`font-bold ${textPrimary}`}>2. Payment Information</h4>
+                  <p>Payments are processed securely via encrypted, PCI-DSS compliant Indian payment gateways (Razorpay / UPI / Superprofile). We never store or handle your credit card numbers or UPI PINs.</p>
+                  <h4 className={`font-bold ${textPrimary}`}>3. Communications</h4>
+                  <p>We only use your purchase email to send your product copy link, setup walkthrough video, and product update notifications. We never sell or share your contact info with third parties.</p>
+                </>
+              )}
+
+              {legalModal === 'refund' && (
+                <>
+                  <p><strong>Last Updated: October 2026</strong></p>
+                  <p>We stand 100% behind Sheetly 2.0 with our <strong>Risk-Free 7-Day Money-Back Guarantee</strong>.</p>
+                  <h4 className={`font-bold ${textPrimary}`}>1. Eligibility Period</h4>
+                  <p>You have a full 7 days from the moment of purchase to test Sheetly 2.0 in your everyday business workflow.</p>
+                  <h4 className={`font-bold ${textPrimary}`}>2. Hassle-Free Process</h4>
+                  <p>If you feel Sheetly doesn't save you time or streamline your business operations, simply reach out via WhatsApp ({CONFIG.whatsappNumber}) or email ({CONFIG.supportEmail}) with your payment receipt or order reference.</p>
+                  <h4 className={`font-bold ${textPrimary}`}>3. 48-Hour Full Refund</h4>
+                  <p>Your full 100% refund of ₹899 will be initiated back to your original payment method (UPI / Bank Account / Card) within 48 hours. No awkward questions asked.</p>
+                </>
+              )}
+            </div>
+
+            {/* Footer */}
+            <div className="pt-4 border-t border-gray-800 flex justify-end">
+              <button
+                onClick={() => setLegalModal(null)}
+                className="px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );

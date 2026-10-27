@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sheetly2-0.pages.dev/sitemap.xml
