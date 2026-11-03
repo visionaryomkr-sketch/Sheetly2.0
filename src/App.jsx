@@ -50,10 +50,10 @@ const CONFIG = {
   productName: "Sheetly",
   price: "₹899",
   originalPrice: "₹4,999",
-  totalValue: "₹11,496",
+  totalValue: "₹14,494",
   checkoutUrl: "https://superprofile.bio/vp/tj9_xpSO",
   whatsappNumber: "916201530733",
-  supportEmail: "support@sheetly.com",
+  supportEmail: "gopalssm9852@gmail.com",
 };
 
 export default function App() {
@@ -153,6 +153,7 @@ export default function App() {
       tagline: 'Your entire business health at a single glance — automated with zero manual math.',
       desc: 'Wake up, open your dashboard, and instantly know your daily schedule, active client deliverables, overdue invoice alerts, and live cashflow numbers. Links automatically to all your backend tabs.',
       views: [
+        { label: "Live ₹ INR Cockpit", src: "/Images/inr-executive-dashboard.webp", caption: "Real-time ₹ revenue overview, unpaid GST bills, client inspector & daily CA schedule" },
         { label: 'Executive Cockpit', src: '/Images/business-dashboard.webp', caption: 'Live KPI gauges, revenue progress & daily schedule' },
         { label: 'Category Insights', src: '/Images/dashboard-insight.webp', caption: 'Visual income vs expense charts & low-balance alerts' },
         { label: 'Clean Overview Layout', src: '/Images/business-dashboards.webp', caption: 'Compact view for 13-inch laptops & tablets' }
@@ -199,6 +200,8 @@ export default function App() {
       tagline: 'Create, track, and export branded GST-compliant bills in under 60 seconds.',
       desc: 'No expensive invoicing software required. Manage your master invoice ledger with automatic 18% GST calculations (Inclusive & Exclusive), then switch to the Print tab to generate client-ready PDF bills in one click.',
       views: [
+        { label: "1-Page GST Bill + UPI QR", src: "/Images/gst-print-invoice.webp", caption: "Print-ready GST Tax Invoice with GSTIN, HSN/SAC, CGST/SGST/IGST & Dynamic Scan-to-Pay UPI QR" },
+        { label: "₹ Ledger + 1-Click WhatsApp", src: "/Images/gst-invoice-whatsapp.webp", caption: "Master ₹ invoice tracker with Paid/Part-Paid/Unpaid status & instant WhatsApp reminder link" },
         { label: 'Printable PDF Invoice', src: '/Images/invoice-dashboard.webp', caption: 'Pixel-perfect, print-ready branded GST invoice' },
         { label: 'Invoice Tracker Board', src: '/Images/invoice-tracker.webp', caption: 'Master invoice ledger with Fully Paid vs Unpaid tags' },
         { label: 'Client Billing View', src: '/Images/invoice.webp', caption: 'Line item breakdown with tax percentage splits' }
@@ -212,6 +215,27 @@ export default function App() {
         { title: 'Auto-Incrementing Invoice Numbers', desc: 'Prevents duplicate invoice numbers and keeps your tax audit records 100% compliant and clean for your CA.' }
       ],
       columnsTracked: ['🖨️ Print Checkbox', 'INVOICE NO.', 'CLIENT / COMPANY', 'DATE SENT & DUE DATE', 'STATUS (Paid/Unpaid/Part-Paid)', 'PAID AMOUNT & BALANCE DUE', 'DISCOUNT %', 'TAX (18.00%) & TOTAL']
+    },
+    {
+      id: "gst-hub",
+      sheetTabName: "🧮 GST Summary (GSTR-1 & 3B)",
+      label: "GST & CA Command Center",
+      icon: Calculator,
+      title: "Automated GSTR-1, GSTR-3B & ITC Intelligence Hub",
+      tagline: "Zero manual GST math. Hand clean monthly numbers to your CA in 30 seconds.",
+      desc: "Automatically separates Intra-State (CGST + SGST) and Inter-State (IGST) sales, deducts eligible Expense Input Tax Credit (ITC), flags missing HSN/SAC codes, and tracks GST locked inside overdue client bills.",
+      badge: "GSTR-1 & GSTR-3B Ready",
+      timeSaved: "Saves ₹15,000+/yr in bookkeeping cleanup & hours before the 11th/20th GST deadlines",
+      views: [
+        { label: "GST & ITC Command Center", src: "/Images/gst-command-center.webp", caption: "Live Output GST (GSTR-1), Expense ITC Shield, Net Payable (3B), B2B/B2C split & Overdue Aging Radar" }
+      ],
+      keyFeatures: [
+        { title: "Auto CGST / SGST vs IGST Split", desc: "Compares your business state with the client's Place of Supply to apply Intra-State or Inter-State GST automatically." },
+        { title: "Expense Input Tax Credit (ITC) Shield", desc: "Pulls GST paid on business expenses and calculates your exact Net GST Payable (Output Tax minus ITC)." },
+        { title: "B2B vs B2C & HSN Audit Health", desc: "Separates GSTIN invoices (Table 4A) from B2C bills (Table 7) and alerts you if any HSN/SAC code is missing." },
+        { title: "Overdue GST Watchlist", desc: "Highlights 1–7, 8–15, 16–30, and 30+ day overdue bills so you recover stuck cash fast." }
+      ],
+      columnsTracked: ["OUTPUT GST (GSTR-1)", "EXPENSE ITC CREDIT", "NET GST PAYABLE (3B)", "CGST / SGST / IGST", "B2B vs B2C AUDIT", "OVERDUE AGING RADAR"]
     },
     {
       id: 'tasks',
@@ -268,7 +292,10 @@ export default function App() {
       views: [
         { label: '12-Month Annual Trend', src: '/Images/master-finance.webp', caption: 'Full year revenue, expenses, and Monthly Profit vs Goals' },
         { label: 'Monthly Category Breakdown', src: '/Images/finance.webp', caption: 'Category-by-category spending charts & net profit margins' },
-        { label: 'Bank Reconciliation Tab', src: '/Images/bookkeeping.webp', caption: 'Cross-check bank statement lines against spreadsheet entries' }
+        { label: 'Bank Reconciliation Tab', src: '/Images/bookkeeping.webp', caption: 'Cross-check bank statement lines against spreadsheet entries' },
+        { label: "₹ Monthly Income & Expenses", src: "/Images/inr-monthly-overview.webp", caption: "Month-by-month ₹ revenue, expense categories & post-GST net income breakdown" },
+        { label: "Profit Goal & UPI Split", src: "/Images/inr-monthly-goals-upi.webp", caption: "Actual profit vs monthly ₹ goal progress & UPI vs Credit Card payment allocation" },
+        { label: "Custom Date Range P&L", src: "/Images/inr-custom-period-pnl.webp", caption: "Filter any custom start & end date for instant Net Revenue, Gross Profit & GST totals" }
       ],
       badge: 'Chartered Accountant (CA) Approved',
       timeSaved: 'Turns 3 days of tax-filing panic into a 15-minute export',
@@ -999,12 +1026,12 @@ export default function App() {
                     <div className={`text-[11px] font-bold uppercase tracking-wider ${textMuted} mb-2`}>
                       Switch View / Angle:
                     </div>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                    <div className="flex flex-wrap gap-2">
                       {currentTab.views.map((v, idx) => (
                         <button
                           key={idx}
                           onClick={() => setActiveSubViewIndex(idx)}
-                          className={`text-left p-1.5 sm:p-2 rounded-xl border transition-all flex items-center gap-2 ${
+                          className={`flex-1 min-w-[140px] sm:min-w-[170px] text-left p-1.5 sm:p-2 rounded-xl border transition-all flex items-center gap-2 ${
                             activeSubViewIndex === idx
                               ? 'border-emerald-500 bg-emerald-500/10 text-emerald-500'
                               : `${borderSubtle} ${isDark ? 'bg-slate-900/60' : 'bg-slate-50'} hover:border-gray-500`
@@ -1015,7 +1042,7 @@ export default function App() {
                             alt={v.label} 
                             className="w-9 h-7 sm:w-10 sm:h-8 rounded object-cover flex-shrink-0 border border-slate-700/50" 
                           />
-                          <div className="min-w-0">
+                          <div className="min-w-0 flex-1">
                             <div className="text-[11px] sm:text-xs font-bold truncate">{v.label}</div>
                             <div className={`text-[9px] sm:text-[10px] ${textMuted} truncate`}>{v.caption}</div>
                           </div>
