@@ -27,7 +27,7 @@ export default function SheetlyAiChatbot({ config, isDark, textPrimary, textSeco
     {
       id: 'welcome-1',
       sender: 'bot',
-      text: "👋 Hi! I'm the **Sheetly AI Assistant**.\n\nAsk me anything about Sheetly — whether it's pricing (₹899), 1-click GST invoicing, 18 pre-built tabs, or compatibility with your business. How can I help you today?",
+      text: "👋 Hi! I'm the **Sheetly AI Assistant**.\n\nAsk me anything about Sheetly — whether it's pricing (₹899), 1-click GST invoicing, 19 pre-built tabs, or compatibility with your business. How can I help you today?",
       time: 'Just now',
       chips: [
         "💰 Is it one-time or monthly?",
@@ -75,7 +75,7 @@ export default function SheetlyAiChatbot({ config, isDark, textPrimary, textSeco
       {
         intent: 'PRICING',
         keywords: ['price', 'cost', 'kitna', 'kitne', 'rupee', 'rupaye', 'rs', '₹', '899', 'discount', 'subscription', 'monthly', 'recurring', 'pay once', 'buy', 'purchase', 'kharid', 'cheap', 'expensive', 'sasta'],
-        response: `Sheetly is just **${config.price} (one-time payment)** for lifetime access! 🚀\n\n• **Zero monthly fees:** No recurring ₹3,000–₹5,000 monthly deductions like Notion or ClickUp.\n• **Lifetime access:** All 18 tabs + free future tab updates.\n• **Massive savings:** Saves Indian business owners ₹50,000+ every single year in software costs.`,
+        response: `Sheetly is just **${config.price} (one-time payment)** for lifetime access! 🚀\n\n• **Zero monthly fees:** No recurring ₹3,000–₹5,000 monthly deductions like Notion or ClickUp.\n• **Lifetime access:** All 19 tabs + free future tab updates.\n• **Massive savings:** Saves Indian business owners ₹50,000+ every single year in software costs.`,
         cta: {
           type: 'buy',
           label: `Get Sheetly for ${config.price} →`,
@@ -104,18 +104,18 @@ export default function SheetlyAiChatbot({ config, isDark, textPrimary, textSeco
       },
       {
         intent: 'REFUND',
-        keywords: ['refund', 'money back', 'guarantee', 'wapas', 'safe', 'risk', 'fraud', 'scam', 'return', 'policy'],
-        response: `You are protected by a **100% Risk-Free 7-Day Money-Back Guarantee**! 🛡️\n\nTry Sheetly for 7 full days. If it doesn't streamline your business operations or save you hours of admin chaos, simply email us at **${config.supportEmail}** or message us on WhatsApp.\n\nYou will receive a **100% full refund within 48 hours**, no questions asked!`
+        keywords: ['refund', 'guarantee', 'wapas', 'safe', 'risk', 'fraud', 'scam', 'return', 'policy', 'working guarantee'],
+        response: `You are protected by our **7-Day Working-System Guarantee**! 🛡️\n\nBecause Sheetly 2.0 and its bonuses are instant, non-revocable digital Google Sheets templates copied permanently into your Google Drive, **we do not offer change-of-mind refunds once accessed**.\n\nHowever, if you experience accidental duplicate billing or a verifiable technical/formula defect in the unmodified master sheet within **7 calendar days** of purchase that our team (${config.supportEmail} / WhatsApp) cannot resolve within **48 business hours** of receiving your screenshot/video report, you receive a 100% full refund.`
       },
       {
         intent: 'DELIVERY',
         keywords: ['delivery', 'deliver', 'receive', 'download', 'milega', 'kaise mile', 'access link', 'instant email', 'after payment'],
-        response: `Delivery is **instant**! ⚡\n\nWithin 10 seconds of payment confirmation, you will receive an automated email with:\n1. 1-Click Google Sheets Master Copy Link (India GST Edition)\n2. 5-Minute Video Setup Masterclass\n3. Two Fast-Action Bonuses (Service Pricing Calculator + WhatsApp Invoicing Automation Pack)\n\nYou make one private copy into your personal Google Drive and you're ready to manage clients in under 5 minutes!`
+        response: `Delivery is **instant**! ⚡\n\nWithin 10 seconds of payment confirmation, you will receive an automated email with:\n1. 1-Click Google Sheets Master Copy Link (India GST Edition)\n2. 5-Minute Video Setup Masterclass\n3. Three Free Bonuses (Service Pricing Calculator + WhatsApp Invoicing Automation Pack + Lifetime Updates)\n\nYou make one private copy into your personal Google Drive and you're ready to manage clients in under 5 minutes!`
       },
       {
         intent: 'BONUSES',
         keywords: ['bonus', 'free', 'gift', 'pricing calculator', 'whatsapp script', 'payment recovery', 'automation pack', 'apps script'],
-        response: `When you grab Sheetly today, you get **2 Free Bonuses Worth ₹4,498**: 🎁\n\n1. **Professional Service Pricing Calculator (Value ₹1,999):** Computes your exact hourly cost, profit margins, and 5 client pricing models before proposing.\n2. **The WhatsApp Invoicing & Payment Recovery Pack (Value ₹2,499):** 1-Click Google Apps Script to send bills via WhatsApp + 35+ battle-tested reminder scripts to recover overdue money from clients!`
+        response: `When you grab Sheetly today, you get **3 Free Bonuses Included (Total Value ₹14,494)**: 🎁\n\n1. **Professional Service Pricing Calculator (Value ₹1,999):** Computes your exact hourly cost, profit margins, and 5 client pricing models before proposing.\n2. **The WhatsApp Invoicing & Payment Recovery Pack (Value ₹2,499):** 1-Click Google Apps Script to send bills via WhatsApp + 35+ battle-tested reminder scripts to recover overdue money from clients!\n3. **Lifetime Free Updates Forever (Value ₹4,999):** Instant access to all future tab releases, tax compliance updates, and feature upgrades forever.`
       },
       {
         intent: 'USE_CASES',
@@ -125,12 +125,12 @@ export default function SheetlyAiChatbot({ config, isDark, textPrimary, textSeco
       {
         intent: 'FEATURES_TABS',
         keywords: ['tab', 'tabs', 'feature', 'inside', 'include', 'what do i get', 'system', 'kya hai'],
-        response: `Sheetly includes **18 pre-linked tabs** across 6 core pillars: 🎛️\n\n1. **Dashboard:** Executive command center with live KPI gauges.\n2. **Client Management & CRM:** Directory, priority tags & contact history.\n3. **GST Invoices & 1-Click Print:** Automated tax calculations & PDF bills.\n4. **Task & Project Tracker:** Checkbox milestones & team delegation.\n5. **Smart Calendar:** Auto-synced deadlines & client renewals.\n6. **Cashflow Analytics:** Income, expenses, monthly breakdown & 12-month P&L.`
+        response: `Sheetly includes **19 pre-linked tabs** across 7 core pillars: 🎛️\n\n1. **Dashboard:** Executive command center with live KPI gauges.\n2. **Client Management & CRM:** Directory, priority tags & contact history.\n3. **GST Invoices & 1-Click Print:** Automated tax calculations & PDF bills.\n4. **GST Summary (GSTR-1 & 3B Hub):** Auto-split CGST/SGST vs IGST & ITC calculation.\n5. **Task & Project Tracker:** Checkbox milestones & team delegation.\n6. **Smart Calendar:** Auto-synced deadlines & client renewals.\n7. **Cashflow Analytics:** Income, expenses, monthly breakdown & 12-month P&L.`
       },
       {
         intent: 'GREETING',
         keywords: ['hi', 'hello', 'hey', 'namaste', 'kaise ho', 'good morning', 'good evening', 'sup'],
-        response: `Hello there! 👋 I am the Sheetly AI Assistant.\n\nAsk me anything — whether it's pricing (${config.price}), GST invoicing, device support, or how the 18 tabs work. How can I help you today?`
+        response: `Hello there! 👋 I am the Sheetly AI Assistant.\n\nAsk me anything — whether it's pricing (${config.price}), GST invoicing, device support, or how the 19 tabs work. How can I help you today?`
       }
     ];
 
@@ -160,7 +160,7 @@ export default function SheetlyAiChatbot({ config, isDark, textPrimary, textSeco
 
     // Default Fallback
     return {
-      text: `Sheetly is an all-in-one business operating system (18 pre-linked tabs) in cloud Google Sheets (India Edition). For a one-time payment of **${config.price}**, it replaces Notion, ClickUp, and QuickBooks with zero monthly fees!\n\nWould you like to know about:\n• **Pricing & Lifetime Access**\n• **GST Invoicing & 1-Click PDF Bills**\n• **Device & Mobile Support**\n• **Or chat directly with our human team on WhatsApp?**`,
+      text: `Sheetly is an all-in-one business operating system (19 pre-linked tabs) in cloud Google Sheets (India Edition). For a one-time payment of **${config.price}**, it replaces Notion, ClickUp, and QuickBooks with zero monthly fees!\n\nWould you like to know about:\n• **Pricing & Lifetime Access**\n• **GST Invoicing & 1-Click PDF Bills**\n• **Device & Mobile Support**\n• **Or chat directly with our human team on WhatsApp?**`,
       cta: {
         type: 'whatsapp',
         label: 'Chat With Team on WhatsApp',
@@ -416,7 +416,7 @@ export default function SheetlyAiChatbot({ config, isDark, textPrimary, textSeco
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                placeholder="Ask about pricing, GST, 18 tabs, etc..."
+                placeholder="Ask about pricing, GST, 19 tabs, etc..."
                 className={`flex-1 text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border focus:outline-none focus:border-emerald-500 transition-colors ${
                   isDark
                     ? 'bg-slate-950 border-slate-800 text-white placeholder-slate-500'

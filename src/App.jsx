@@ -353,15 +353,15 @@ export default function App() {
     },
     {
       q: "How do I receive the product after payment?",
-      a: "Immediately after completing payment (and within 1 to 5 minutes via email), you will receive on-screen access and an email containing your Google Sheets 1-Click Copy Link (India GST Edition), complete Video Setup Walkthrough, and your 2 Free Fast-Action Bonuses. You make a private copy into your personal Google Drive in 1 click and you're ready to go!"
+      a: "Immediately after completing payment (and within 1 to 5 minutes via email), you will receive on-screen access and an email containing your Google Sheets 1-Click Copy Link (India GST Edition), complete Video Setup Walkthrough, and your 3 Free Fast-Action Bonuses. You make a private copy into your personal Google Drive in 1 click and you're ready to go!"
     },
     {
       q: "Can I customize the templates with my own company logo and colors?",
       a: "Yes! Every single tab, invoice layout, and table is 100% customizable. You can add your brand logo, adjust colors, modify categories, and set your own tax rates."
     },
     {
-      q: "What is your refund policy if it doesn't work for me?",
-      a: "We offer a 100% Risk-Free 7-Day Money-Back Guarantee. If Sheetly doesn't save you time or streamline your business operations, simply email or WhatsApp us within 7 days and you will receive a full 100% refund within 48 hours. No awkward questions asked."
+      q: "What is your refund policy?",
+      a: "Because Sheetly 2.0 and its bonuses are instant, non-revocable digital Google Sheets templates copied permanently into your Google Drive, we do not offer change-of-mind refunds once accessed. You are protected by our 7-Day Working-System Guarantee: if you experience accidental duplicate billing or a verifiable technical/formula defect in the unmodified master sheet within 7 calendar days of purchase that our team (gopalssm9852@gmail.com / WhatsApp) cannot resolve within 48 business hours of receiving your screenshot/video report, you receive a 100% full refund."
     }
   ];
 
@@ -431,7 +431,7 @@ export default function App() {
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
             Special Deal
           </span>
-          <span className="truncate">Save 82% Today (₹4,999 → ₹899) • 2 Free Bonuses Included</span>
+          <span className="truncate">Save 82% Today (₹4,999 → ₹899) • 3 Free Bonuses Included</span>
           <span className="bg-black/30 px-2 py-0.5 rounded font-mono text-emerald-200 text-[11px] flex-shrink-0">
             {String(timeLeft.hours).padStart(2, '0')}:{String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}
           </span>
@@ -469,7 +469,7 @@ export default function App() {
               <span>Live Tour</span>
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
             </a>
-            <a href="#features" className="hover:text-emerald-500 transition-colors">18 Tabs</a>
+            <a href="#features" className="hover:text-emerald-500 transition-colors">19 Tabs</a>
             <a href="#calculator" className="hover:text-emerald-500 transition-colors">Savings Calc</a>
             <a href="#bonuses" className="hover:text-emerald-500 transition-colors">Bonuses</a>
             <a href="#faqs" className="hover:text-emerald-500 transition-colors">FAQs</a>
@@ -667,7 +667,7 @@ export default function App() {
               </div>
               <h3 className={`text-lg font-bold ${textPrimary} mb-2`}>Pre-Built Business ERP</h3>
               <p className={`text-sm ${textSecondary} leading-relaxed`}>
-                This is not a generic blank sheet. It is an interconnected <strong className={textPrimary}>18-tab operating system</strong> linking your CRM, GST invoicing, client projects, and cashflow into one command center.
+                This is not a generic blank sheet. It is an interconnected <strong className={textPrimary}>19-tab operating system</strong> linking your CRM, GST invoicing, client projects, and cashflow into one command center.
               </p>
             </div>
 
@@ -831,7 +831,7 @@ export default function App() {
               <div className={`text-[11px] sm:text-sm ${textMuted} font-semibold`}>Avg Annual Software Cost Saved</div>
             </div>
             <div className="p-2 sm:p-4">
-              <div className={`text-2xl sm:text-4xl font-black ${textPrimary} mb-1`}>18+ Tabs</div>
+              <div className={`text-2xl sm:text-4xl font-black ${textPrimary} mb-1`}>19 Tabs</div>
               <div className={`text-[11px] sm:text-sm ${textMuted} font-semibold`}>Pre-Linked Operations Engine</div>
             </div>
             <div className="p-2 sm:p-4">
@@ -1062,7 +1062,7 @@ export default function App() {
       </section>
 
       {/* ========================================================
-          8. COMPLETE 18-TAB BREAKDOWN GRID
+          8. COMPLETE 19-TAB BREAKDOWN GRID
       ======================================================== */}
       <section id="features" className={`py-16 sm:py-20 ${bgSectionAlt} border-y ${borderSubtle}`}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1072,7 +1072,7 @@ export default function App() {
               Complete Feature Suite
             </span>
             <h2 className={`text-2xl sm:text-4xl md:text-5xl font-black ${textPrimary} mt-3 mb-3`}>
-              All 18 Pre-Linked Tabs In The System
+              All 19 Pre-Linked Tabs In The System
             </h2>
             <p className={`text-xs sm:text-base ${textSecondary}`}>
               Every single tab is already connected through pre-engineered formulas and dropdowns:
@@ -1086,6 +1086,7 @@ export default function App() {
               { title: "💬 Communication History Log", desc: "Keep track of every meeting note, call decision, and promised deadline.", cat: "Clients" },
               { title: "🧾 GST-Ready Invoicing Engine", desc: "Calculates standard 18% GST automatically with inclusive & exclusive tax breakdown.", cat: "Billing" },
               { title: "🖨️ 1-Click Print Invoice", desc: "Select any invoice number to generate a gorgeous, printable PDF bill.", cat: "Billing" },
+              { title: "🧮 GST Summary (GSTR-1 & 3B Hub)", desc: "Auto-splits CGST/SGST & IGST, deducts Expense ITC, tracks B2B/B2C & overdue GST bills.", cat: "Tax & CA" },
               { title: "☑️ Task & Deliverable Tracker", desc: "Manage team workload, task priorities, and project milestones.", cat: "Projects" },
               { title: "🗓️ Visual Smart Calendar", desc: "Deadlines, invoice due dates, and follow-ups auto-sync onto the calendar.", cat: "Operations" },
               { title: "🟢 Income Entry Ledger", desc: "Record every payment received, payment method, and client source.", cat: "Finance" },
@@ -1143,7 +1144,7 @@ export default function App() {
                 <div className="text-xs font-bold text-emerald-500 mb-1">ASSET #1</div>
                 <h4 className={`text-sm font-bold ${textPrimary} mb-1.5`}>Google Sheets Master OS (India Edition)</h4>
                 <p className={`text-xs ${textSecondary} leading-relaxed`}>
-                  1-Click duplicate straight into your private Google Drive. 18 pre-linked tabs, 18% GST engine, and auto P&L.
+                  1-Click duplicate straight into your private Google Drive. 19 pre-linked tabs, 18% GST engine, and auto P&L.
                 </p>
               </div>
               <div className="mt-4 pt-3 border-t border-gray-800 text-[11px] font-semibold text-emerald-500 flex items-center gap-1">
@@ -1188,14 +1189,14 @@ export default function App() {
                 <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center mb-3">
                   <Gift className="w-5 h-5" />
                 </div>
-                <div className="text-xs font-bold text-amber-500 mb-1">ASSETS #4 & #5</div>
-                <h4 className={`text-sm font-bold ${textPrimary} mb-1.5`}>2 Fast-Action Bonuses</h4>
+                <div className="text-xs font-bold text-amber-500 mb-1">ASSETS #4, #5 & #6</div>
+                <h4 className={`text-sm font-bold ${textPrimary} mb-1.5`}>3 Fast-Action Bonuses</h4>
                 <p className={`text-xs ${textSecondary} leading-relaxed`}>
-                  Service Pricing Calculator + 1-Click WhatsApp Invoicing & 35+ Payment Recovery Automation Scripts.
+                  Service Pricing Calculator + WhatsApp Invoicing Automation Pack + Lifetime Free Updates Forever.
                 </p>
               </div>
               <div className="mt-4 pt-3 border-t border-gray-800 text-[11px] font-semibold text-amber-500 flex items-center gap-1">
-                <Check className="w-3.5 h-3.5" /> ₹4,498 Value Free
+                <Check className="w-3.5 h-3.5" /> ₹9,497 Value Free
               </div>
             </div>
 
@@ -1361,7 +1362,7 @@ export default function App() {
               Get {CONFIG.totalValue} In Total Value Today
             </h2>
             <p className={`text-xs sm:text-base ${textSecondary}`}>
-              When you purchase Sheetly today, you also unlock these 2 fast-action bonuses for 100% free:
+              When you purchase Sheetly today, you also unlock these 3 Free Bonuses for 100% free:
             </p>
           </div>
 
@@ -1468,7 +1469,7 @@ export default function App() {
             <div className={`max-w-lg mx-auto ${isDark ? 'bg-slate-900/60' : 'bg-slate-50'} rounded-2xl p-5 sm:p-6 border ${borderSubtle} text-left space-y-2.5 sm:space-y-3 mb-6 sm:mb-8`}>
               <div className="flex items-center justify-between text-xs sm:text-sm">
                 <span className={`flex items-center gap-2 ${textPrimary} font-medium`}>
-                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Complete Sheetly 18-Tab Business OS
+                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Complete Sheetly 19-Tab Business OS
                 </span>
                 <span className={`text-xs ${textMuted} line-through`}>₹4,999</span>
               </div>
@@ -1555,13 +1556,13 @@ export default function App() {
             <ShieldCheck className="w-8 h-8 sm:w-9 sm:h-9" />
           </div>
           <h3 className={`text-xl sm:text-3xl font-black ${textPrimary} mb-3 sm:mb-4`}>
-            100% Risk-Free 7-Day Money-Back Guarantee
+            7-Day Working-System Guarantee
           </h3>
           <p className={`text-xs sm:text-base ${textSecondary} leading-relaxed mb-5 sm:mb-6`}>
-            We want you to try Sheetly with complete confidence. Download it, plug in your clients and invoices, and put it to work. If within 7 days you don't feel it saves you hours of admin chaos and money, simply email or WhatsApp us: <strong className={`${textPrimary} font-bold`}>you will receive a full 100% refund within 48 hours, no questions asked.</strong>
+            Because Sheetly 2.0 and its bonuses are instant, non-revocable digital Google Sheets templates copied permanently into your Google Drive, <strong className={textPrimary}>we do not offer change-of-mind refunds once accessed</strong>. You are protected by our <strong className={textPrimary}>7-Day Working-System Guarantee</strong>: if you experience accidental duplicate billing or a verifiable technical/formula defect in the unmodified master sheet within <strong className={textPrimary}>7 calendar days</strong> of purchase that our team ({CONFIG.supportEmail} / WhatsApp) cannot resolve within <strong className={textPrimary}>48 business hours</strong> of receiving your screenshot/video report, you receive a 100% full refund.
           </p>
           <div className="text-[11px] sm:text-xs text-emerald-600 dark:text-emerald-400 font-extrabold tracking-wide uppercase">
-            Zero Questions Asked • Instant 100% Refund
+            Technical Defect & Duplicate Protection • 100% Verified Refund
           </div>
         </div>
       </section>
@@ -1774,7 +1775,7 @@ export default function App() {
               <h3 className={`text-lg sm:text-xl font-black ${textPrimary}`}>
                 {legalModal === 'terms' && "Terms & Conditions"}
                 {legalModal === 'privacy' && "Privacy Policy"}
-                {legalModal === 'refund' && "7-Day 100% Money-Back Refund Policy"}
+                {legalModal === 'refund' && "7-Day Working-System Guarantee"}
               </h3>
               <button
                 onClick={() => setLegalModal(null)}
@@ -1815,13 +1816,13 @@ export default function App() {
               {legalModal === 'refund' && (
                 <>
                   <p><strong>Last Updated: October 2026</strong></p>
-                  <p>We stand 100% behind Sheetly 2.0 with our <strong>Risk-Free 7-Day Money-Back Guarantee</strong>.</p>
-                  <h4 className={`font-bold ${textPrimary}`}>1. Eligibility Period</h4>
-                  <p>You have a full 7 days from the moment of purchase to test Sheetly 2.0 in your everyday business workflow.</p>
-                  <h4 className={`font-bold ${textPrimary}`}>2. Hassle-Free Process</h4>
-                  <p>If you feel Sheetly doesn't save you time or streamline your business operations, simply reach out via WhatsApp ({CONFIG.whatsappNumber}) or email ({CONFIG.supportEmail}) with your payment receipt or order reference.</p>
-                  <h4 className={`font-bold ${textPrimary}`}>3. 48-Hour Full Refund</h4>
-                  <p>Your full 100% refund of ₹899 will be initiated back to your original payment method (UPI / Bank Account / Card) within 48 hours. No awkward questions asked.</p>
+                  <p>We stand behind the engineering of Sheetly 2.0 with our <strong>7-Day Working-System Guarantee</strong>.</p>
+                  <h4 className={`font-bold ${textPrimary}`}>1. Digital Goods Policy</h4>
+                  <p>Because Sheetly 2.0 and its bonus resources are instant, non-revocable digital Google Sheets templates copied permanently into your personal Google Drive, <strong>we do not offer change-of-mind refunds once accessed</strong>.</p>
+                  <h4 className={`font-bold ${textPrimary}`}>2. 7-Day Working-System Guarantee</h4>
+                  <p>You are protected by our <strong>7-Day Working-System Guarantee</strong>: if you experience accidental duplicate billing or a verifiable technical/formula defect in the unmodified master sheet within <strong>7 calendar days</strong> of purchase that our team ({CONFIG.supportEmail} / WhatsApp) cannot resolve within <strong>48 business hours</strong> of receiving your screenshot/video report, you receive a 100% full refund.</p>
+                  <h4 className={`font-bold ${textPrimary}`}>3. Resolution & 100% Refund Process</h4>
+                  <p>To report an issue, simply send your order details and a screenshot or short video demonstrating the defect to our team via WhatsApp ({CONFIG.whatsappNumber}) or email ({CONFIG.supportEmail}). If our technical team cannot resolve the verified issue within 48 business hours of receiving your report, your full 100% refund of ₹899 will be initiated back to your original payment method (UPI / Bank Account / Card).</p>
                 </>
               )}
             </div>
