@@ -1,3 +1,8 @@
+# Environment variables
+.env
+*.env
+.env.*
+
 # Dependencies
 node_modules
 .pnp
@@ -25,9 +30,16 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
-# Temporary python files
+# Temporary python files & scratch
 __pycache__/
 *.py[cod]
 *$py.class
 backup/
+apply_gst_patch.py
+apply_premium_gst_patch.py
+build_perfect_gst_sheet.py
+generate_logos.py
+patch_watermarks.py
+title_media_*.png
+google_exported.xlsx
 

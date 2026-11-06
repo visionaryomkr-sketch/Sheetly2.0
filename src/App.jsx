@@ -56,6 +56,59 @@ const CONFIG = {
   supportEmail: "gopalssm9852@gmail.com",
 };
 
+// ==========================================
+// META PIXEL EVENT TRACKING HELPERS
+// ==========================================
+export const handleCheckoutClick = (e, source = 'CTA Button') => {
+  if (e && e.preventDefault) {
+    e.preventDefault();
+  }
+  if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+    try {
+      window.fbq('track', 'InitiateCheckout', {
+        content_name: 'Sheetly 2.0 Business Operating System',
+        content_category: 'Google Sheets Template',
+        content_ids: ['sheetly-2-0'],
+        currency: 'INR',
+        value: 899,
+        button_source: source
+      });
+    } catch (err) {
+      console.error('Meta Pixel error:', err);
+    }
+  }
+  setTimeout(() => {
+    window.location.href = CONFIG.checkoutUrl;
+  }, 180);
+};
+
+export const trackInitiateCheckout = (source = 'CTA Button') => {
+  if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+    try {
+      window.fbq('track', 'InitiateCheckout', {
+        content_name: 'Sheetly 2.0 Business Operating System',
+        content_category: 'Google Sheets Template',
+        content_ids: ['sheetly-2-0'],
+        currency: 'INR',
+        value: 899,
+        button_source: source
+      });
+    } catch (err) {
+      console.error('Meta Pixel error:', err);
+    }
+  }
+};
+
+export const trackWhatsAppClick = (source = 'WhatsApp CTA') => {
+  if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+    window.fbq('track', 'Contact', {
+      content_name: 'Sheetly WhatsApp Inquiry',
+      channel: 'WhatsApp',
+      source: source
+    });
+  }
+};
+
 export default function App() {
   // Theme State: 'dark' or 'light'
   const [theme, setTheme] = useState(() => {
@@ -502,6 +555,7 @@ export default function App() {
             {/* Navbar CTA (Compact on mobile, full on desktop - NEVER WRAPS) */}
             <a
               href={CONFIG.checkoutUrl}
+              onClick={(e) => handleCheckoutClick(e, 'Navbar')}
               className="relative group overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-bold text-xs sm:text-sm px-2.5 sm:px-5 py-1.5 sm:py-2.5 rounded-xl shadow-lg shadow-emerald-500/25 transition-all duration-200 flex items-center gap-1 whitespace-nowrap flex-shrink-0"
             >
               <span className="hidden sm:inline">Get Access • {CONFIG.price}</span>
@@ -544,6 +598,7 @@ export default function App() {
           <div className="flex flex-col items-center justify-center gap-3 max-w-md mx-auto mb-5 sm:mb-7">
             <a
               href={CONFIG.checkoutUrl}
+              onClick={(e) => handleCheckoutClick(e, 'Hero Section')}
               className="w-full relative group overflow-hidden bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-400 text-white font-extrabold text-base sm:text-xl px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl shadow-2xl shadow-emerald-500/35 transition-all duration-300 transform hover:-translate-y-0.5 flex items-center justify-center gap-2.5 border border-emerald-400/30"
             >
               <span>Get Instant Access for {CONFIG.price}</span>
@@ -558,12 +613,13 @@ export default function App() {
                 <Zap className="w-3.5 h-3.5 text-amber-500" /> Instant Download
               </span>
               <span className="flex items-center gap-1">
-                <CheckCircle className="w-3.5 h-3.5 text-emerald-500" /> 7-Day Money Back
+                <CheckCircle className="w-3.5 h-3.5 text-emerald-500" /> 7-Day System Guarantee
               </span>
             </div>
 
             <a
               href={`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent("Hi! I have a question about Sheetly 2.0 before purchasing.")}`}
+              onClick={() => trackWhatsAppClick('Hero Section')}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 transition-colors pt-0.5"
@@ -709,6 +765,7 @@ export default function App() {
 
             <a
               href={CONFIG.checkoutUrl}
+              onClick={(e) => handleCheckoutClick(e, '3-Step Walkthrough')}
               className="w-full md:w-auto flex-shrink-0 text-center text-xs sm:text-sm font-bold bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-3 rounded-xl transition-all shadow-md flex items-center justify-center gap-1.5"
             >
               <span>Claim for {CONFIG.price}</span>
@@ -807,6 +864,7 @@ export default function App() {
               <div className="mt-6 sm:mt-8 pt-4 border-t border-emerald-500/20">
                 <a
                   href={CONFIG.checkoutUrl}
+                  onClick={(e) => handleCheckoutClick(e, 'Comparison Card')}
                   className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition-all text-xs sm:text-sm"
                 >
                   <span>Switch to Sheetly for {CONFIG.price}</span>
@@ -967,6 +1025,7 @@ export default function App() {
                 <div className="pt-1">
                   <a
                     href={CONFIG.checkoutUrl}
+                    onClick={(e) => handleCheckoutClick(e, 'Product Tour Link')}
                     className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-emerald-500 hover:text-emerald-600 transition-colors"
                   >
                     <span>Get this sheet unlocked in Sheetly ({CONFIG.price})</span>
@@ -1528,6 +1587,7 @@ export default function App() {
             <div className="max-w-md mx-auto">
               <a
                 href={CONFIG.checkoutUrl}
+                onClick={(e) => handleCheckoutClick(e, 'Bonuses Offer Section')}
                 className="w-full relative group overflow-hidden bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-400 text-white font-extrabold text-lg sm:text-xl px-6 sm:px-8 py-4 sm:py-5 rounded-2xl shadow-2xl shadow-emerald-500/40 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2.5 border border-emerald-400/40"
               >
                 <span>Download Sheetly Now →</span>
@@ -1691,6 +1751,7 @@ export default function App() {
             </p>
             <a
               href={`https://wa.me/${CONFIG.whatsappNumber}?text=Hi%2C%20I%20have%20a%20question%20about%20Sheetly`}
+              onClick={() => trackWhatsAppClick('FAQ Support Box')}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 text-emerald-500 hover:text-emerald-600 font-bold text-xs sm:text-sm transition-colors"
@@ -1747,6 +1808,7 @@ export default function App() {
         <div className="flex items-center gap-2">
           <a
             href={`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent("Hi! I have a question about Sheetly 2.0 before purchasing.")}`}
+            onClick={() => trackWhatsAppClick('Sticky Mobile Bar')}
             target="_blank"
             rel="noreferrer"
             aria-label="Chat on WhatsApp"
@@ -1756,6 +1818,7 @@ export default function App() {
           </a>
           <a
             href={CONFIG.checkoutUrl}
+            onClick={(e) => handleCheckoutClick(e, 'Sticky Mobile Bar')}
             className="bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-400 text-white font-extrabold text-xs py-2.5 px-3.5 rounded-xl shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-1.5 transition-transform active:scale-95"
           >
             <span>Get Sheetly Now</span>

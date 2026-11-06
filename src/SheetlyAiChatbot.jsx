@@ -334,6 +334,36 @@ export default function SheetlyAiChatbot({ config, isDark, textPrimary, textSeco
                         href={msg.cta.url}
                         target={msg.cta.type === 'whatsapp' ? '_blank' : '_self'}
                         rel="noreferrer"
+                        onClick={(e) => {
+                          if (msg.cta.type === 'buy') {
+                            if (e && e.preventDefault) e.preventDefault();
+                            if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+                              try {
+                                window.fbq('track', 'InitiateCheckout', {
+                                  content_name: 'Sheetly 2.0 Business Operating System',
+                                  content_category: 'Google Sheets Template',
+                                  content_ids: ['sheetly-2-0'],
+                                  currency: 'INR',
+                                  value: 899,
+                                  button_source: 'AI Chatbot Message CTA'
+                                });
+                              } catch (err) {}
+                            }
+                            setTimeout(() => {
+                              window.location.href = msg.cta.url;
+                            }, 180);
+                          } else if (msg.cta.type === 'whatsapp') {
+                            if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+                              try {
+                                window.fbq('track', 'Contact', {
+                                  content_name: 'Sheetly WhatsApp Inquiry',
+                                  channel: 'WhatsApp',
+                                  source: 'AI Chatbot Message CTA'
+                                });
+                              } catch (err) {}
+                            }
+                          }
+                        }}
                         className={`inline-flex items-center gap-1.5 font-bold text-xs px-3.5 py-2 rounded-xl transition-all shadow-md ${
                           msg.cta.type === 'whatsapp'
                             ? 'bg-[#25D366] hover:bg-[#20ba59] text-white'
@@ -439,6 +469,15 @@ export default function SheetlyAiChatbot({ config, isDark, textPrimary, textSeco
                 href={`https://wa.me/${config.whatsappNumber}?text=Hi%2C%20I%20have%20a%20question%20about%20Sheetly`}
                 target="_blank"
                 rel="noreferrer"
+                onClick={() => {
+                  if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+                    window.fbq('track', 'Contact', {
+                      content_name: 'Sheetly WhatsApp Inquiry',
+                      channel: 'WhatsApp',
+                      source: 'AI Chatbot Footer'
+                    });
+                  }
+                }}
                 className="text-emerald-500 hover:underline flex items-center gap-0.5"
               >
                 <span>Or chat on WhatsApp</span>
