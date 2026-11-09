@@ -53,7 +53,7 @@ const CONFIG = {
   totalValue: "₹14,494",
   checkoutUrl: "https://superprofile.bio/vp/tj9_xpSO",
   whatsappNumber: "916201530733",
-  supportEmail: "gopalssm9852@gmail.com",
+  supportEmail: "birzcrown@gmail.com",
 };
 
 // ==========================================
@@ -414,7 +414,7 @@ export default function App() {
     },
     {
       q: "What is your refund policy?",
-      a: "Because Sheetly 2.0 and its bonuses are instant, non-revocable digital Google Sheets templates copied permanently into your Google Drive, we do not offer change-of-mind refunds once accessed. You are protected by our 7-Day Working-System Guarantee: if you experience accidental duplicate billing or a verifiable technical/formula defect in the unmodified master sheet within 7 calendar days of purchase that our team (gopalssm9852@gmail.com / WhatsApp) cannot resolve within 48 business hours of receiving your screenshot/video report, you receive a 100% full refund."
+      a: "Because Sheetly 2.0 and its bonuses are instant, non-revocable digital Google Sheets templates copied permanently into your Google Drive, we do not offer change-of-mind refunds once accessed. You are protected by our 7-Day Working-System Guarantee: if you experience accidental duplicate billing or a verifiable technical/formula defect in the unmodified master sheet within 7 calendar days of purchase that our team (birzcrown@gmail.com / WhatsApp) cannot resolve within 48 business hours of receiving your screenshot/video report, you receive a 100% full refund."
     }
   ];
 
