@@ -39,7 +39,8 @@ import {
   SlidersHorizontal,
   Package,
   PlayCircle,
-  Quote
+  Quote,
+  ArrowDown
 } from 'lucide-react';
 import SheetlyAiChatbot from './SheetlyAiChatbot.jsx';
 
@@ -137,6 +138,7 @@ export default function App() {
   const [legalModal, setLegalModal] = useState(null); // 'terms' | 'privacy' | 'refund' | null
   const [zoomImage, setZoomImage] = useState(null);
   const [openFaq, setOpenFaq] = useState(null);
+  const [heroActiveTab, setHeroActiveTab] = useState(0);
 
   // Preview Tour States (Per-module subviews, collapsible details, and accordion)
   const [moduleSubViews, setModuleSubViews] = useState({});
@@ -497,6 +499,41 @@ export default function App() {
     }, 60);
   };
 
+  const heroPreviewTabs = [
+    {
+      id: 'dashboard',
+      label: '🎛️ ₹ Executive Dashboard',
+      src: '/Images/inr-executive-dashboard.webp',
+      caption: "Morning clarity in 5 seconds: Today's schedule, live ₹ revenue gauges, client quick-inspector & overdue bill alerts."
+    },
+    {
+      id: 'invoice',
+      label: '🧾 60-Sec GST Bill + UPI QR',
+      src: '/Images/gst-print-invoice.webp',
+      caption: "Pick invoice number from dropdown -> Ready-to-print A4 GST Tax Invoice with HSN/SAC, CGST/SGST/IGST & offline Scan-to-Pay UPI QR."
+    },
+    {
+      id: 'whatsapp',
+      label: '💬 WhatsApp Payment Ledger',
+      src: '/Images/gst-invoice-whatsapp.webp',
+      caption: "Auto-calculated GST ledger with Paid/Part-Paid/Unpaid status & built-in 1-Click WhatsApp + Email reminder links."
+    },
+    {
+      id: 'gst-hub',
+      label: '🧮 GSTR-1, 3B & ITC Hub',
+      src: '/Images/gst-command-center.webp',
+      caption: "Auto-splits CGST/SGST vs IGST, deducts Expense Input Tax Credit (ITC) & gives CA-ready monthly figures in 30 seconds."
+    },
+    {
+      id: 'finances',
+      label: '💰 Monthly ₹ Profit & UPI',
+      src: '/Images/inr-monthly-overview.webp',
+      caption: "100% auto-updated monthly revenue, expense categories, UPI vs Bank split & net profit margins."
+    }
+  ];
+
+  const currentHeroTab = heroPreviewTabs[heroActiveTab] || heroPreviewTabs[0];
+
   return (
     <div className={`${theme} min-h-screen theme-transition font-sans relative overflow-x-hidden ${
       isDark ? 'bg-[#070b14] text-slate-100' : 'bg-[#f8fafc] text-slate-900'
@@ -520,11 +557,21 @@ export default function App() {
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <img 
-              src={zoomImage.src} 
-              alt={zoomImage.caption} 
-              className="w-full h-auto max-h-[82vh] object-contain bg-slate-950" 
-            />
+            <div className="relative overflow-hidden bg-slate-950 flex items-center justify-center">
+              <img 
+                src={zoomImage.src} 
+                alt={zoomImage.caption} 
+                className="w-full h-auto max-h-[82vh] object-contain bg-slate-950" 
+              />
+              {zoomImage.src === '/Images/hero-images.webp' && (
+                <div className="absolute bottom-0 inset-x-0 bg-slate-950/95 text-slate-100 py-2.5 px-3 text-center border-t border-emerald-500/30 backdrop-blur-sm z-10">
+                  <div className="text-xs font-bold text-emerald-400 flex items-center justify-center gap-1.5">
+                    <ShieldCheck className="w-3.5 h-3.5 flex-shrink-0" />
+                    <span>🛡️ Protected by 7-Day Working-System Guarantee • One-Time ₹899</span>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
@@ -647,18 +694,18 @@ export default function App() {
           {/* Eyebrow Badge (No truncation, tight mobile fit) */}
           <div className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-600 dark:text-emerald-400 text-[11px] sm:text-xs md:text-sm font-bold mb-3.5 sm:mb-5 shadow-sm max-w-full">
             <Sparkles className="w-3.5 h-3.5 flex-shrink-0 text-emerald-500" />
-            <span className="leading-tight">Built for Indian Agencies, Freelancers & Businesses</span>
+            <span className="leading-tight">⚡ Complete 19-Tab Business, GST Billing & Profit OS Inside Google Sheets</span>
           </div>
 
           {/* Main Headline */}
           <h1 className={`text-[23px] sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight ${textPrimary} max-w-5xl mx-auto leading-[1.2] mb-3.5 sm:mb-5`}>
-            Stop Paying ₹5,000/Month on 5 Tools.{' '}
-            <span className="gradient-text">Run Your Entire Business In One Spreadsheet.</span>
+            Not a Blank Excel Sheet.{' '}
+            <span className="gradient-text">Run Your Entire Business, GST Billing & Profit in One System.</span>
           </h1>
 
           {/* Subtitle */}
           <p className={`text-xs sm:text-base md:text-lg ${textSecondary} max-w-3xl mx-auto leading-relaxed mb-5 sm:mb-7`}>
-            Replace Notion, ClickUp & QuickBooks. Track clients, auto-generate GST invoices, manage project deadlines, and monitor your cashflow in real-time. <strong className={`${textPrimary} font-bold`}>One-time {CONFIG.price}. Zero monthly subscriptions.</strong>
+            Manage clients, generate branded 18% GST PDF bills with Scan-to-Pay UPI QR in 60 seconds, send 1-Click WhatsApp payment reminders, and track GSTR-1/3B & full-year profit automatically — with zero formula skills needed. <strong className={`${textPrimary} font-bold`}>One-time {CONFIG.price}. Zero monthly subscriptions.</strong>
           </p>
 
           {/* Main Hero CTA (Placed above pills so it's 100% above-the-fold on mobile) */}
@@ -680,7 +727,7 @@ export default function App() {
                 <Zap className="w-3.5 h-3.5 text-amber-500" /> Instant Download
               </span>
               <span className="flex items-center gap-1">
-                <CheckCircle className="w-3.5 h-3.5 text-emerald-500" /> 7-Day System Guarantee
+                <CheckCircle className="w-3.5 h-3.5 text-emerald-500" /> 7-Day Working-System Guarantee
               </span>
             </div>
 
@@ -699,46 +746,99 @@ export default function App() {
           {/* Feature Highlights Pills (Clean 2x2 symmetric grid on mobile, flex row on desktop) */}
           <div className="grid grid-cols-2 gap-2 max-w-xs mx-auto sm:max-w-none sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-3 mb-6 sm:mb-10 text-[11px] sm:text-xs font-semibold">
             <span className={`flex items-center justify-center gap-1.5 ${cardClass} px-2 py-1.5 rounded-lg sm:rounded-xl border ${borderSubtle} whitespace-nowrap`}>
-              <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500 flex-shrink-0" /> 10-Minute Setup
+              <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500 flex-shrink-0" /> 5-Minute Setup
             </span>
             <span className={`flex items-center justify-center gap-1.5 ${cardClass} px-2 py-1.5 rounded-lg sm:rounded-xl border ${borderSubtle} whitespace-nowrap`}>
-              <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500 flex-shrink-0" /> GST Auto-Calculated
+              <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500 flex-shrink-0" /> Zero Formulas Needed
             </span>
             <span className={`flex items-center justify-center gap-1.5 ${cardClass} px-2 py-1.5 rounded-lg sm:rounded-xl border ${borderSubtle} whitespace-nowrap`}>
-              <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500 flex-shrink-0" /> Cloud Google Sheets
+              <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500 flex-shrink-0" /> 60-Sec GST Bill + UPI QR
             </span>
             <span className={`flex items-center justify-center gap-1.5 ${cardClass} px-2 py-1.5 rounded-lg sm:rounded-xl border ${borderSubtle} whitespace-nowrap`}>
-              <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500 flex-shrink-0" /> Lifetime Updates
+              <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500 flex-shrink-0" /> 1-Click WhatsApp Chaser
             </span>
           </div>
 
-          {/* Hero Visual Mockup */}
+          {/* Hero Visual Mockup: Interactive 5-Tab Sheet Showcase */}
           <div className="relative mx-auto max-w-5xl mt-2">
             <div className={`rounded-2xl sm:rounded-3xl p-1.5 sm:p-3 border ${borderSubtle} ${cardClass} shadow-2xl`}>
               <div className={`relative rounded-xl sm:rounded-2xl overflow-hidden border ${borderSubtle} ${isDark ? 'bg-[#0d131f]' : 'bg-slate-100'}`}>
                 {/* Browser bar */}
                 <div className={`h-8 sm:h-9 ${isDark ? 'bg-slate-900' : 'bg-slate-200'} px-3 sm:px-4 flex items-center justify-between border-b ${borderSubtle}`}>
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1.5 flex-shrink-0">
                     <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-rose-500/80"></div>
                     <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-amber-500/80"></div>
                     <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-500/80"></div>
                   </div>
-                  <div className={`text-[11px] sm:text-xs ${textMuted} font-mono px-2 sm:px-3 py-0.5 sm:py-1 rounded-md ${isDark ? 'bg-black/30' : 'bg-white/70'}`}>
+                  <div className={`text-[10px] sm:text-xs ${textMuted} font-mono px-2 sm:px-3 py-0.5 rounded-md ${isDark ? 'bg-black/30' : 'bg-white/70'} truncate mx-2`}>
                     sheetly-master-business-os (Google Sheets India Edition)
                   </div>
-                  <div className="w-8"></div>
+                  <button
+                    type="button"
+                    onClick={() => setZoomImage(currentHeroTab)}
+                    className="text-[11px] text-emerald-500 hover:text-emerald-400 flex items-center gap-1 font-semibold flex-shrink-0 bg-emerald-500/10 hover:bg-emerald-500/20 px-2 py-0.5 rounded transition-colors"
+                    title="Click to view full size"
+                  >
+                    <Maximize2 className="w-3 h-3" />
+                    <span className="hidden sm:inline">Tap to Zoom</span>
+                  </button>
                 </div>
 
-                {/* Dashboard Image */}
-                <img
-                  src="/Images/hero-images.webp"
-                  alt="Sheetly Business Spreadsheet OS Preview"
-                  className="w-full h-auto object-cover"
-                  fetchPriority="high"
-                  loading="eager"
-                  width="941"
-                  height="1672"
-                />
+                {/* Sleek Horizontal Tab Bar inside macOS Window (Scrollable on mobile) */}
+                <div className={`px-2 py-2 border-b ${borderSubtle} ${isDark ? 'bg-slate-900/90' : 'bg-slate-50'} overflow-x-auto scrollbar-none`}>
+                  <div className="flex items-center gap-1.5 sm:gap-2 min-w-max px-1">
+                    {heroPreviewTabs.map((tab, idx) => {
+                      const isActive = heroActiveTab === idx;
+                      return (
+                        <button
+                          key={tab.id}
+                          type="button"
+                          onClick={() => setHeroActiveTab(idx)}
+                          className={`text-xs font-bold px-3 py-1.5 rounded-lg border transition-all whitespace-nowrap flex items-center gap-1.5 ${
+                            isActive
+                              ? 'border-emerald-500 bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
+                              : `${borderSubtle} ${isDark ? 'bg-slate-800/80 text-slate-300 hover:bg-slate-800 hover:text-white' : 'bg-white text-slate-700 hover:bg-slate-100'}`
+                          }`}
+                        >
+                          <span>{tab.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Active Screenshot Display (Clickable for zoom lightbox modal) */}
+                <div
+                  onClick={() => setZoomImage(currentHeroTab)}
+                  className="cursor-zoom-in relative bg-slate-950/20 flex items-center justify-center overflow-hidden group"
+                >
+                  <img
+                    src={currentHeroTab.src}
+                    alt={currentHeroTab.caption}
+                    className="w-full h-auto max-h-[540px] object-contain transition-transform duration-300 group-hover:scale-[1.01]"
+                    fetchPriority="high"
+                    loading="eager"
+                  />
+                </div>
+
+                {/* 1-Line Caption Bar at the Bottom of Browser Frame */}
+                <div className={`p-2.5 sm:p-3 border-t ${borderSubtle} ${isDark ? 'bg-slate-950/95 text-slate-300' : 'bg-white/95 text-slate-700'} text-left flex items-center justify-between gap-3 text-xs`}>
+                  <div className="flex items-center gap-2 min-w-0">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" />
+                    <span className="font-medium text-[11px] sm:text-xs truncate">
+                      {currentHeroTab.caption}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setZoomImage(currentHeroTab)}
+                    className="text-emerald-500 hover:text-emerald-400 font-bold text-[11px] flex-shrink-0 flex items-center gap-1 hover:underline"
+                  >
+                    <span>Inspect Full Screen</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+
               </div>
             </div>
 
@@ -812,6 +912,187 @@ export default function App() {
               <p className={`text-sm ${textSecondary} leading-relaxed`}>
                 No monthly credit card deductions of ₹3,000–₹5,000 like bloated SaaS software. <strong className={textPrimary}>Pay just ₹899 once</strong> and enjoy unlimited, lifetime access forever.
               </p>
+            </div>
+
+          </div>
+
+          {/* ========================================================
+              SIDE-BY-SIDE: SYSTEM BLUEPRINT POSTER + ZERO OVERWHELM FLOW
+          ======================================================== */}
+          <div className="mt-8 sm:mt-10 grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch">
+            
+            {/* Left: Complete System Overview Poster (Preserving /Images/hero-images.webp) */}
+            <div className={`lg:col-span-5 ${cardClass} rounded-2xl p-4 sm:p-5 flex flex-col justify-between border ${borderSubtle}`}>
+              <div>
+                <div className="flex items-center justify-between gap-2 mb-3">
+                  <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wide bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20">
+                    🗺️ Master Blueprint
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setZoomImage({ src: '/Images/hero-images.webp', caption: 'Sheetly 2.0 Full 19-Tab Interconnected System Architecture' })}
+                    className="text-[11px] font-semibold text-emerald-500 hover:text-emerald-400 flex items-center gap-1 hover:underline"
+                  >
+                    <Maximize2 className="w-3 h-3" />
+                    <span>Tap to Zoom</span>
+                  </button>
+                </div>
+                
+                <h3 className={`text-base sm:text-lg font-bold ${textPrimary} mb-1.5`}>
+                  All 19 Tabs Interlinked Into 1 Command OS
+                </h3>
+                <p className={`text-xs ${textSecondary} mb-3.5 leading-relaxed`}>
+                  Every client, bill, task, and transaction speaks to one central brain without manual copy-pasting.
+                </p>
+
+                {/* Framed Image Container with Bottom Guarantee Banner Overlay */}
+                <div 
+                  onClick={() => setZoomImage({ src: '/Images/hero-images.webp', caption: 'Sheetly 2.0 Full 19-Tab Interconnected System Architecture' })}
+                  className="cursor-zoom-in relative rounded-xl overflow-hidden border border-slate-700/30 group bg-slate-950/40"
+                >
+                  <img
+                    src="/Images/hero-images.webp"
+                    alt="Sheetly 2.0 Full 19-Tab Architecture Blueprint"
+                    className="w-full h-auto object-cover max-h-[440px] transition-transform duration-300 group-hover:scale-[1.01]"
+                    loading="lazy"
+                    width="941"
+                    height="1672"
+                  />
+                  {/* Bottom Banner Overlay concealing old sketch guarantee */}
+                  <div className="absolute bottom-0 inset-x-0 bg-slate-950/95 dark:bg-black/95 text-slate-100 py-2.5 px-3 text-center border-t border-emerald-500/30 backdrop-blur-sm z-10">
+                    <div className="text-[10px] sm:text-xs font-bold text-emerald-400 flex items-center justify-center gap-1.5">
+                      <ShieldCheck className="w-3.5 h-3.5 flex-shrink-0" />
+                      <span>🛡️ Protected by 7-Day Working-System Guarantee • One-Time ₹899</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-3 pt-3 border-t border-slate-700/20 flex items-center justify-between text-[11px]">
+                <span className={textMuted}>Instant Google Drive Copy</span>
+                <span className="font-semibold text-emerald-500">Zero formula maintenance</span>
+              </div>
+            </div>
+
+            {/* Right: Zero Daily Overwhelm — How 19 Tabs Run Automatically */}
+            <div className={`lg:col-span-7 ${cardClass} rounded-2xl p-5 sm:p-6 flex flex-col justify-between border ${borderSubtle}`}>
+              <div>
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                  <span className="text-xs font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wide bg-teal-500/10 px-2.5 py-1 rounded-md border border-teal-500/20">
+                    ⚡ You Do NOT Fill 19 Tabs Every Day!
+                  </span>
+                  <span className={`text-[11px] font-mono ${textMuted}`}>Automated Flow</span>
+                </div>
+
+                <h3 className={`text-lg sm:text-xl font-bold ${textPrimary} mb-2`}>
+                  Zero Daily Overwhelm: 4 Quick Inputs ➔ 15 Auto-Updated Dashboards
+                </h3>
+                <p className={`text-xs sm:text-sm ${textSecondary} mb-4 sm:mb-5 leading-relaxed`}>
+                  Most business sheets overwhelm you with 50 tabs to maintain. Sheetly is engineered so you only touch <strong className={textPrimary}>4 simple rows</strong> in your day. Our pre-built backend handles the other 15 tabs automatically.
+                </p>
+
+                {/* 2-Step Visual Flow Box */}
+                <div className="grid grid-cols-1 md:grid-cols-11 gap-3 sm:gap-4 items-center">
+                  
+                  {/* Step 1: 4 Inputs (md:col-span-5) */}
+                  <div className={`md:col-span-5 p-4 rounded-xl border border-emerald-500/30 ${isDark ? 'bg-emerald-950/15' : 'bg-emerald-50/70'}`}>
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="w-6 h-6 rounded-full bg-emerald-500 text-white font-bold text-xs flex items-center justify-center">1</span>
+                      <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wide">
+                        You Only Update 4 Places:
+                      </span>
+                    </div>
+                    <div className="space-y-2.5 text-xs">
+                      <div className="flex items-start gap-2">
+                        <span className="font-bold text-emerald-500">1.</span>
+                        <span className={textSecondary}><strong className={textPrimary}>Add Client Once</strong> inside Client CRM</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="font-bold text-emerald-500">2.</span>
+                        <span className={textSecondary}><strong className={textPrimary}>Pick Dropdown</strong> to auto-fill GST Tax Invoice</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="font-bold text-emerald-500">3.</span>
+                        <span className={textSecondary}><strong className={textPrimary}>Tick Checkbox (☑️)</strong> when a task is completed</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="font-bold text-emerald-500">4.</span>
+                        <span className={textSecondary}><strong className={textPrimary}>Log Basic Income / Expense</strong> in seconds</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Center Connector / Formula Arrow (md:col-span-1) */}
+                  <div className="md:col-span-1 flex flex-col items-center justify-center py-2 md:py-0">
+                    <div className="hidden md:flex flex-col items-center gap-1.5 text-center">
+                      <div className="w-px h-6 bg-emerald-500/40"></div>
+                      <div className="bg-emerald-500/10 border border-emerald-500/25 text-emerald-500 text-[10px] font-bold px-1.5 py-1 rounded">
+                        100% Pre-Built Formulas
+                      </div>
+                      <ArrowRight className="w-5 h-5 text-emerald-500" />
+                      <div className="w-px h-6 bg-emerald-500/40"></div>
+                    </div>
+                    <div className="flex md:hidden items-center justify-center gap-2 py-1 text-emerald-500 text-xs font-bold">
+                      <span>100% Pre-Built Formulas Automatically Flow</span>
+                      <ArrowDown className="w-4 h-4" />
+                    </div>
+                  </div>
+
+                  {/* Step 2: 15 Auto Dashboards (md:col-span-5) */}
+                  <div className={`md:col-span-5 p-4 rounded-xl border border-teal-500/30 ${isDark ? 'bg-teal-950/15' : 'bg-teal-50/70'}`}>
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="w-6 h-6 rounded-full bg-teal-500 text-white font-bold text-xs flex items-center justify-center">2</span>
+                      <span className="text-xs font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wide">
+                        15 Dashboards Auto-Update Live:
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {[
+                        "🎛️ Live ₹ Executive Dashboard",
+                        "🧾 Printable GST PDF + UPI QR",
+                        "🧮 GSTR-1 & 3B Tax Hub",
+                        "🛡️ Expense ITC Tax Shield",
+                        "📅 Smart Operations Calendar",
+                        "💰 Monthly & 12-Month P&L",
+                        "🏦 UPI vs Bank Balance Sheet",
+                        "🔍 Bank Statement Reconciliation",
+                        "⏳ Overdue Aging Radar (15/30d)",
+                        "👤 Instant Client History"
+                      ].map((dash, i) => (
+                        <span
+                          key={i}
+                          className={`text-[10px] sm:text-[11px] px-2 py-1 rounded-md font-medium border ${
+                            isDark
+                              ? 'bg-slate-900/90 border-slate-700/60 text-slate-200'
+                              : 'bg-white border-slate-200 text-slate-700'
+                          }`}
+                        >
+                          {dash}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              {/* Bottom Trust Note */}
+              <div className={`mt-5 pt-3.5 border-t ${borderSubtle} flex flex-wrap items-center justify-between gap-3 text-xs`}>
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+                  <span className={textSecondary}>
+                    No complex formulas, scripting, or spreadsheet skills required.
+                  </span>
+                </div>
+                <a
+                  href="#preview"
+                  onClick={(e) => handleQuickJump(e, 'preview')}
+                  className="text-xs font-bold text-emerald-500 hover:text-emerald-400 flex items-center gap-1 hover:underline"
+                >
+                  <span>Explore All 7 Modules Below</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </a>
+              </div>
             </div>
 
           </div>
