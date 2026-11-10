@@ -216,7 +216,7 @@ export default function App() {
         { label: 'Clean Overview Layout', src: '/Images/business-dashboards.webp', caption: 'Compact view for 13-inch laptops & tablets' }
       ],
       badge: 'Auto-Updated in Real Time',
-      timeSaved: '⏱️ Saves ~45 mins/day',
+      timeSaved: 'Saves ~45 mins/day',
       bullets: [
         { label: "Instant Client Inspector", text: "Select any client to auto-load contact details, status, and active work." },
         { label: "Daily Schedule Cockpit", text: "Auto-detects today's date to list all meetings, bills, and deadlines due today." },
@@ -247,7 +247,7 @@ export default function App() {
         { label: 'Client Billing View', src: '/Images/invoice.webp', caption: 'Line item breakdown with tax percentage splits' }
       ],
       badge: 'Indian GST Compliant (18% / 12% / 5%)',
-      timeSaved: '⏱️ Saves ~29 mins/invoice',
+      timeSaved: 'Saves ~29 mins/invoice',
       bullets: [
         { label: "Auto 18% GST Calculations", text: "Enter fee & tax rate — inclusive & exclusive totals calculate instantly." },
         { label: "1-Click Print & Branded PDF", text: "Select invoice number to generate a client-ready PDF with dynamic UPI QR code." },
@@ -274,7 +274,7 @@ export default function App() {
         { label: "GST & ITC Command Center", src: "/Images/gst-command-center.webp", caption: "Live Output GST (GSTR-1), Expense ITC Shield, Net Payable (3B), B2B/B2C split & Overdue Aging Radar" }
       ],
       badge: "GSTR-1 & GSTR-3B Ready",
-      timeSaved: "⏱️ Saves ₹15,000+/yr in CA cleanup",
+      timeSaved: "Saves ₹15,000+/yr in CA cleanup",
       bullets: [
         { label: "Auto CGST/SGST vs IGST Split", text: "Automatically checks State vs Place of Supply for intra vs inter-state tax." },
         { label: "Expense ITC Tax Shield", text: "Pulls GST paid on business expenses to calculate exact Net Tax Payable (3B)." },
@@ -298,15 +298,15 @@ export default function App() {
       tagline: 'Complete financial clarity. Eliminate tax season chaos forever.',
       desc: 'Comprehensive financial suite featuring dedicated Income & Expense ledgers, bank reconciliation, monthly category breakdowns, 12-month annual growth trends, and custom date range analyzers.',
       views: [
-        { label: '12-Month Annual Trend', src: '/Images/master-finance.webp', caption: 'Full year revenue, expenses, and Monthly Profit vs Goals' },
-        { label: 'Monthly Category Breakdown', src: '/Images/finance.webp', caption: 'Category-by-category spending charts & net profit margins' },
-        { label: 'Bank Reconciliation Tab', src: '/Images/bookkeeping.webp', caption: 'Cross-check bank statement lines against spreadsheet entries' },
         { label: "₹ Monthly Income & Expenses", src: "/Images/inr-monthly-overview.webp", caption: "Month-by-month ₹ revenue, expense categories & post-GST net income breakdown" },
         { label: "Profit Goal & UPI Split", src: "/Images/inr-monthly-goals-upi.webp", caption: "Actual profit vs monthly ₹ goal progress & UPI vs Credit Card payment allocation" },
-        { label: "Custom Date Range P&L", src: "/Images/inr-custom-period-pnl.webp", caption: "Filter any custom start & end date for instant Net Revenue, Gross Profit & GST totals" }
+        { label: "Custom Date Range P&L", src: "/Images/inr-custom-period-pnl.webp", caption: "Filter any custom start & end date for instant Net Revenue, Gross Profit & GST totals" },
+        { label: '12-Month Annual Trend', src: '/Images/master-finance.webp', caption: 'Full year revenue, expenses, and Monthly Profit vs Goals' },
+        { label: 'Monthly Category Breakdown', src: '/Images/finance.webp', caption: 'Category-by-category spending charts & net profit margins' },
+        { label: 'Bank Reconciliation Tab', src: '/Images/bookkeeping.webp', caption: 'Cross-check bank statement lines against spreadsheet entries' }
       ],
       badge: 'Chartered Accountant (CA) Approved',
-      timeSaved: '⏱️ Saves 3 days of tax panic',
+      timeSaved: 'Saves 3 days of tax panic',
       bullets: [
         { label: "12-Month P&L Growth Engine", text: "Full year revenue, expenses, and monthly profit targets side-by-side." },
         { label: "Account & UPI Split Tracker", text: "Real-time breakdown of cash, UPI payments, credit cards, and bank balances." },
@@ -335,7 +335,7 @@ export default function App() {
         { label: 'Client Profile Inspector', src: '/Images/client.webp', caption: 'Individual client contract & balance inspector' }
       ],
       badge: 'Unlimited Client Profiles',
-      timeSaved: '⏱️ Zero communication confusion',
+      timeSaved: 'Zero communication confusion',
       bullets: [
         { label: "Unlimited Client Directory", text: "Store client profiles with priority tags (🔴 High, 🟠 Medium, 🟡 Low) & payment terms." },
         { label: "WhatsApp & Call History Log", text: "Record date, contact method, services pitched, and next follow-up dates." },
@@ -363,7 +363,7 @@ export default function App() {
         { label: 'Milestone Stage View', src: '/Images/task-manage.webp', caption: 'Progress stages: In Progress, Review, Completed' }
       ],
       badge: 'Interactive Checkbox System',
-      timeSaved: '⏱️ Saves 2+ hrs/wk on follow-ups',
+      timeSaved: 'Saves 2+ hrs/wk on follow-ups',
       bullets: [
         { label: "Interactive Checkboxes (☑️)", text: "Tap to mark done, auto-update progress %, and clear from overdue alerts." },
         { label: "Client & CRM Connection", text: "Every task links to client dropdowns so workload stays neatly organized." },
@@ -391,7 +391,7 @@ export default function App() {
         { label: 'Appointments Inspector', src: '/Images/calender-deadline.webp', caption: 'Dedicated schedule list for client calls & deliverables' }
       ],
       badge: '100% Formula-Driven Calendar Grid',
-      timeSaved: '⏱️ Zero duplicate scheduling',
+      timeSaved: 'Zero duplicate scheduling',
       bullets: [
         { label: "Dynamic Month/Year Dropdown", text: "Pick any month or year — calendar layout recalculates in real-time." },
         { label: "Auto-Synced Bills & Deadlines", text: "Invoice payment due dates and task milestones sync onto days automatically." },
@@ -1044,7 +1044,7 @@ export default function App() {
                             title="Click to view full size"
                           >
                             <Maximize2 className="w-3 h-3" />
-                            <span>Tap to Zoom 🔍</span>
+                            <span>Tap to Zoom</span>
                           </button>
                         </div>
 
@@ -1059,21 +1059,17 @@ export default function App() {
                             loading="lazy"
                             className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-[1.01]"
                           />
-                          <div className="absolute bottom-2 right-2 bg-black/80 backdrop-blur-md text-white text-[10px] font-semibold px-2 py-1 rounded-md flex items-center gap-1 pointer-events-none opacity-80 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
-                            <Maximize2 className="w-3 h-3 text-emerald-400" />
-                            <span>Tap to Zoom 🔍</span>
-                          </div>
                         </div>
                       </div>
 
-                      {/* Angle Switcher Pills (Directly below image, compact, no vertical jumping) */}
+                      {/* Angle Switcher Pills (Directly below image, compact 2-col on mobile) */}
                       {module.views.length > 1 && (
                         <div className="pt-0.5">
                           <div className={`text-[10px] sm:text-[11px] font-bold uppercase tracking-wider ${textMuted} mb-1.5 flex items-center justify-between`}>
                             <span>Switch View / Angle ({module.views.length} views):</span>
                             <span className="text-[10px] text-emerald-500 font-medium">Tap to inspect</span>
                           </div>
-                          <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                          <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-1.5">
                             {module.views.map((v, idx) => {
                               const isCurrentView = currentSubViewIdx === idx;
                               return (
@@ -1081,14 +1077,14 @@ export default function App() {
                                   key={idx}
                                   type="button"
                                   onClick={() => setSubView(module.id, idx)}
-                                  className={`text-left px-2.5 py-1.5 rounded-lg border text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                                  className={`text-left px-2.5 py-1.5 rounded-lg border text-[11px] font-semibold transition-all flex items-center gap-1.5 min-w-0 ${
                                     isCurrentView
                                       ? 'border-emerald-500 bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 shadow-sm'
                                       : `${borderSubtle} ${isDark ? 'bg-slate-900/60 hover:bg-slate-800' : 'bg-white hover:bg-slate-50'} ${textSecondary}`
                                   }`}
                                 >
-                                  <span className={`w-1.5 h-1.5 rounded-full ${isCurrentView ? 'bg-emerald-500' : 'bg-slate-400'}`} />
-                                  <span className="truncate max-w-[140px] sm:max-w-none">{idx + 1}. {v.label}</span>
+                                  <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${isCurrentView ? 'bg-emerald-500' : 'bg-slate-400'}`} />
+                                  <span className="truncate">{idx + 1}. {v.label}</span>
                                 </button>
                               );
                             })}
@@ -1261,14 +1257,14 @@ export default function App() {
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-2 flex-shrink-0">
-                        <span className={`text-[11px] font-bold px-3 py-1.5 rounded-lg border transition-all flex items-center gap-1 ${
+                      <div className="flex items-center gap-1.5 flex-shrink-0">
+                        <span className={`text-xs font-bold px-2.5 py-1 rounded-lg border transition-all flex items-center gap-1 ${
                           isOpen
                             ? 'bg-emerald-500 text-white border-emerald-500 shadow-sm'
                             : `${borderSubtle} ${isDark ? 'bg-slate-800 text-slate-300' : 'bg-white text-slate-700'}`
                         }`}>
-                          <span>{isOpen ? 'Close' : 'Preview Sheet'}</span>
-                          <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+                          <span>{isOpen ? 'Close' : 'View'}</span>
+                          <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
                         </span>
                       </div>
                     </button>
@@ -1296,7 +1292,7 @@ export default function App() {
                                   title="Click to view full size"
                                 >
                                   <Maximize2 className="w-3 h-3" />
-                                  <span>Tap to Zoom 🔍</span>
+                                  <span>Tap to Zoom</span>
                                 </button>
                               </div>
                               <div
@@ -1309,10 +1305,6 @@ export default function App() {
                                   loading="lazy"
                                   className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-[1.01]"
                                 />
-                                <div className="absolute bottom-2 right-2 bg-black/80 backdrop-blur-md text-white text-[10px] font-semibold px-2 py-1 rounded-md flex items-center gap-1 pointer-events-none opacity-80 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
-                                  <Maximize2 className="w-3 h-3 text-emerald-400" />
-                                  <span>Tap to Zoom 🔍</span>
-                                </div>
                               </div>
                             </div>
 
@@ -1323,7 +1315,7 @@ export default function App() {
                                   <span>Switch View / Angle ({mod.views.length} views):</span>
                                   <span className="text-[10px] text-emerald-500 font-medium">Tap to inspect</span>
                                 </div>
-                                <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                                <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-1.5">
                                   {mod.views.map((v, idx) => {
                                     const isCurrentView = currentSubViewIdx === idx;
                                     return (
@@ -1331,14 +1323,14 @@ export default function App() {
                                         key={idx}
                                         type="button"
                                         onClick={() => setSubView(mod.id, idx)}
-                                        className={`text-left px-2.5 py-1.5 rounded-lg border text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                                        className={`text-left px-2.5 py-1.5 rounded-lg border text-[11px] font-semibold transition-all flex items-center gap-1.5 min-w-0 ${
                                           isCurrentView
                                             ? 'border-emerald-500 bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 shadow-sm'
                                             : `${borderSubtle} ${isDark ? 'bg-slate-900/60 hover:bg-slate-800' : 'bg-white hover:bg-slate-50'} ${textSecondary}`
                                         }`}
                                       >
-                                        <span className={`w-1.5 h-1.5 rounded-full ${isCurrentView ? 'bg-emerald-500' : 'bg-slate-400'}`} />
-                                        <span className="truncate max-w-[140px] sm:max-w-none">{idx + 1}. {v.label}</span>
+                                        <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${isCurrentView ? 'bg-emerald-500' : 'bg-slate-400'}`} />
+                                        <span className="truncate">{idx + 1}. {v.label}</span>
                                       </button>
                                     );
                                   })}
