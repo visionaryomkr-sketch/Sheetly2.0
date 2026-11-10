@@ -115,7 +115,7 @@ export default function SheetlyAiChatbot({ config, isDark, textPrimary, textSeco
       {
         intent: 'BONUSES',
         keywords: ['bonus', 'free', 'gift', 'pricing calculator', 'whatsapp script', 'payment recovery', 'automation pack', 'apps script'],
-        response: `When you grab Sheetly today, you get **3 Free Bonuses Included (Total Value ₹14,494)**: 🎁\n\n1. **Professional Service Pricing Calculator (Value ₹1,999):** Computes your exact hourly cost, profit margins, and 5 client pricing models before proposing.\n2. **The WhatsApp Invoicing & Payment Recovery Pack (Value ₹2,499):** 1-Click Google Apps Script to send bills via WhatsApp + 35+ battle-tested reminder scripts to recover overdue money from clients!\n3. **Lifetime Free Updates Forever (Value ₹4,999):** Instant access to all future tab releases, tax compliance updates, and feature upgrades forever.`
+        response: `When you grab Sheetly today, you get **3 Free Bonuses Included (Total Value ₹14,494)**: 🎁\n\n1. **Professional Service Pricing Calculator (Value ₹1,999):** Computes your exact hourly cost, profit margins, and 5 client pricing models before proposing.\n2. **The WhatsApp Invoicing & Payment Recovery Pack (Value ₹2,499):** 1-Click Google Apps Script to send bills via WhatsApp + 35+ battle-tested reminder scripts to recover overdue money from clients!\n3. **Lifetime Free Updates Forever (Value ₹1,999):** Instant access to all future tab releases, tax compliance updates, and feature upgrades forever.`
       },
       {
         intent: 'USE_CASES',
@@ -160,7 +160,7 @@ export default function SheetlyAiChatbot({ config, isDark, textPrimary, textSeco
 
     // Default Fallback
     return {
-      text: `Sheetly is an all-in-one business operating system (19 pre-linked tabs) in cloud Google Sheets (India Edition). For a one-time payment of **${config.price}**, it replaces Notion, ClickUp, and QuickBooks with zero monthly fees!\n\nWould you like to know about:\n• **Pricing & Lifetime Access**\n• **GST Invoicing & 1-Click PDF Bills**\n• **Device & Mobile Support**\n• **Or chat directly with our human team on WhatsApp?**`,
+      text: `Sheetly is an all-in-one business operating system (19 pre-linked tabs) in cloud Google Sheets (India Edition). For a one-time payment of **${config.price}**, it replaces monthly billing, CRM, and project management software with zero monthly fees!\n\nWould you like to know about:\n• **Pricing & Lifetime Access**\n• **GST Invoicing & 1-Click PDF Bills**\n• **Device & Mobile Support**\n• **Or chat directly with our human team on WhatsApp?**`,
       cta: {
         type: 'whatsapp',
         label: 'Chat With Team on WhatsApp',
