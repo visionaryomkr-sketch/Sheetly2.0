@@ -135,10 +135,18 @@ export default function App() {
     };
   });
   const [legalModal, setLegalModal] = useState(null); // 'terms' | 'privacy' | 'refund' | null
-  const [activeTab, setActiveTab] = useState('dashboard');
-  const [activeSubViewIndex, setActiveSubViewIndex] = useState(0);
   const [zoomImage, setZoomImage] = useState(null);
   const [openFaq, setOpenFaq] = useState(null);
+
+  // Preview Tour States (Per-module subviews, collapsible details, and accordion)
+  const [moduleSubViews, setModuleSubViews] = useState({});
+  const [expandedCards, setExpandedCards] = useState({});
+  const [openAccordion, setOpenAccordion] = useState(null);
+
+  const getSubView = (moduleId) => moduleSubViews[moduleId] || 0;
+  const setSubView = (moduleId, idx) => setModuleSubViews(prev => ({ ...prev, [moduleId]: idx }));
+  const toggleCardExpand = (id) => setExpandedCards(prev => ({ ...prev, [id]: !prev[id] }));
+  const toggleAccordion = (id) => setOpenAccordion(prev => prev === id ? null : id);
 
   // Savings Calculator State (Default 2 tools selected for realistic initial savings)
   const [tools, setTools] = useState({
@@ -155,11 +163,6 @@ export default function App() {
     setTheme(newTheme);
     localStorage.setItem('sheetly-theme', newTheme);
   };
-
-  // Reset subview when active tab changes
-  useEffect(() => {
-    setActiveSubViewIndex(0);
-  }, [activeTab]);
 
   // Countdown effect (ticks accurately against persistent timestamp)
   useEffect(() => {
@@ -195,14 +198,15 @@ export default function App() {
   }, 0);
   const annualSavings = monthlySavings * 12;
 
-  // Ultra-detailed tabs based on actual Google Sheet inspection
+  // Ultra-detailed modules based on actual Google Sheet inspection
   const previewTabs = [
     {
       id: 'dashboard',
       sheetTabName: "🎛️ Dashboard",
       label: 'Executive Dashboard',
+      numberPill: '01 / CORE ENGINE',
       icon: TrendingUp,
-      title: 'Real-Time Business Command Center',
+      title: '🎛️ Executive ₹ Dashboard',
       tagline: 'Your entire business health at a single glance — automated with zero manual math.',
       desc: 'Wake up, open your dashboard, and instantly know your daily schedule, active client deliverables, overdue invoice alerts, and live cashflow numbers. Links automatically to all your backend tabs.',
       views: [
@@ -212,7 +216,12 @@ export default function App() {
         { label: 'Clean Overview Layout', src: '/Images/business-dashboards.webp', caption: 'Compact view for 13-inch laptops & tablets' }
       ],
       badge: 'Auto-Updated in Real Time',
-      timeSaved: 'Saves ~45 mins every morning on status checking',
+      timeSaved: '⏱️ Saves ~45 mins/day',
+      bullets: [
+        { label: "Instant Client Inspector", text: "Select any client to auto-load contact details, status, and active work." },
+        { label: "Daily Schedule Cockpit", text: "Auto-detects today's date to list all meetings, bills, and deadlines due today." },
+        { label: "Live ₹ Profit & Overdue Radar", text: "Visual target trackers and high-visibility alerts for pending payments." }
+      ],
       keyFeatures: [
         { title: 'Interactive Client Quick Inspector', desc: 'Select any client name from the dropdown: their phone, email, address, status, and active project immediately load automatically.' },
         { title: 'Today\'s Operational Schedule', desc: 'Automatically checks today\'s date and lists all meetings, invoice due dates, and task deliverables scheduled for today.' },
@@ -222,34 +231,12 @@ export default function App() {
       columnsTracked: ['Today\'s Schedule Message', 'Client Quick Inspector Dropdown', 'Email, Phone & City', 'Status & Priority Tags', 'Client Notes & History', 'Today\'s Tasks Counter']
     },
     {
-      id: 'crm',
-      sheetTabName: "🤝 Client Management & 💬 Communication Log",
-      label: 'Client CRM & Log',
-      icon: Users,
-      title: 'Complete Client CRM & Activity Log',
-      tagline: 'Never lose a lead or forget a client discussion again.',
-      desc: 'Store unlimited client profiles with priority ratings, payment preferences, and contract histories. Connected directly to an automated communication ledger that logs every WhatsApp chat, phone call, and meeting.',
-      views: [
-        { label: 'Client Directory', src: '/Images/client-managnment.webp', caption: 'Full CRM database with status tags & payment modes' },
-        { label: 'Communication Log', src: '/Images/relationship.webp', caption: 'Historical activity log with Next Action follow-ups' },
-        { label: 'Client Profile Inspector', src: '/Images/client.webp', caption: 'Individual client contract & balance inspector' }
-      ],
-      badge: 'Unlimited Client Profiles',
-      timeSaved: 'Eliminates 100% of "Where did we leave that discussion?" confusion',
-      keyFeatures: [
-        { title: 'Built-in Client Highlighter Tool', desc: 'Pick any client from the top dropdown to automatically highlight and isolate their entire row across all tables.' },
-        { title: 'Client Classification & Priority Tags', desc: 'Tag accounts by type (Small Business, Freelancer, Enterprise) with visual priority tags (🔴 High, 🟠 Medium, 🟡 Low).' },
-        { title: 'Communication History Log', desc: 'Records contact person, date, contact method (Phone, WhatsApp, Meeting), service pitched, and "Next Action" reminders.' },
-        { title: 'One-Click Integration With Invoices', desc: 'Client names and contact info automatically feed into the invoice dropdowns — type their name once, use forever.' }
-      ],
-      columnsTracked: ['CLIENT / COMPANY', 'TYPE (Business Category)', 'E-MAIL & PHONE', 'ADDRESS / CITY', 'STATUS & PRIORITY', 'PAYMENT METHOD (UPI/Bank)', 'CONTACT TYPE', 'NEXT ACTION FOLLOW-UP']
-    },
-    {
       id: 'invoicing',
       sheetTabName: "🧾 Invoices & 🖨️ Print - Invoice",
       label: 'GST Invoicing Engine',
+      numberPill: '02 / REVENUE ENGINE',
       icon: Receipt,
-      title: 'GST Invoicing & 1-Click PDF Generator',
+      title: '🧾 60-Sec GST Invoicing & UPI QR',
       tagline: 'Create, track, and export branded GST-compliant bills in under 60 seconds.',
       desc: 'No expensive invoicing software required. Manage your master invoice ledger with automatic 18% GST calculations (Inclusive & Exclusive), then switch to the Print tab to generate client-ready PDF bills in one click.',
       views: [
@@ -260,7 +247,12 @@ export default function App() {
         { label: 'Client Billing View', src: '/Images/invoice.webp', caption: 'Line item breakdown with tax percentage splits' }
       ],
       badge: 'Indian GST Compliant (18% / 12% / 5%)',
-      timeSaved: 'Reduces billing time from 30 mins to 60 seconds per client',
+      timeSaved: '⏱️ Saves ~29 mins/invoice',
+      bullets: [
+        { label: "Auto 18% GST Calculations", text: "Enter fee & tax rate — inclusive & exclusive totals calculate instantly." },
+        { label: "1-Click Print & Branded PDF", text: "Select invoice number to generate a client-ready PDF with dynamic UPI QR code." },
+        { label: "1-Click WhatsApp Payment Chaser", text: "Color-coded Paid/Unpaid tags with instant WhatsApp payment reminder link." }
+      ],
       keyFeatures: [
         { title: 'Automatic 18% GST Calculations', desc: 'Just enter the base service fee and tax percentage: all Tax-Inclusive and Tax-Exclusive amounts calculate automatically with zero manual math.' },
         { title: '1-Click Printable PDF Bill Layout', desc: 'Select the invoice number from the dropdown on the Print tab — all client details, line items, and totals auto-fill into a gorgeous PDF-ready bill.' },
@@ -273,29 +265,97 @@ export default function App() {
       id: "gst-hub",
       sheetTabName: "🧮 GST Summary (GSTR-1 & 3B)",
       label: "GST & CA Command Center",
+      numberPill: '03 / TAX INTELLIGENCE',
       icon: Calculator,
-      title: "Automated GSTR-1, GSTR-3B & ITC Intelligence Hub",
+      title: "🧮 GSTR-1, GSTR-3B & CA Hub",
       tagline: "Zero manual GST math. Hand clean monthly numbers to your CA in 30 seconds.",
       desc: "Automatically separates Intra-State (CGST + SGST) and Inter-State (IGST) sales, deducts eligible Expense Input Tax Credit (ITC), flags missing HSN/SAC codes, and tracks GST locked inside overdue client bills.",
-      badge: "GSTR-1 & GSTR-3B Ready",
-      timeSaved: "Saves ₹15,000+/yr in bookkeeping cleanup & hours before the 11th/20th GST deadlines",
       views: [
         { label: "GST & ITC Command Center", src: "/Images/gst-command-center.webp", caption: "Live Output GST (GSTR-1), Expense ITC Shield, Net Payable (3B), B2B/B2C split & Overdue Aging Radar" }
       ],
+      badge: "GSTR-1 & GSTR-3B Ready",
+      timeSaved: "⏱️ Saves ₹15,000+/yr in CA cleanup",
+      bullets: [
+        { label: "Auto CGST/SGST vs IGST Split", text: "Automatically checks State vs Place of Supply for intra vs inter-state tax." },
+        { label: "Expense ITC Tax Shield", text: "Pulls GST paid on business expenses to calculate exact Net Tax Payable (3B)." },
+        { label: "B2B Audit & Overdue Watchlist", text: "Segregates GSTIN bills from B2C and flags missing HSN/SAC codes automatically." }
+      ],
       keyFeatures: [
         { title: "Auto CGST / SGST vs IGST Split", desc: "Compares your business state with the client's Place of Supply to apply Intra-State or Inter-State GST automatically." },
-        { title: "Expense Input Tax Credit (ITC) Shield", desc: "Pulls GST paid on business expenses and calculates your exact Net GST Payable (Output Tax minus ITC)." },
+        { title: "Expense Input Tax Credit (ITC) Shield", desc: "Pulls GST paid on business expenses to calculate exact Net GST Payable (Output Tax minus ITC)." },
         { title: "B2B vs B2C & HSN Audit Health", desc: "Separates GSTIN invoices (Table 4A) from B2C bills (Table 7) and alerts you if any HSN/SAC code is missing." },
         { title: "Overdue GST Watchlist", desc: "Highlights 1–7, 8–15, 16–30, and 30+ day overdue bills so you recover stuck cash fast." }
       ],
       columnsTracked: ["OUTPUT GST (GSTR-1)", "EXPENSE ITC CREDIT", "NET GST PAYABLE (3B)", "CGST / SGST / IGST", "B2B vs B2C AUDIT", "OVERDUE AGING RADAR"]
     },
     {
+      id: 'finances',
+      sheetTabName: "🟢 Income, 🔴 Expense, 📅 Monthly & 1️⃣2️⃣-Month Views",
+      label: 'Cashflow & Profit Analytics',
+      numberPill: '04 / PROFIT ENGINE',
+      icon: IndianRupee,
+      title: '💰 Cashflow, UPI Split & 12-Month Profit',
+      tagline: 'Complete financial clarity. Eliminate tax season chaos forever.',
+      desc: 'Comprehensive financial suite featuring dedicated Income & Expense ledgers, bank reconciliation, monthly category breakdowns, 12-month annual growth trends, and custom date range analyzers.',
+      views: [
+        { label: '12-Month Annual Trend', src: '/Images/master-finance.webp', caption: 'Full year revenue, expenses, and Monthly Profit vs Goals' },
+        { label: 'Monthly Category Breakdown', src: '/Images/finance.webp', caption: 'Category-by-category spending charts & net profit margins' },
+        { label: 'Bank Reconciliation Tab', src: '/Images/bookkeeping.webp', caption: 'Cross-check bank statement lines against spreadsheet entries' },
+        { label: "₹ Monthly Income & Expenses", src: "/Images/inr-monthly-overview.webp", caption: "Month-by-month ₹ revenue, expense categories & post-GST net income breakdown" },
+        { label: "Profit Goal & UPI Split", src: "/Images/inr-monthly-goals-upi.webp", caption: "Actual profit vs monthly ₹ goal progress & UPI vs Credit Card payment allocation" },
+        { label: "Custom Date Range P&L", src: "/Images/inr-custom-period-pnl.webp", caption: "Filter any custom start & end date for instant Net Revenue, Gross Profit & GST totals" }
+      ],
+      badge: 'Chartered Accountant (CA) Approved',
+      timeSaved: '⏱️ Saves 3 days of tax panic',
+      bullets: [
+        { label: "12-Month P&L Growth Engine", text: "Full year revenue, expenses, and monthly profit targets side-by-side." },
+        { label: "Account & UPI Split Tracker", text: "Real-time breakdown of cash, UPI payments, credit cards, and bank balances." },
+        { label: "Custom Date Range Analyzer", text: "Pick any custom date range for instant Net Revenue, Gross Margin & GST totals." }
+      ],
+      keyFeatures: [
+        { title: 'Tax-Inclusive & Exclusive Calculation', desc: 'Handles GST 18%, 12%, 5% or 0% automatically, splitting Net Amount from Tax Amount for clean quarterly filing.' },
+        { title: 'Monthly View & Goal Comparison', desc: 'Set a monthly profit goal (e.g. ₹5,00,000) and watch your live progress bar fill up as invoices are paid.' },
+        { title: '12-Month Annual Growth Overview', desc: 'Side-by-side January-to-December financial comparison showing seasonal revenue peaks and cost trends.' },
+        { title: 'Custom Date Range Analyzer', desc: 'Select any custom start and end date (e.g. Q1 or festival campaign) to calculate custom gross profit and net margin in 1 click.' }
+      ],
+      columnsTracked: ['INVOICE NO. / EXPENSE ID', 'DATE & CATEGORY', 'TOTAL AMOUNT', 'TAX % (Inclusive & Exclusive)', 'Reconciled Checkbox (☑️)', 'Monthly Profit Goal vs Actual', 'Custom Period (From/To)', 'Account Balances (Cash/UPI/Bank)']
+    },
+    {
+      id: 'crm',
+      sheetTabName: "🤝 Client Management & 💬 Communication Log",
+      label: 'Client CRM & Log',
+      numberPill: 'OPERATIONS / CLIENTS',
+      icon: Users,
+      title: '🤝 Client CRM & Activity Log',
+      tagline: 'Never lose a lead or forget a client discussion again.',
+      desc: 'Store unlimited client profiles with priority ratings, payment preferences, and contract histories. Connected directly to an automated communication ledger that logs every WhatsApp chat, phone call, and meeting.',
+      views: [
+        { label: 'Client Directory', src: '/Images/client-managnment.webp', caption: 'Full CRM database with status tags & payment modes' },
+        { label: 'Communication Log', src: '/Images/relationship.webp', caption: 'Historical activity log with Next Action follow-ups' },
+        { label: 'Client Profile Inspector', src: '/Images/client.webp', caption: 'Individual client contract & balance inspector' }
+      ],
+      badge: 'Unlimited Client Profiles',
+      timeSaved: '⏱️ Zero communication confusion',
+      bullets: [
+        { label: "Unlimited Client Directory", text: "Store client profiles with priority tags (🔴 High, 🟠 Medium, 🟡 Low) & payment terms." },
+        { label: "WhatsApp & Call History Log", text: "Record date, contact method, services pitched, and next follow-up dates." },
+        { label: "1-Click Invoice Linkage", text: "Client details auto-feed into invoice dropdowns — type once, use everywhere." }
+      ],
+      keyFeatures: [
+        { title: 'Built-in Client Highlighter Tool', desc: 'Pick any client from the top dropdown to automatically highlight and isolate their entire row across all tables.' },
+        { title: 'Client Classification & Priority Tags', desc: 'Tag accounts by type (Small Business, Freelancer, Enterprise) with visual priority tags (🔴 High, 🟠 Medium, 🟡 Low).' },
+        { title: 'Communication History Log', desc: 'Records contact person, date, contact method (Phone, WhatsApp, Meeting), service pitched, and "Next Action" reminders.' },
+        { title: 'One-Click Integration With Invoices', desc: 'Client names and contact info automatically feed into the invoice dropdowns — type their name once, use forever.' }
+      ],
+      columnsTracked: ['CLIENT / COMPANY', 'TYPE (Business Category)', 'E-MAIL & PHONE', 'ADDRESS / CITY', 'STATUS & PRIORITY', 'PAYMENT METHOD (UPI/Bank)', 'CONTACT TYPE', 'NEXT ACTION FOLLOW-UP']
+    },
+    {
       id: 'tasks',
       sheetTabName: "☑️ Task-Project Tracker",
       label: 'Tasks & Projects',
+      numberPill: 'OPERATIONS / PROJECTS',
       icon: Layers,
-      title: 'Deliverables & Milestone Tracker',
+      title: '☑️ Tasks & Deliverable Tracker',
       tagline: 'Keep your team focused, deliverables on schedule, and clients delighted.',
       desc: 'A robust task and project management board that tracks deadlines, client milestones, team member assignments, and progress stages with interactive completion checkboxes.',
       views: [
@@ -303,7 +363,12 @@ export default function App() {
         { label: 'Milestone Stage View', src: '/Images/task-manage.webp', caption: 'Progress stages: In Progress, Review, Completed' }
       ],
       badge: 'Interactive Checkbox System',
-      timeSaved: 'Saves 2+ hours every week spent on internal team follow-ups',
+      timeSaved: '⏱️ Saves 2+ hrs/wk on follow-ups',
+      bullets: [
+        { label: "Interactive Checkboxes (☑️)", text: "Tap to mark done, auto-update progress %, and clear from overdue alerts." },
+        { label: "Client & CRM Connection", text: "Every task links to client dropdowns so workload stays neatly organized." },
+        { label: "Delegation & Urgency Counter", text: "Assign team members with custom notes and track today's urgent midnight tasks." }
+      ],
       keyFeatures: [
         { title: 'Interactive Completion Checkboxes (☑️)', desc: 'Clicking a checkbox instantly marks the task complete, updates progress percentages, and removes it from the overdue list.' },
         { title: 'Client & Project Linkage', desc: 'Tasks link directly to your Client CRM dropdown, so you always know which client each deliverable belongs to.' },
@@ -316,8 +381,9 @@ export default function App() {
       id: 'calendar',
       sheetTabName: "🗓️ Calendar",
       label: 'Smart Operations Calendar',
+      numberPill: 'OPERATIONS / SCHEDULE',
       icon: CalendarIcon,
-      title: 'Visual Operations & Appointments Calendar',
+      title: '🗓️ Smart Operations Calendar',
       tagline: 'Your entire month mapped out automatically — with zero manual double-entry.',
       desc: 'A smart monthly grid that auto-populates directly from your invoices, tasks, and client renewal dates. Change the month and year dropdown to instantly review upcoming workload.',
       views: [
@@ -325,7 +391,12 @@ export default function App() {
         { label: 'Appointments Inspector', src: '/Images/calender-deadline.webp', caption: 'Dedicated schedule list for client calls & deliverables' }
       ],
       badge: '100% Formula-Driven Calendar Grid',
-      timeSaved: 'Never miss an invoice due date or client meeting again',
+      timeSaved: '⏱️ Zero duplicate scheduling',
+      bullets: [
+        { label: "Dynamic Month/Year Dropdown", text: "Pick any month or year — calendar layout recalculates in real-time." },
+        { label: "Auto-Synced Bills & Deadlines", text: "Invoice payment due dates and task milestones sync onto days automatically." },
+        { label: "Today Marker & Appointments", text: "Current day highlighted with dedicated rows for calls, meetings, and shoots." }
+      ],
       keyFeatures: [
         { title: 'Dynamic Month & Year Dropdowns', desc: 'Select any month (January to December) or year: the calendar grid automatically recalculates day layouts and weekends.' },
         { title: 'Auto-Synced Invoices & Deadlines', desc: 'You don\'t manually type into the calendar — invoice due dates and project milestones automatically sync onto their scheduled days.' },
@@ -333,32 +404,6 @@ export default function App() {
         { title: 'High-Visibility Weekend & Today Marker', desc: 'Current day is visually highlighted so you always know exactly where you are in the monthly cycle.' }
       ],
       columnsTracked: ['Dynamic Month & Year Dropdown', 'Don\'t Show Tasks Filter', '31-Day Interactive Calendar Grid', 'Other Entries & Appointments with Checkboxes (☑️)']
-    },
-    {
-      id: 'finances',
-      sheetTabName: "🟢 Income, 🔴 Expense, 📅 Monthly & 1️⃣2️⃣-Month Views",
-      label: 'Cashflow & Profit Analytics',
-      icon: IndianRupee,
-      title: 'Master Income, Expense & P&L Suite',
-      tagline: 'Complete financial clarity. Eliminate tax season chaos forever.',
-      desc: 'Comprehensive financial suite featuring dedicated Income & Expense ledgers, bank reconciliation, monthly category breakdowns, 12-month annual growth trends, and custom date range analyzers.',
-      views: [
-        { label: '12-Month Annual Trend', src: '/Images/master-finance.webp', caption: 'Full year revenue, expenses, and Monthly Profit vs Goals' },
-        { label: 'Monthly Category Breakdown', src: '/Images/finance.webp', caption: 'Category-by-category spending charts & net profit margins' },
-        { label: 'Bank Reconciliation Tab', src: '/Images/bookkeeping.webp', caption: 'Cross-check bank statement lines against spreadsheet entries' },
-        { label: "₹ Monthly Income & Expenses", src: "/Images/inr-monthly-overview.webp", caption: "Month-by-month ₹ revenue, expense categories & post-GST net income breakdown" },
-        { label: "Profit Goal & UPI Split", src: "/Images/inr-monthly-goals-upi.webp", caption: "Actual profit vs monthly ₹ goal progress & UPI vs Credit Card payment allocation" },
-        { label: "Custom Date Range P&L", src: "/Images/inr-custom-period-pnl.webp", caption: "Filter any custom start & end date for instant Net Revenue, Gross Profit & GST totals" }
-      ],
-      badge: 'Chartered Accountant (CA) Approved',
-      timeSaved: 'Turns 3 days of tax-filing panic into a 15-minute export',
-      keyFeatures: [
-        { title: 'Tax-Inclusive & Exclusive Calculation', desc: 'Handles GST 18%, 12%, 5% or 0% automatically, splitting Net Amount from Tax Amount for clean quarterly filing.' },
-        { title: 'Monthly View & Goal Comparison', desc: 'Set a monthly profit goal (e.g. ₹5,00,000) and watch your live progress bar fill up as invoices are paid.' },
-        { title: '12-Month Annual Growth Overview', desc: 'Side-by-side January-to-December financial comparison showing seasonal revenue peaks and cost trends.' },
-        { title: 'Custom Date Range Analyzer', desc: 'Select any custom start and end date (e.g. Q1 or festival campaign) to calculate custom gross profit and net margin in 1 click.' }
-      ],
-      columnsTracked: ['INVOICE NO. / EXPENSE ID', 'DATE & CATEGORY', 'TOTAL AMOUNT', 'TAX % (Inclusive & Exclusive)', 'Reconciled Checkbox (☑️)', 'Monthly Profit Goal vs Actual', 'Custom Period (From/To)', 'Account Balances (Cash/UPI/Bank)']
     }
   ];
 
@@ -427,8 +472,30 @@ export default function App() {
   const borderSubtle = isDark ? 'border-slate-800' : 'border-slate-200';
   const bgSectionAlt = isDark ? 'bg-slate-950/60' : 'bg-slate-100/70';
 
-  const currentTab = previewTabs.find(t => t.id === activeTab) || previewTabs[0];
-  const activeImage = currentTab.views[activeSubViewIndex] || currentTab.views[0];
+  const coreModules = previewTabs.slice(0, 4);
+  const operationsModules = previewTabs.slice(4, 7);
+
+  const quickJumpPills = [
+    { id: 'dashboard', label: '🎛️ Executive ₹ Dashboard', isAccordion: false },
+    { id: 'invoicing', label: '🧾 60-Sec GST Invoicing', isAccordion: false },
+    { id: 'gst-hub', label: '🧮 GST & CA Hub', isAccordion: false },
+    { id: 'finances', label: '💰 Cashflow & P&L', isAccordion: false },
+    { id: 'crm', label: '🤝 Client CRM', isAccordion: true },
+    { id: 'tasks', label: '☑️ Tasks & Projects', isAccordion: true },
+    { id: 'calendar', label: '🗓️ Smart Calendar', isAccordion: true },
+  ];
+
+  const handleQuickJump = (pillId, isAccordion) => {
+    if (isAccordion) {
+      setOpenAccordion(pillId);
+    }
+    setTimeout(() => {
+      const el = document.getElementById(`module-${pillId}`);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 60);
+  };
 
   return (
     <div className={`${theme} min-h-screen theme-transition font-sans relative overflow-x-hidden ${
@@ -905,216 +972,519 @@ export default function App() {
       </section>
 
       {/* ========================================================
-          7. ULTRA-DETAILED PRODUCT WALKTHROUGH STUDIO (FIXED CLIPPING!)
+          7. MOBILE-FIRST 30-SECOND VISUAL TOUR (CRO REDESIGN)
       ======================================================== */}
       <section id="preview" className="py-16 sm:py-24 md:py-28 relative">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
-            <span className="text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/25">
-              Deep Product Tour
+          {/* Section Header */}
+          <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
+            <span className="inline-flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 text-xs font-black uppercase tracking-wider bg-emerald-500/10 px-3.5 py-1.5 rounded-full border border-emerald-500/25">
+              ⚡ 30-SECOND VISUAL TOUR
             </span>
-            <h2 className={`text-2xl sm:text-4xl md:text-5xl font-black ${textPrimary} mt-3 mb-3`}>
-              Inside Sheetly: See Exactly What You Get
+            <h2 className={`text-2xl sm:text-4xl md:text-5xl font-black ${textPrimary} mt-3 mb-3 tracking-tight`}>
+              Inside Sheetly 2.0: See What Runs Your Business
             </h2>
-            <p className={`text-xs sm:text-base ${textSecondary}`}>
-              Click each core tab below to inspect the actual layouts, automated calculations, and interactive views built into your spreadsheet:
+            <p className={`text-xs sm:text-base ${textSecondary} max-w-2xl mx-auto leading-relaxed`}>
+              No complex software to learn. Scroll down to see your core automated sheets (tap any screenshot to zoom full-screen):
             </p>
           </div>
 
-          {/* Main Core Tab Selector (FIXED: w-max mx-auto px-4 prevents any left-side clipping!) */}
-          <div className="w-full overflow-x-auto pb-4 mb-8 scrollbar-none py-1">
-            <div className="flex items-center gap-2 w-max mx-auto px-4">
-              {previewTabs.map((tab) => {
-                const Icon = tab.icon;
-                const isActive = activeTab === tab.id;
+          {/* Compact 2-Row Wrapped Quick-Jump Pill Grid (NO horizontal scrolling!) */}
+          <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-10 sm:mb-14 max-w-4xl mx-auto px-2">
+            {quickJumpPills.map((pill) => (
+              <button
+                key={pill.id}
+                type="button"
+                onClick={() => handleQuickJump(pill.id, pill.isAccordion)}
+                className={`text-xs font-bold px-3 py-1.5 sm:py-2 rounded-xl border transition-all flex items-center gap-1.5 shadow-sm hover:scale-[1.02] active:scale-[0.98] ${
+                  cardClass
+                } ${textSecondary} hover:${textPrimary} hover:border-emerald-500`}
+              >
+                <span>{pill.label}</span>
+                <ChevronDown className="w-3 h-3 text-emerald-500" />
+              </button>
+            ))}
+          </div>
+
+          {/* Top 4 "Money-Maker" Modules — Vertical Stack on Mobile, Alternating 2-Col on Desktop */}
+          <div className="space-y-8 sm:space-y-12">
+            {coreModules.map((module, idx) => {
+              const isEven = idx % 2 === 0;
+              const currentSubViewIdx = getSubView(module.id);
+              const activeImg = module.views[currentSubViewIdx] || module.views[0];
+              const isExpanded = !!expandedCards[module.id];
+
+              return (
+                <div
+                  key={module.id}
+                  id={`module-${module.id}`}
+                  className={`${cardClass} rounded-2xl sm:rounded-3xl p-5 sm:p-8 border ${borderSubtle} shadow-xl scroll-mt-24`}
+                >
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+                    
+                    {/* SCREENSHOT COMES FIRST ON MOBILE (order-1 on mobile, alternating on lg:) */}
+                    <div className={`order-1 ${isEven ? 'lg:order-2 lg:col-span-7' : 'lg:order-1 lg:col-span-7'} space-y-3`}>
+                      {/* Browser Frame */}
+                      <div className={`rounded-xl sm:rounded-2xl overflow-hidden border ${borderSubtle} ${isDark ? 'bg-slate-900' : 'bg-slate-100'} shadow-lg group`}>
+                        {/* Frame Header Bar */}
+                        <div className={`h-8 px-3 flex items-center justify-between border-b ${borderSubtle} ${isDark ? 'bg-slate-950/90' : 'bg-slate-200/90'}`}>
+                          <div className="flex items-center gap-1.5 min-w-0">
+                            <div className="w-2.5 h-2.5 rounded-full bg-rose-500/80 flex-shrink-0" />
+                            <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80 flex-shrink-0" />
+                            <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 flex-shrink-0" />
+                            <span className={`text-[10px] sm:text-[11px] font-mono ${textMuted} ml-2 truncate`}>
+                              {activeImg.caption}
+                            </span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setZoomImage(activeImg)}
+                            className="text-[11px] text-emerald-500 hover:text-emerald-400 flex items-center gap-1 font-semibold flex-shrink-0 bg-emerald-500/10 hover:bg-emerald-500/20 px-2 py-0.5 rounded transition-colors"
+                            title="Click to view full size"
+                          >
+                            <Maximize2 className="w-3 h-3" />
+                            <span>Tap to Zoom 🔍</span>
+                          </button>
+                        </div>
+
+                        {/* Image Preview (Zoom on click) */}
+                        <div
+                          onClick={() => setZoomImage(activeImg)}
+                          className="cursor-zoom-in relative overflow-hidden bg-slate-950/20"
+                        >
+                          <img
+                            src={activeImg.src}
+                            alt={activeImg.caption}
+                            loading="lazy"
+                            className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-[1.01]"
+                          />
+                          <div className="absolute bottom-2 right-2 bg-black/80 backdrop-blur-md text-white text-[10px] font-semibold px-2 py-1 rounded-md flex items-center gap-1 pointer-events-none opacity-80 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                            <Maximize2 className="w-3 h-3 text-emerald-400" />
+                            <span>Tap to Zoom 🔍</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Angle Switcher Pills (Directly below image, compact, no vertical jumping) */}
+                      {module.views.length > 1 && (
+                        <div className="pt-0.5">
+                          <div className={`text-[10px] sm:text-[11px] font-bold uppercase tracking-wider ${textMuted} mb-1.5 flex items-center justify-between`}>
+                            <span>Switch View / Angle ({module.views.length} views):</span>
+                            <span className="text-[10px] text-emerald-500 font-medium">Tap to inspect</span>
+                          </div>
+                          <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                            {module.views.map((v, idx) => {
+                              const isCurrentView = currentSubViewIdx === idx;
+                              return (
+                                <button
+                                  key={idx}
+                                  type="button"
+                                  onClick={() => setSubView(module.id, idx)}
+                                  className={`text-left px-2.5 py-1.5 rounded-lg border text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                                    isCurrentView
+                                      ? 'border-emerald-500 bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 shadow-sm'
+                                      : `${borderSubtle} ${isDark ? 'bg-slate-900/60 hover:bg-slate-800' : 'bg-white hover:bg-slate-50'} ${textSecondary}`
+                                  }`}
+                                >
+                                  <span className={`w-1.5 h-1.5 rounded-full ${isCurrentView ? 'bg-emerald-500' : 'bg-slate-400'}`} />
+                                  <span className="truncate max-w-[140px] sm:max-w-none">{idx + 1}. {v.label}</span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* ULTRA-CONCISE COPY (order-2 on mobile, alternating on lg:) */}
+                    <div className={`order-2 ${isEven ? 'lg:order-1 lg:col-span-5' : 'lg:order-2 lg:col-span-5'} space-y-3.5`}>
+                      {/* Module Number Pill + Time-Saved Badge */}
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25 px-2.5 py-0.5 rounded-md text-[11px] font-black uppercase tracking-wider">
+                          {module.numberPill}
+                        </span>
+                        <span className="flex items-center gap-1 text-[11px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-md border border-emerald-500/20">
+                          <Clock className="w-3 h-3 text-emerald-500" />
+                          {module.timeSaved}
+                        </span>
+                        <span className={`text-[10px] font-mono ${textMuted} bg-slate-900/30 px-2 py-0.5 rounded border ${borderSubtle}`}>
+                          Tab: {module.sheetTabName}
+                        </span>
+                      </div>
+
+                      {/* Title + Tagline */}
+                      <div>
+                        <h3 className={`text-lg sm:text-2xl font-black ${textPrimary} tracking-tight`}>
+                          {module.title}
+                        </h3>
+                        <p className="text-xs sm:text-sm font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                          {module.tagline}
+                        </p>
+                      </div>
+
+                      {/* 3 Punchy 1-Line Checkmark Bullets */}
+                      <div className="space-y-2 pt-1">
+                        {module.bullets.map((b, bIdx) => (
+                          <div key={bIdx} className="flex items-start gap-2">
+                            <div className="mt-0.5 w-4 h-4 rounded-full bg-emerald-500/15 text-emerald-500 flex items-center justify-center flex-shrink-0">
+                              <Check className="w-3 h-3 stroke-[3]" />
+                            </div>
+                            <p className={`text-xs sm:text-sm ${textSecondary} leading-snug`}>
+                              <strong className={`${textPrimary} font-bold`}>{b.label}:</strong> {b.text}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Collapsible Details & Columns */}
+                      <div className="pt-1">
+                        <button
+                          type="button"
+                          onClick={() => toggleCardExpand(module.id)}
+                          className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 flex items-center gap-1.5 transition-colors"
+                        >
+                          <span>{isExpanded ? 'Hide automations & tracked columns ▴' : 'See all automations & tracked columns ▾'}</span>
+                        </button>
+
+                        {isExpanded && (
+                          <div className={`mt-3.5 space-y-3.5 p-3.5 sm:p-4 rounded-xl border ${borderSubtle} ${isDark ? 'bg-slate-900/70' : 'bg-slate-50'} animate-fadeIn`}>
+                            <p className={`text-xs ${textSecondary} leading-relaxed`}>
+                              {module.desc}
+                            </p>
+
+                            {/* 4 Deep Automation Features */}
+                            <div>
+                              <div className={`text-[11px] font-bold uppercase tracking-wider ${textMuted} mb-2 flex items-center gap-1.5`}>
+                                <SlidersHorizontal className="w-3 h-3 text-emerald-500" />
+                                <span>Automations Built Into This Tab:</span>
+                              </div>
+                              <div className="space-y-2">
+                                {module.keyFeatures.map((feat, fIdx) => (
+                                  <div key={fIdx} className={`p-2.5 rounded-lg border ${borderSubtle} ${isDark ? 'bg-slate-950/40' : 'bg-white'}`}>
+                                    <div className={`text-xs font-bold ${textPrimary} flex items-center gap-1.5 mb-0.5`}>
+                                      <CheckCircle className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />
+                                      <span>{feat.title}</span>
+                                    </div>
+                                    <p className={`text-[11px] ${textSecondary} leading-relaxed pl-5`}>
+                                      {feat.desc}
+                                    </p>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+
+                            {/* Columns Tracked */}
+                            <div>
+                              <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-1.5 flex items-center gap-1">
+                                <Eye className="w-3 h-3" />
+                                <span>Exact Columns & Formulas Tracked:</span>
+                              </div>
+                              <div className="flex flex-wrap gap-1">
+                                {module.columnsTracked.map((col, cIdx) => (
+                                  <span key={cIdx} className={`text-[10px] font-medium px-2 py-0.5 rounded border ${borderSubtle} ${isDark ? 'bg-slate-800 text-slate-300' : 'bg-white text-slate-700'}`}>
+                                    {col}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Quick Link */}
+                      <div className="pt-1">
+                        <a
+                          href={CONFIG.checkoutUrl}
+                          onClick={(e) => handleCheckoutClick(e, 'Product Tour Link - ' + module.title)}
+                          className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-500 hover:text-emerald-400 transition-colors"
+                        >
+                          <span>Get this sheet unlocked in Sheetly ({CONFIG.price})</span>
+                          <ChevronRight className="w-4 h-4" />
+                        </a>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Plus 3 More Operations Modules Interactive Accordion */}
+          <div className="mt-14 sm:mt-20">
+            <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-600 dark:text-emerald-400 text-xs font-black tracking-wider uppercase">
+                ➕ PLUS 3 MORE AUTOMATED SHEETS INCLUDED INSIDE YOUR ₹899 OS (TAP TO PREVIEW):
+              </div>
+            </div>
+
+            <div className="space-y-3.5 max-w-5xl mx-auto">
+              {operationsModules.map((mod) => {
+                const isOpen = openAccordion === mod.id;
+                const currentSubViewIdx = getSubView(mod.id);
+                const activeImg = mod.views[currentSubViewIdx] || mod.views[0];
+                const isExpanded = !!expandedCards[mod.id];
+
                 return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm whitespace-nowrap transition-all ${
-                      isActive
-                        ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/25 scale-105'
-                        : `${cardClass} ${textSecondary} hover:${textPrimary}`
-                    }`}
+                  <div
+                    key={mod.id}
+                    id={`module-${mod.id}`}
+                    className={`rounded-2xl border transition-all ${borderSubtle} ${cardClass} overflow-hidden shadow-md scroll-mt-24`}
                   >
-                    <Icon className="w-4 h-4 flex-shrink-0" />
-                    <span>{tab.label}</span>
-                  </button>
+                    {/* Accordion Bar Toggle */}
+                    <button
+                      type="button"
+                      onClick={() => toggleAccordion(mod.id)}
+                      className={`w-full text-left p-3.5 sm:p-5 flex items-center justify-between gap-3 transition-colors ${
+                        isOpen ? (isDark ? 'bg-slate-900/90' : 'bg-slate-100/90') : 'hover:bg-emerald-500/5'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3 min-w-0">
+                        <img
+                          src={mod.views[0].src}
+                          alt={mod.title}
+                          className="w-12 h-9 sm:w-14 sm:h-10 rounded-lg object-cover border border-slate-700/60 flex-shrink-0"
+                        />
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className={`text-sm sm:text-base font-bold ${textPrimary} truncate`}>
+                              {mod.title}
+                            </span>
+                            <span className="hidden sm:inline-block text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                              {mod.timeSaved}
+                            </span>
+                          </div>
+                          <p className={`text-[11px] sm:text-xs ${textSecondary} truncate mt-0.5`}>
+                            {mod.tagline}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2 flex-shrink-0">
+                        <span className={`text-[11px] font-bold px-3 py-1.5 rounded-lg border transition-all flex items-center gap-1 ${
+                          isOpen
+                            ? 'bg-emerald-500 text-white border-emerald-500 shadow-sm'
+                            : `${borderSubtle} ${isDark ? 'bg-slate-800 text-slate-300' : 'bg-white text-slate-700'}`
+                        }`}>
+                          <span>{isOpen ? 'Close' : 'Preview Sheet'}</span>
+                          <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+                        </span>
+                      </div>
+                    </button>
+
+                    {/* Accordion Body */}
+                    {isOpen && (
+                      <div className={`p-4 sm:p-7 border-t ${borderSubtle} ${isDark ? 'bg-slate-950/40' : 'bg-slate-50/50'} animate-fadeIn`}>
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                          {/* Screenshot Column (order-1 on mobile) */}
+                          <div className="order-1 lg:order-2 lg:col-span-7 space-y-3">
+                            <div className={`rounded-xl sm:rounded-2xl overflow-hidden border ${borderSubtle} ${isDark ? 'bg-slate-900' : 'bg-slate-100'} shadow-lg group`}>
+                              <div className={`h-8 px-3 flex items-center justify-between border-b ${borderSubtle} ${isDark ? 'bg-slate-950/90' : 'bg-slate-200/90'}`}>
+                                <div className="flex items-center gap-1.5 min-w-0">
+                                  <div className="w-2.5 h-2.5 rounded-full bg-rose-500/80 flex-shrink-0" />
+                                  <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80 flex-shrink-0" />
+                                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 flex-shrink-0" />
+                                  <span className={`text-[10px] sm:text-[11px] font-mono ${textMuted} ml-2 truncate`}>
+                                    {activeImg.caption}
+                                  </span>
+                                </div>
+                                <button
+                                  type="button"
+                                  onClick={() => setZoomImage(activeImg)}
+                                  className="text-[11px] text-emerald-500 hover:text-emerald-400 flex items-center gap-1 font-semibold flex-shrink-0 bg-emerald-500/10 hover:bg-emerald-500/20 px-2 py-0.5 rounded transition-colors"
+                                  title="Click to view full size"
+                                >
+                                  <Maximize2 className="w-3 h-3" />
+                                  <span>Tap to Zoom 🔍</span>
+                                </button>
+                              </div>
+                              <div
+                                onClick={() => setZoomImage(activeImg)}
+                                className="cursor-zoom-in relative overflow-hidden bg-slate-950/20"
+                              >
+                                <img
+                                  src={activeImg.src}
+                                  alt={activeImg.caption}
+                                  loading="lazy"
+                                  className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-[1.01]"
+                                />
+                                <div className="absolute bottom-2 right-2 bg-black/80 backdrop-blur-md text-white text-[10px] font-semibold px-2 py-1 rounded-md flex items-center gap-1 pointer-events-none opacity-80 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                                  <Maximize2 className="w-3 h-3 text-emerald-400" />
+                                  <span>Tap to Zoom 🔍</span>
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Angle Switcher Pills */}
+                            {mod.views.length > 1 && (
+                              <div className="pt-0.5">
+                                <div className={`text-[10px] sm:text-[11px] font-bold uppercase tracking-wider ${textMuted} mb-1.5 flex items-center justify-between`}>
+                                  <span>Switch View / Angle ({mod.views.length} views):</span>
+                                  <span className="text-[10px] text-emerald-500 font-medium">Tap to inspect</span>
+                                </div>
+                                <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                                  {mod.views.map((v, idx) => {
+                                    const isCurrentView = currentSubViewIdx === idx;
+                                    return (
+                                      <button
+                                        key={idx}
+                                        type="button"
+                                        onClick={() => setSubView(mod.id, idx)}
+                                        className={`text-left px-2.5 py-1.5 rounded-lg border text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                                          isCurrentView
+                                            ? 'border-emerald-500 bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 shadow-sm'
+                                            : `${borderSubtle} ${isDark ? 'bg-slate-900/60 hover:bg-slate-800' : 'bg-white hover:bg-slate-50'} ${textSecondary}`
+                                        }`}
+                                      >
+                                        <span className={`w-1.5 h-1.5 rounded-full ${isCurrentView ? 'bg-emerald-500' : 'bg-slate-400'}`} />
+                                        <span className="truncate max-w-[140px] sm:max-w-none">{idx + 1}. {v.label}</span>
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Copy Column (order-2 on mobile) */}
+                          <div className="order-2 lg:order-1 lg:col-span-5 space-y-3.5">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <span className="flex items-center gap-1 text-[11px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-md border border-emerald-500/20">
+                                <Clock className="w-3 h-3 text-emerald-500" />
+                                {mod.timeSaved}
+                              </span>
+                              <span className={`text-[10px] font-mono ${textMuted} bg-slate-900/30 px-2 py-0.5 rounded border ${borderSubtle}`}>
+                                Tab: {mod.sheetTabName}
+                              </span>
+                            </div>
+
+                            <div>
+                              <h4 className={`text-base sm:text-xl font-black ${textPrimary}`}>
+                                {mod.title}
+                              </h4>
+                              <p className="text-xs sm:text-sm font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                                {mod.tagline}
+                              </p>
+                            </div>
+
+                            {/* 3 Bullets */}
+                            <div className="space-y-2 pt-1">
+                              {mod.bullets.map((b, bIdx) => (
+                                <div key={bIdx} className="flex items-start gap-2">
+                                  <div className="mt-0.5 w-4 h-4 rounded-full bg-emerald-500/15 text-emerald-500 flex items-center justify-center flex-shrink-0">
+                                    <Check className="w-3 h-3 stroke-[3]" />
+                                  </div>
+                                  <p className={`text-xs sm:text-sm ${textSecondary} leading-snug`}>
+                                    <strong className={`${textPrimary} font-bold`}>{b.label}:</strong> {b.text}
+                                  </p>
+                                </div>
+                              ))}
+                            </div>
+
+                            {/* Collapsible toggle */}
+                            <div className="pt-1">
+                              <button
+                                type="button"
+                                onClick={() => toggleCardExpand(mod.id)}
+                                className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 flex items-center gap-1.5 transition-colors"
+                              >
+                                <span>{isExpanded ? 'Hide automations & tracked columns ▴' : 'See all automations & tracked columns ▾'}</span>
+                              </button>
+
+                              {isExpanded && (
+                                <div className={`mt-3.5 space-y-3.5 p-3.5 rounded-xl border ${borderSubtle} ${isDark ? 'bg-slate-900/70' : 'bg-slate-50'} animate-fadeIn`}>
+                                  <p className={`text-xs ${textSecondary} leading-relaxed`}>
+                                    {mod.desc}
+                                  </p>
+                                  <div>
+                                    <div className={`text-[11px] font-bold uppercase tracking-wider ${textMuted} mb-2 flex items-center gap-1.5`}>
+                                      <SlidersHorizontal className="w-3 h-3 text-emerald-500" />
+                                      <span>Automations Built Into This Tab:</span>
+                                    </div>
+                                    <div className="space-y-2">
+                                      {mod.keyFeatures.map((feat, fIdx) => (
+                                        <div key={fIdx} className={`p-2.5 rounded-lg border ${borderSubtle} ${isDark ? 'bg-slate-950/40' : 'bg-white'}`}>
+                                          <div className={`text-xs font-bold ${textPrimary} flex items-center gap-1.5 mb-0.5`}>
+                                            <CheckCircle className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />
+                                            <span>{feat.title}</span>
+                                          </div>
+                                          <p className={`text-[11px] ${textSecondary} leading-relaxed pl-5`}>
+                                            {feat.desc}
+                                          </p>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                  <div>
+                                    <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-1.5 flex items-center gap-1">
+                                      <Eye className="w-3 h-3" />
+                                      <span>Exact Columns & Formulas Tracked:</span>
+                                    </div>
+                                    <div className="flex flex-wrap gap-1">
+                                      {mod.columnsTracked.map((col, cIdx) => (
+                                        <span key={cIdx} className={`text-[10px] font-medium px-2 py-0.5 rounded border ${borderSubtle} ${isDark ? 'bg-slate-800 text-slate-300' : 'bg-white text-slate-700'}`}>
+                                          {col}
+                                        </span>
+                                      ))}
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+
+                            {/* Quick Link */}
+                            <div className="pt-1">
+                              <a
+                                href={CONFIG.checkoutUrl}
+                                onClick={(e) => handleCheckoutClick(e, 'Product Tour Link - ' + mod.title)}
+                                className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-500 hover:text-emerald-400 transition-colors"
+                              >
+                                <span>Get this sheet unlocked in Sheetly ({CONFIG.price})</span>
+                                <ChevronRight className="w-4 h-4" />
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 );
               })}
             </div>
           </div>
 
-          {/* Active Tab Master Card */}
-          <div className={`${cardClass} rounded-2xl sm:rounded-3xl p-5 sm:p-10 border ${borderSubtle} shadow-2xl`}>
-            
-            {/* Tab Header Banner */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 pb-5 sm:pb-6 mb-6 sm:mb-8 border-b border-gray-800/60 dark:border-gray-800">
-              <div>
-                <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                  <span className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25 px-2.5 py-0.5 rounded-md text-[11px] font-bold">
-                    {currentTab.badge}
+          {/* Bottom High-Intent Micro-CTA Bar Inside #preview */}
+          <div className="mt-12 sm:mt-16 max-w-4xl mx-auto">
+            <div className="p-5 sm:p-7 rounded-2xl sm:rounded-3xl border border-emerald-500/30 bg-gradient-to-r from-emerald-950/40 via-slate-900 to-emerald-950/30 backdrop-blur-xl shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+              <div className="space-y-1">
+                <div className="flex items-center justify-center sm:justify-start gap-2 flex-wrap">
+                  <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider">
+                    Instant 1-Click Access
                   </span>
-                  <span className={`text-[11px] font-mono font-medium ${textMuted} bg-slate-900/40 dark:bg-slate-900 px-2 py-0.5 rounded border ${borderSubtle}`}>
-                    Spreadsheet Tab: {currentTab.sheetTabName}
+                  <span className="text-slate-400 text-xs font-semibold">
+                    7-Day Working-System Guarantee 🛡️
                   </span>
                 </div>
-                <h3 className={`text-xl sm:text-3xl font-black ${textPrimary}`}>
-                  {currentTab.title}
-                </h3>
-                <p className={`text-xs sm:text-sm font-medium text-emerald-600 dark:text-emerald-400 mt-0.5`}>
-                  {currentTab.tagline}
+                <h4 className="text-sm sm:text-base font-extrabold text-white">
+                  All 19 pre-linked tabs, GST Invoice Generator & CA Hub — ₹899 One-Time (Lifetime Access)
+                </h4>
+                <p className="text-xs text-slate-400">
+                  No recurring fees. Instant Google Drive copy link sent immediately after checkout.
                 </p>
               </div>
 
-              {/* Time saved pill */}
-              <div className={`flex items-center gap-2 ${isDark ? 'bg-slate-900/80' : 'bg-slate-100'} px-3 sm:px-3.5 py-2 rounded-xl border ${borderSubtle} flex-shrink-0 text-xs font-semibold ${textPrimary}`}>
-                <Clock className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                <span>{currentTab.timeSaved}</span>
+              <div className="w-full sm:w-auto flex-shrink-0">
+                <a
+                  href={CONFIG.checkoutUrl}
+                  onClick={(e) => handleCheckoutClick(e, 'Preview Tour Bottom Micro-CTA')}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xs sm:text-sm px-6 py-3.5 rounded-xl shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                >
+                  <span>Get Sheetly 2.0 Now ({CONFIG.price})</span>
+                  <ChevronRight className="w-4 h-4 stroke-[3]" />
+                </a>
               </div>
             </div>
-
-            {/* Two-Column Deep-Dive Layout */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
-              
-              {/* Left Column: Deep Feature Explanation & Column Spec */}
-              <div className="lg:col-span-5 space-y-5 sm:space-y-6 text-left">
-                <p className={`text-xs sm:text-sm md:text-base ${textSecondary} leading-relaxed`}>
-                  {currentTab.desc}
-                </p>
-
-                {/* 4 Deep Automation Features */}
-                <div>
-                  <div className={`text-xs font-bold uppercase tracking-wider ${textMuted} mb-3 flex items-center gap-1.5`}>
-                    <SlidersHorizontal className="w-3.5 h-3.5 text-emerald-500" />
-                    <span>Automations Built Into This Tab:</span>
-                  </div>
-
-                  <div className="space-y-2.5 sm:space-y-3">
-                    {currentTab.keyFeatures.map((feat, i) => (
-                      <div key={i} className={`p-3 sm:p-3.5 rounded-xl border ${borderSubtle} ${isDark ? 'bg-slate-900/40' : 'bg-slate-50'}`}>
-                        <div className={`text-xs sm:text-sm font-bold ${textPrimary} flex items-center gap-1.5 mb-1`}>
-                          <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-500 flex-shrink-0" />
-                          <span>{feat.title}</span>
-                        </div>
-                        <p className={`text-xs ${textSecondary} leading-relaxed pl-5`}>
-                          {feat.desc}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* What Columns Are Included Box */}
-                <div className={`p-3.5 sm:p-4 rounded-xl border ${borderSubtle} ${isDark ? 'bg-slate-900/70' : 'bg-emerald-50/50'}`}>
-                  <div className={`text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-2 flex items-center gap-1`}>
-                    <Eye className="w-3.5 h-3.5" />
-                    <span>Exact Data Points & Columns Tracked:</span>
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {currentTab.columnsTracked.map((col, i) => (
-                      <span key={i} className={`text-[10px] sm:text-[11px] font-medium px-2 sm:px-2.5 py-1 rounded-md border ${borderSubtle} ${isDark ? 'bg-slate-800 text-slate-300' : 'bg-white text-slate-700'}`}>
-                        {col}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Quick Link */}
-                <div className="pt-1">
-                  <a
-                    href={CONFIG.checkoutUrl}
-                    onClick={(e) => handleCheckoutClick(e, 'Product Tour Link')}
-                    className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-emerald-500 hover:text-emerald-600 transition-colors"
-                  >
-                    <span>Get this sheet unlocked in Sheetly ({CONFIG.price})</span>
-                    <ChevronRight className="w-4 h-4" />
-                  </a>
-                </div>
-              </div>
-
-              {/* Right Column: High-Res Screenshot Showcase with Sub-View Switcher */}
-              <div className="lg:col-span-7 space-y-3.5 sm:space-y-4">
-                
-                {/* Main Active Screenshot */}
-                <div className={`relative rounded-xl sm:rounded-2xl overflow-hidden border ${borderSubtle} ${isDark ? 'bg-slate-900' : 'bg-slate-100'} shadow-2xl group`}>
-                  
-                  {/* Top image bar */}
-                  <div className={`h-8 px-3 sm:px-3.5 flex items-center justify-between border-b ${borderSubtle} ${isDark ? 'bg-slate-950/80' : 'bg-slate-200'}`}>
-                    <div className="flex items-center gap-1.5 min-w-0">
-                      <div className="w-2.5 h-2.5 rounded-full bg-rose-500 flex-shrink-0"></div>
-                      <div className="w-2.5 h-2.5 rounded-full bg-amber-500 flex-shrink-0"></div>
-                      <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 flex-shrink-0"></div>
-                      <span className={`text-[10px] sm:text-[11px] font-mono ${textMuted} ml-2 truncate`}>
-                        {activeImage.caption}
-                      </span>
-                    </div>
-
-                    {/* Click to zoom button */}
-                    <button
-                      onClick={() => setZoomImage(activeImage)}
-                      className="text-xs text-emerald-500 hover:text-emerald-400 flex items-center gap-1 font-semibold flex-shrink-0"
-                      title="Click to view full size"
-                    >
-                      <Maximize2 className="w-3.5 h-3.5" />
-                      <span className="hidden sm:inline">Zoom</span>
-                    </button>
-                  </div>
-
-                  {/* Image with zoom on click */}
-                  <div 
-                    onClick={() => setZoomImage(activeImage)}
-                    className="cursor-zoom-in relative"
-                  >
-                    <img
-                      src={activeImage.src}
-                      alt={activeImage.caption}
-                      className="w-full h-auto object-cover group-hover:scale-[1.02] transition-transform duration-300"
-                    />
-                    <div className="absolute bottom-2.5 right-2.5 bg-black/75 backdrop-blur-md text-white text-[10px] font-semibold px-2 py-1 rounded-md flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <Maximize2 className="w-3 h-3" />
-                      <span>Click to enlarge preview</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Sub-View Thumbnails Selector */}
-                {currentTab.views.length > 1 && (
-                  <div>
-                    <div className={`text-[11px] font-bold uppercase tracking-wider ${textMuted} mb-2`}>
-                      Switch View / Angle:
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {currentTab.views.map((v, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => setActiveSubViewIndex(idx)}
-                          className={`flex-1 min-w-[140px] sm:min-w-[170px] text-left p-1.5 sm:p-2 rounded-xl border transition-all flex items-center gap-2 ${
-                            activeSubViewIndex === idx
-                              ? 'border-emerald-500 bg-emerald-500/10 text-emerald-500'
-                              : `${borderSubtle} ${isDark ? 'bg-slate-900/60' : 'bg-slate-50'} hover:border-gray-500`
-                          }`}
-                        >
-                          <img 
-                            src={v.src} 
-                            alt={v.label} 
-                            className="w-9 h-7 sm:w-10 sm:h-8 rounded object-cover flex-shrink-0 border border-slate-700/50" 
-                          />
-                          <div className="min-w-0 flex-1">
-                            <div className="text-[11px] sm:text-xs font-bold truncate">{v.label}</div>
-                            <div className={`text-[9px] sm:text-[10px] ${textMuted} truncate`}>{v.caption}</div>
-                          </div>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-              </div>
-
-            </div>
-
           </div>
 
         </div>
