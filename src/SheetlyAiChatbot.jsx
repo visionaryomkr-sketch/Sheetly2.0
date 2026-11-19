@@ -27,7 +27,7 @@ export default function SheetlyAiChatbot({ config, isDark, textPrimary, textSeco
     {
       id: 'welcome-1',
       sender: 'bot',
-      text: "👋 Hi! I'm the **Sheetly AI Assistant**.\n\nAsk me anything about Sheetly — whether it's pricing (₹899), 1-click GST invoicing, 19 pre-built tabs, or compatibility with your business. How can I help you today?",
+      text: "👋 Hi! I'm the **Sheetly AI Assistant**.\n\nAsk me anything about Sheetly — whether it's pricing (₹499), 1-click GST invoicing, 19 pre-built tabs, or compatibility with your business. How can I help you today?",
       time: 'Just now',
       chips: [
         "💰 Is it one-time or monthly?",
@@ -74,7 +74,7 @@ export default function SheetlyAiChatbot({ config, isDark, textPrimary, textSeco
       },
       {
         intent: 'PRICING',
-        keywords: ['price', 'cost', 'kitna', 'kitne', 'rupee', 'rupaye', 'rs', '₹', '899', 'discount', 'subscription', 'monthly', 'recurring', 'pay once', 'buy', 'purchase', 'kharid', 'cheap', 'expensive', 'sasta'],
+        keywords: ['price', 'cost', 'kitna', 'kitne', 'rupee', 'rupaye', 'rs', '₹', '499', 'discount', 'subscription', 'monthly', 'recurring', 'pay once', 'buy', 'purchase', 'kharid', 'cheap', 'expensive', 'sasta'],
         response: `Sheetly is just **${config.price} (one-time payment)** for lifetime access! 🚀\n\n• **Zero monthly fees:** No recurring ₹3,000–₹5,000 monthly deductions like Notion or ClickUp.\n• **Lifetime access:** All 19 tabs + free future tab updates.\n• **Massive savings:** Saves Indian business owners ₹50,000+ every single year in software costs.`,
         cta: {
           type: 'buy',
@@ -115,7 +115,7 @@ export default function SheetlyAiChatbot({ config, isDark, textPrimary, textSeco
       {
         intent: 'BONUSES',
         keywords: ['bonus', 'free', 'gift', 'pricing calculator', 'whatsapp script', 'payment recovery', 'automation pack', 'apps script'],
-        response: `When you grab Sheetly today, you get **3 Free Bonuses Included (Total Value ₹14,494)**: 🎁\n\n1. **Professional Service Pricing Calculator (Value ₹1,999):** Computes your exact hourly cost, profit margins, and 5 client pricing models before proposing.\n2. **The WhatsApp Invoicing & Payment Recovery Pack (Value ₹2,499):** 1-Click Google Apps Script to send bills via WhatsApp + 35+ battle-tested reminder scripts to recover overdue money from clients!\n3. **Lifetime Free Updates Forever (Value ₹1,999):** Instant access to all future tab releases, tax compliance updates, and feature upgrades forever.`
+        response: `When you grab Sheetly today, you get **3 Free Bonuses Included**: 🎁\n\n1. **Professional Service Pricing Calculator:** Computes your exact hourly cost, profit margins, and 5 client pricing models before proposing.\n2. **The WhatsApp Invoicing & Payment Recovery Pack:** 1-Click Google Apps Script to send bills via WhatsApp + 35+ battle-tested reminder scripts to recover overdue money from clients!\n3. **Lifetime Free Updates Forever:** Instant access to all future tab releases, tax compliance updates, and feature upgrades forever.`
       },
       {
         intent: 'USE_CASES',
@@ -332,11 +332,10 @@ export default function SheetlyAiChatbot({ config, isDark, textPrimary, textSeco
                     <div className="mt-3 pt-2.5 border-t border-slate-700/40">
                       <a
                         href={msg.cta.url}
-                        target={msg.cta.type === 'whatsapp' ? '_blank' : '_self'}
-                        rel="noreferrer"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         onClick={(e) => {
                           if (msg.cta.type === 'buy') {
-                            if (e && e.preventDefault) e.preventDefault();
                             if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
                               try {
                                 window.fbq('track', 'InitiateCheckout', {
@@ -344,14 +343,11 @@ export default function SheetlyAiChatbot({ config, isDark, textPrimary, textSeco
                                   content_category: 'Google Sheets Template',
                                   content_ids: ['sheetly-2-0'],
                                   currency: 'INR',
-                                  value: 899,
+                                  value: 499,
                                   button_source: 'AI Chatbot Message CTA'
                                 });
                               } catch (err) {}
                             }
-                            setTimeout(() => {
-                              window.location.href = msg.cta.url;
-                            }, 180);
                           } else if (msg.cta.type === 'whatsapp') {
                             if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
                               try {

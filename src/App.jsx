@@ -49,9 +49,9 @@ import SheetlyAiChatbot from './SheetlyAiChatbot.jsx';
 // ==========================================
 const CONFIG = {
   productName: "Sheetly",
-  price: "₹899",
-  originalPrice: "₹4,999",
-  totalValue: "₹14,494",
+  price: "₹499",
+  originalPrice: "₹899",
+  totalValue: "₹899",
   checkoutUrl: "https://superprofile.bio/vp/tj9_xpSO",
   whatsappNumber: "916201530733",
   supportEmail: "birzcrown@gmail.com",
@@ -61,9 +61,6 @@ const CONFIG = {
 // META PIXEL EVENT TRACKING HELPERS
 // ==========================================
 export const handleCheckoutClick = (e, source = 'CTA Button') => {
-  if (e && e.preventDefault) {
-    e.preventDefault();
-  }
   if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
     try {
       window.fbq('track', 'InitiateCheckout', {
@@ -71,16 +68,13 @@ export const handleCheckoutClick = (e, source = 'CTA Button') => {
         content_category: 'Google Sheets Template',
         content_ids: ['sheetly-2-0'],
         currency: 'INR',
-        value: 899,
+        value: 499,
         button_source: source
       });
     } catch (err) {
       console.error('Meta Pixel error:', err);
     }
   }
-  setTimeout(() => {
-    window.location.href = CONFIG.checkoutUrl;
-  }, 180);
 };
 
 export const trackInitiateCheckout = (source = 'CTA Button') => {
@@ -91,7 +85,7 @@ export const trackInitiateCheckout = (source = 'CTA Button') => {
         content_category: 'Google Sheets Template',
         content_ids: ['sheetly-2-0'],
         currency: 'INR',
-        value: 899,
+        value: 499,
         button_source: source
       });
     } catch (err) {
@@ -450,7 +444,7 @@ export default function App() {
     },
     {
       q: "Is this a monthly subscription or a one-time payment?",
-      a: "This is a one-time payment of just ₹899. No recurring monthly fees, no hidden charges. You get lifetime access and all future updates completely free."
+      a: "This is a one-time payment of just ₹499. No recurring monthly fees, no hidden charges. You get lifetime access and all future updates completely free."
     },
     {
       q: "How do I receive the product after payment?",
@@ -463,8 +457,18 @@ export default function App() {
     {
       q: "What is your refund policy?",
       a: "Because Sheetly 2.0 and its bonuses are instant, non-revocable digital Google Sheets templates copied permanently into your Google Drive, we do not offer change-of-mind refunds once accessed. You are protected by our 7-Day Working-System Guarantee: if you experience accidental duplicate billing or a verifiable technical/formula defect in the unmodified master sheet within 7 calendar days of purchase that our team (birzcrown@gmail.com / WhatsApp) cannot resolve within 48 business hours of receiving your screenshot/video report, you receive a 100% full refund."
+    },
+    {
+      q: "Why is it ₹499 right now?",
+      a: "We're giving the first 100 customers a founding price so we can collect real usage feedback and testimonials. After 100 sales it goes back to ₹899."
+    },
+    {
+      q: "Will it stay ₹499 if I buy now?",
+      a: "Yes. Once you buy, that's your price forever — including all future updates."
     }
   ];
+
+  const priceNum = Number(String(CONFIG.price).replace(/[^\d]/g, "")) || 499;
 
   // Helper variables for theme styles
   const isDark = theme === 'dark';
@@ -559,11 +563,13 @@ export default function App() {
               </button>
             </div>
             <div className="relative overflow-hidden bg-slate-950 flex items-center justify-center">
-              <img 
-                src={zoomImage.src} 
-                alt={zoomImage.caption} 
-                className="w-full h-auto max-h-[82vh] object-contain bg-slate-950" 
-              />
+              {zoomImage?.src && (
+                <img 
+                  src={zoomImage.src} 
+                  alt={zoomImage.caption || "Preview"} 
+                  className="w-full h-auto max-h-[82vh] object-contain bg-slate-950" 
+                />
+              )}
             </div>
           </div>
         </div>
@@ -591,7 +597,7 @@ export default function App() {
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
             Special Deal
           </span>
-          <span className="truncate">Save 82% Today (₹4,999 → ₹899) • 3 Free Bonuses Included</span>
+          <span className="truncate">Founding 100 — ₹499 (₹899 tha) • Sirf first 100 • 3 Free Bonuses</span>
           <span className="bg-black/30 px-2 py-0.5 rounded font-mono text-emerald-200 text-[11px] flex-shrink-0">
             {String(timeLeft.hours).padStart(2, '0')}:{String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}
           </span>
@@ -662,6 +668,8 @@ export default function App() {
             {/* Navbar CTA (Compact on mobile, full on desktop - NEVER WRAPS) */}
             <a
               href={CONFIG.checkoutUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={(e) => handleCheckoutClick(e, 'Navbar')}
               className="relative group overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-bold text-xs sm:text-sm px-2.5 sm:px-5 py-1.5 sm:py-2.5 rounded-xl shadow-lg shadow-emerald-500/25 transition-all duration-200 flex items-center gap-1 whitespace-nowrap flex-shrink-0"
             >
@@ -698,13 +706,22 @@ export default function App() {
 
           {/* Subtitle */}
           <p className={`text-xs sm:text-base md:text-lg ${textSecondary} max-w-3xl mx-auto leading-relaxed mb-5 sm:mb-7`}>
-            Automated in one smart Google Sheet — generate 60-sec GST PDF bills with Scan-to-Pay UPI QR, send 1-Click WhatsApp payment reminders, and track GSTR-1/3B & full-year profit with zero formula skills. <strong className={`${textPrimary} font-bold`}>One-time {CONFIG.price}. Zero monthly subscriptions.</strong>
+            Automated in one smart Google Sheet — generate 60-sec GST PDF bills with Scan-to-Pay UPI QR, send 1-Click WhatsApp payment reminders, and track GSTR-1/3B & full-year profit with zero formula skills. <strong className={`${textPrimary} font-bold`}>Founding 100 price: {CONFIG.price} (regular ₹899). One-time. Zero monthly subscriptions.</strong>
           </p>
 
           {/* Main Hero CTA (Placed above pills so it's 100% above-the-fold on mobile) */}
           <div className="flex flex-col items-center justify-center gap-3 max-w-md mx-auto mb-5 sm:mb-7">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/25 text-[11px] sm:text-xs font-semibold shadow-xs">
+              <span>🔥 Founding 100 —</span>
+              <span className="line-through text-rose-500 dark:text-rose-400">₹899</span>
+              <span className="font-extrabold text-emerald-600 dark:text-emerald-400">₹499</span>
+              <span className={textMuted}>• One-time, lifetime</span>
+            </div>
+
             <a
               href={CONFIG.checkoutUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={(e) => handleCheckoutClick(e, 'Hero Section')}
               className="w-full relative group overflow-hidden bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-400 text-white font-extrabold text-base sm:text-xl px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl shadow-2xl shadow-emerald-500/35 transition-all duration-300 transform hover:-translate-y-0.5 flex items-center justify-center gap-2.5 border border-emerald-400/30"
             >
@@ -805,13 +822,15 @@ export default function App() {
                   onClick={() => setZoomImage(currentHeroTab)}
                   className="cursor-zoom-in relative bg-slate-950/20 flex items-center justify-center overflow-hidden group"
                 >
-                  <img
-                    src={currentHeroTab.src}
-                    alt={currentHeroTab.caption}
-                    className="w-full h-auto max-h-[540px] object-contain transition-transform duration-300 group-hover:scale-[1.01]"
-                    fetchPriority="high"
-                    loading="eager"
-                  />
+                  {currentHeroTab?.src && (
+                    <img
+                      src={currentHeroTab.src}
+                      alt={currentHeroTab.caption}
+                      className="w-full h-auto max-h-[540px] object-contain transition-transform duration-300 group-hover:scale-[1.01]"
+                      fetchPriority="high"
+                      loading="eager"
+                    />
+                  )}
                 </div>
 
                 {/* 1-Line Caption Bar at the Bottom of Browser Frame */}
@@ -843,19 +862,14 @@ export default function App() {
                 <div className="w-7 h-7 rounded-full bg-blue-500 flex items-center justify-center text-xs font-bold text-white border-2 border-slate-900">KS</div>
               </div>
               <div className="text-xs text-left">
-                <div className="flex items-center gap-1 text-amber-400">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
-                  ))}
-                  <span className={`font-bold ${textPrimary} ml-1`}>4.9/5</span>
-                </div>
-                <span className={textMuted}>Trusted by 350+ Indian business owners</span>
+                <span className={`${textPrimary} font-semibold`}>Built for Indian freelancers, agencies & studios</span>
               </div>
             </div>
           </div>
 
         </div>
       </section>
+
 
       {/* ========================================================
           4. "WHAT EXACTLY IS SHEETLY?" (INSTANT VALUE CLARITY)
@@ -903,7 +917,7 @@ export default function App() {
               </div>
               <h3 className={`text-lg font-bold ${textPrimary} mb-2`}>Pay Once, Own Forever</h3>
               <p className={`text-sm ${textSecondary} leading-relaxed`}>
-                No monthly credit card deductions of ₹3,000–₹5,000 like bloated SaaS software. <strong className={textPrimary}>Pay just ₹899 once</strong> and enjoy unlimited, lifetime access forever.
+                No monthly credit card deductions of ₹3,000–₹5,000 like bloated SaaS software. <strong className={textPrimary}>Pay just ₹499 once</strong> and enjoy unlimited, lifetime access forever.
               </p>
             </div>
 
@@ -1058,6 +1072,8 @@ export default function App() {
 
             <a
               href={CONFIG.checkoutUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={(e) => handleCheckoutClick(e, '3-Step Walkthrough')}
               className="w-full md:w-auto flex-shrink-0 text-center text-xs sm:text-sm font-bold bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-3 rounded-xl transition-all shadow-md flex items-center justify-center gap-1.5"
             >
@@ -1105,7 +1121,7 @@ export default function App() {
 
               <div className="space-y-3.5 sm:space-y-4 text-xs sm:text-sm">
                 {[
-                  "Wasting ₹3,000–₹5,000 every single month on bloated software subscriptions (₹60,000+/year).",
+                  "Wasting ₹3,000–₹5,000 every single month on bloated software subscriptions.",
                   "Constantly app-switching across 5+ disconnected tools: Notion, WhatsApp, Excel, Gmail, and Calendly.",
                   "Manual invoice math and GST calculations prone to costly human errors and tax calculation mistakes.",
                   "Sending raw WhatsApp texts or messy screenshots that damage your premium brand perception.",
@@ -1140,7 +1156,7 @@ export default function App() {
 
               <div className="space-y-3.5 sm:space-y-4 text-xs sm:text-sm">
                 {[
-                  "One-time ₹899 payment for lifetime access — zero monthly subscription fees ever.",
+                  "One-time ₹499 payment for lifetime access — zero monthly subscription fees ever.",
                   "Your complete business command center in one cloud-synced Google Sheets spreadsheet (India GST Edition).",
                   "Auto-calculated 18% GST — generate compliant, branded PDF invoices with tax breakdown in 1 click.",
                   "Send sleek, numbered, professional invoices that command respect and prompt payments.",
@@ -1157,6 +1173,8 @@ export default function App() {
               <div className="mt-6 sm:mt-8 pt-4 border-t border-emerald-500/20">
                 <a
                   href={CONFIG.checkoutUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={(e) => handleCheckoutClick(e, 'Comparison Card')}
                   className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition-all text-xs sm:text-sm"
                 >
@@ -1178,8 +1196,8 @@ export default function App() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center">
             <div className="p-2 sm:p-4">
-              <div className="text-2xl sm:text-4xl font-black text-emerald-500 mb-1">₹60,000+</div>
-              <div className={`text-[11px] sm:text-sm ${textMuted} font-semibold`}>Avg Annual Software Cost Saved</div>
+              <div className="text-2xl sm:text-4xl font-black text-emerald-500 mb-1">₹36,000+</div>
+              <div className={`text-[11px] sm:text-sm ${textMuted} font-semibold`}>Avg Annual SaaS Spend Avoided</div>
             </div>
             <div className="p-2 sm:p-4">
               <div className={`text-2xl sm:text-4xl font-black ${textPrimary} mb-1`}>19 Tabs</div>
@@ -1279,12 +1297,14 @@ export default function App() {
                           onClick={() => setZoomImage(activeImg)}
                           className="cursor-zoom-in relative overflow-hidden bg-slate-950/20"
                         >
-                          <img
-                            src={activeImg.src}
-                            alt={activeImg.caption}
-                            loading="lazy"
-                            className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-[1.01]"
-                          />
+                          {activeImg?.src && (
+                            <img
+                              src={activeImg.src}
+                              alt={activeImg.caption}
+                              loading="lazy"
+                              className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-[1.01]"
+                            />
+                          )}
                         </div>
                       </div>
 
@@ -1418,6 +1438,8 @@ export default function App() {
                       <div className="pt-1">
                         <a
                           href={CONFIG.checkoutUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           onClick={(e) => handleCheckoutClick(e, 'Product Tour Link - ' + module.title)}
                           className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-500 hover:text-emerald-400 transition-colors"
                         >
@@ -1437,7 +1459,7 @@ export default function App() {
           <div className="mt-14 sm:mt-20">
             <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-600 dark:text-emerald-400 text-xs font-black tracking-wider uppercase">
-                ➕ PLUS 3 MORE AUTOMATED SHEETS INCLUDED INSIDE YOUR ₹899 OS (TAP TO PREVIEW):
+                ➕ PLUS 3 MORE AUTOMATED SHEETS INCLUDED INSIDE YOUR ₹499 OS (TAP TO PREVIEW):
               </div>
             </div>
 
@@ -1463,11 +1485,13 @@ export default function App() {
                       }`}
                     >
                       <div className="flex items-center gap-3 min-w-0">
-                        <img
-                          src={mod.views[0].src}
-                          alt={mod.title}
-                          className="w-12 h-9 sm:w-14 sm:h-10 rounded-lg object-cover border border-slate-700/60 flex-shrink-0"
-                        />
+                        {mod.views?.[0]?.src && (
+                          <img
+                            src={mod.views[0].src}
+                            alt={mod.title}
+                            className="w-12 h-9 sm:w-14 sm:h-10 rounded-lg object-cover border border-slate-700/60 flex-shrink-0"
+                          />
+                        )}
                         <div className="min-w-0">
                           <div className="flex items-center gap-2 flex-wrap">
                             <span className={`text-sm sm:text-base font-bold ${textPrimary} truncate`}>
@@ -1525,12 +1549,14 @@ export default function App() {
                                 onClick={() => setZoomImage(activeImg)}
                                 className="cursor-zoom-in relative overflow-hidden bg-slate-950/20"
                               >
-                                <img
-                                  src={activeImg.src}
-                                  alt={activeImg.caption}
-                                  loading="lazy"
-                                  className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-[1.01]"
-                                />
+                                {activeImg?.src && (
+                                  <img
+                                    src={activeImg.src}
+                                    alt={activeImg.caption}
+                                    loading="lazy"
+                                    className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-[1.01]"
+                                  />
+                                )}
                               </div>
                             </div>
 
@@ -1655,6 +1681,8 @@ export default function App() {
                             <div className="pt-1">
                               <a
                                 href={CONFIG.checkoutUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 onClick={(e) => handleCheckoutClick(e, 'Product Tour Link - ' + mod.title)}
                                 className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-500 hover:text-emerald-400 transition-colors"
                               >
@@ -1685,16 +1713,18 @@ export default function App() {
                   </span>
                 </div>
                 <h4 className="text-sm sm:text-base font-extrabold text-white">
-                  All 19 pre-linked tabs, GST Invoice Generator & CA Hub — ₹899 One-Time (Lifetime Access)
+                  All 19 pre-linked tabs, GST Invoice Generator & CA Hub — ₹499 One-Time (Lifetime Access)
                 </h4>
                 <p className="text-xs text-slate-400">
-                  No recurring fees. Instant Google Drive copy link sent immediately after checkout.
+                  No recurring fees. Instant Google Drive copy link — checkout ke turant baad.
                 </p>
               </div>
 
               <div className="w-full sm:w-auto flex-shrink-0">
                 <a
                   href={CONFIG.checkoutUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={(e) => handleCheckoutClick(e, 'Preview Tour Bottom Micro-CTA')}
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xs sm:text-sm px-6 py-3.5 rounded-xl shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:scale-[1.02] active:scale-[0.98] transition-all"
                 >
@@ -1863,7 +1893,7 @@ export default function App() {
                 </p>
               </div>
               <div className="mt-4 pt-3 border-t border-gray-800 text-[11px] font-semibold text-amber-500 flex items-center gap-1">
-                <Check className="w-3.5 h-3.5" /> ₹6,497 Bonuses Free
+                <Check className="w-3.5 h-3.5" /> 3 Bonuses — Free
               </div>
             </div>
 
@@ -1883,10 +1913,10 @@ export default function App() {
               Verified Social Proof
             </span>
             <h2 className={`text-2xl sm:text-4xl md:text-5xl font-black ${textPrimary} mt-3 mb-3`}>
-              Trusted by 350+ Indian Business Owners & Founders
+              Banaya Gaya Indian Businesses Ke Liye
             </h2>
             <p className={`text-xs sm:text-base ${textSecondary}`}>
-              Read how real business owners transitioned from subscription chaos to Sheetly:
+              Koi screenshot nahi — asli demo sheet. Neeche wala button dabao aur poora 19-tab system live kholo. Pasand aaye tabhi kharido.
             </p>
           </div>
 
@@ -2006,7 +2036,7 @@ export default function App() {
                   Just {CONFIG.price} <span className={`text-xs font-normal ${textMuted}`}>once</span>
                 </div>
                 <div className="text-xs text-emerald-600 dark:text-emerald-300 font-bold mt-1">
-                  You Save ₹{(annualSavings - 899).toLocaleString('en-IN')} in Year 1 alone!
+                  You Save ₹{(annualSavings - priceNum).toLocaleString('en-IN')} in Year 1 alone!
                 </div>
               </div>
             </div>
@@ -2015,7 +2045,7 @@ export default function App() {
             <div className="mt-6 p-4 sm:p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-700 dark:text-amber-300 text-xs sm:text-sm flex items-start gap-3 shadow-sm">
               <span className="text-base sm:text-lg flex-shrink-0 mt-0.5">⚠️</span>
               <p className="leading-relaxed">
-                <strong className="font-bold text-amber-800 dark:text-amber-200">The Hidden Loss Nobody Calculates:</strong> Forgetting just 1 overdue client follow-up or missing eligible Expense GST Input Tax Credit (ITC) silently costs ₹10,000–₹25,000+ — Sheetly 2.0 prevents both automatically for ₹899 once.
+                <strong className="font-bold text-amber-800 dark:text-amber-200">The Hidden Loss Nobody Calculates:</strong> Forgetting just 1 overdue client follow-up or missing eligible Expense GST Input Tax Credit (ITC) silently costs ₹10,000–₹25,000+ — Sheetly 2.0 prevents both automatically for ₹499 once.
               </p>
             </div>
 
@@ -2128,7 +2158,7 @@ export default function App() {
             
             {/* Top Ribbon */}
             <div className="absolute top-0 right-0 bg-gradient-to-l from-emerald-500 to-teal-500 text-white text-[10px] sm:text-xs font-black px-5 sm:px-6 py-1 sm:py-1.5 rounded-bl-xl uppercase tracking-wider shadow-md">
-              Save 82% Limited Offer
+              Founding 100 • Save 44%
             </div>
 
             <div className="max-w-2xl mx-auto mb-6 sm:mb-8">
@@ -2144,58 +2174,43 @@ export default function App() {
             <div className={`max-w-lg mx-auto ${isDark ? 'bg-slate-900/60' : 'bg-slate-50'} rounded-2xl p-5 sm:p-6 border ${borderSubtle} text-left space-y-2.5 sm:space-y-3 mb-6 sm:mb-8`}>
               <div className="flex items-center justify-between text-xs sm:text-sm">
                 <span className={`flex items-center gap-2 ${textPrimary} font-medium`}>
-                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Complete Sheetly 2.0 (19-Tab Master Business OS)
+                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Sheetly 2.0 — 19 pre-linked tabs
                 </span>
-                <span className={`text-xs ${textMuted} line-through`}>₹4,999</span>
+                <span className={`text-xs ${textMuted} line-through`}>₹899</span>
               </div>
               <div className="flex items-center justify-between text-xs sm:text-sm">
                 <span className={`flex items-center gap-2 ${textPrimary} font-medium`}>
-                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" /> 60-Sec Printable GST Invoice + Offline UPI QR Engine
+                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" /> 3 Bonuses (Pricing + WhatsApp + Updates)
                 </span>
-                <span className={`text-xs ${textMuted} line-through`}>₹1,999</span>
+                <span className="text-xs font-bold text-emerald-500">FREE</span>
               </div>
               <div className="flex items-center justify-between text-xs sm:text-sm">
                 <span className={`flex items-center gap-2 ${textPrimary} font-medium`}>
-                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Automated GSTR-1, GSTR-3B & Expense ITC Tax Hub
+                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Lifetime updates
                 </span>
-                <span className={`text-xs ${textMuted} line-through`}>₹999</span>
-              </div>
-              <div className="flex items-center justify-between text-xs sm:text-sm">
-                <span className={`flex items-center gap-2 ${textPrimary} font-medium`}>
-                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Bonus #1: Professional Service Pricing Calculator
-                </span>
-                <span className={`text-xs ${textMuted} line-through`}>₹1,999</span>
-              </div>
-              <div className="flex items-center justify-between text-xs sm:text-sm">
-                <span className={`flex items-center gap-2 ${textPrimary} font-medium`}>
-                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Bonus #2: WhatsApp Invoicing & Payment Recovery Pack
-                </span>
-                <span className={`text-xs ${textMuted} line-through`}>₹2,499</span>
-              </div>
-              <div className="flex items-center justify-between text-xs sm:text-sm">
-                <span className={`flex items-center gap-2 ${textPrimary} font-medium`}>
-                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Bonus #3: Lifetime Free Updates Forever
-                </span>
-                <span className={`text-xs ${textMuted} line-through`}>₹1,999</span>
+                <span className="text-xs font-bold text-emerald-500">FREE</span>
               </div>
 
               <div className={`pt-3 border-t ${borderSubtle} flex items-center justify-between font-bold text-xs sm:text-sm`}>
-                <span className={textPrimary}>Total Value:</span>
-                <span className="text-rose-500 line-through">{CONFIG.totalValue}</span>
+                <span className={`${textPrimary} font-bold`}>Founding 100 price</span>
+                <span className="text-emerald-500 text-base font-black">₹499</span>
+              </div>
+              <div className="text-center text-[11px] text-amber-500 pt-1">
+                ₹899 tha — 100 sales ke baad wapas ₹899
               </div>
             </div>
 
             {/* Price Box */}
             <div className="mb-6 sm:mb-8">
               <div className={`text-[10px] sm:text-xs ${textMuted} uppercase tracking-widest font-bold mb-1`}>
-                One-Time Payment • Lifetime Access
+                Founding 100 Price • One-Time
               </div>
               <div className="flex items-baseline justify-center gap-2 sm:gap-3">
                 <span className="text-4xl sm:text-6xl md:text-7xl font-black text-emerald-500">{CONFIG.price}</span>
                 <span className={`text-lg sm:text-2xl ${textMuted} line-through`}>{CONFIG.originalPrice}</span>
               </div>
               <div className="text-[11px] sm:text-xs text-emerald-600 dark:text-emerald-400 font-bold mt-1">
-                (Zero Monthly Fees • Pay Once, Own It Forever)
+                Zero monthly fees • Lifetime access • Instant delivery
               </div>
             </div>
 
@@ -2203,15 +2218,17 @@ export default function App() {
             <div className="max-w-md mx-auto">
               <a
                 href={CONFIG.checkoutUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={(e) => handleCheckoutClick(e, 'Bonuses Offer Section')}
                 className="w-full relative group overflow-hidden bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-400 text-white font-extrabold text-lg sm:text-xl px-6 sm:px-8 py-4 sm:py-5 rounded-2xl shadow-2xl shadow-emerald-500/40 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2.5 border border-emerald-400/40"
               >
-                <span>Download Sheetly Now →</span>
+                <span>Get Instant Access — ₹499 →</span>
               </a>
 
               <div className={`mt-3.5 sm:mt-4 text-[11px] sm:text-xs ${textMuted} flex items-center justify-center gap-3 sm:gap-4 flex-wrap font-medium`}>
                 <span className="flex items-center gap-1">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" /> 100% Secure via UPI / Razorpay
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" /> Secure checkout by SuperProfile — UPI / Cards / Netbanking
                 </span>
                 <span className="flex items-center gap-1">
                   <Zap className="w-3.5 h-3.5 text-amber-500" /> Instant Download Link
@@ -2234,11 +2251,23 @@ export default function App() {
           <h3 className={`text-xl sm:text-3xl font-black ${textPrimary} mb-3 sm:mb-4`}>
             7-Day Working-System Guarantee
           </h3>
-          <p className={`text-xs sm:text-base ${textSecondary} leading-relaxed mb-5 sm:mb-6`}>
-            Because Sheetly 2.0 and its bonuses are instant, non-revocable digital Google Sheets templates copied permanently into your Google Drive, <strong className={textPrimary}>we do not offer change-of-mind refunds once accessed</strong>. You are protected by our <strong className={textPrimary}>7-Day Working-System Guarantee</strong>: if you experience accidental duplicate billing or a verifiable technical/formula defect in the unmodified master sheet within <strong className={textPrimary}>7 calendar days</strong> of purchase that our team ({CONFIG.supportEmail} / WhatsApp) cannot resolve within <strong className={textPrimary}>48 business hours</strong> of receiving your screenshot/video report, you receive a 100% full refund.
-          </p>
-          <div className="text-[11px] sm:text-xs text-emerald-600 dark:text-emerald-400 font-extrabold tracking-wide uppercase">
-            Technical Defect & Duplicate Protection • 100% Verified Refund
+          <div className={`space-y-4 text-xs sm:text-base ${textSecondary} leading-relaxed mb-6 sm:mb-8 text-center max-w-2xl mx-auto`}>
+            <p>Sheetly 100% kaam karta hai — 57,000+ formula cells verified hain.</p>
+            <p>Agar unmodified master sheet mein koi genuine technical ya formula defect mile jo hum 48 business hours mein fix nahi kar paayein, to 7 din ke andar 100% refund — koi sawaal nahi.</p>
+            <p>Saath hi, duplicate billing ho jaye to bhi turant full refund.</p>
+            <p>Bas ek cheez: yeh digital Google Sheets template hai jo copy hote hi aapke Drive mein permanently chala jata hai, isliye "man badal gaya" wale refunds possible nahi hain.</p>
+            <p className="font-semibold text-emerald-600 dark:text-emerald-400">Support: WhatsApp +{CONFIG.whatsappNumber} • {CONFIG.supportEmail}</p>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm font-semibold">
+            <span className={`inline-flex items-center gap-1.5 ${cardClass} px-3 py-1.5 rounded-full border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 shadow-sm`}>
+              <Check className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" /> 57,000+ formula cells verified
+            </span>
+            <span className={`inline-flex items-center gap-1.5 ${cardClass} px-3 py-1.5 rounded-full border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 shadow-sm`}>
+              <Check className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" /> 48-hour support
+            </span>
+            <span className={`inline-flex items-center gap-1.5 ${cardClass} px-3 py-1.5 rounded-full border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 shadow-sm`}>
+              <Check className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" /> Instant delivery
+            </span>
           </div>
         </div>
       </section>
@@ -2312,6 +2341,10 @@ export default function App() {
                 </li>
               </ul>
             </div>
+          </div>
+
+          <div className={`mt-6 p-4 rounded-xl border border-amber-500/30 ${isDark ? 'bg-amber-950/20 text-amber-200' : 'bg-amber-50 text-amber-800'} text-xs sm:text-sm text-center leading-relaxed`}>
+            📌 <strong>Note:</strong> ₹499 sirf first 100 customers ke liye hai. Uske baad price wapas ₹899 ho jayegi — aur koi "last chance" email nahi aayega. Yeh page hi sach bata deta hai.
           </div>
         </div>
       </section>
@@ -2434,6 +2467,8 @@ export default function App() {
           </a>
           <a
             href={CONFIG.checkoutUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={(e) => handleCheckoutClick(e, 'Sticky Mobile Bar')}
             className="bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-400 text-white font-extrabold text-xs py-2.5 px-3.5 rounded-xl shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-1.5 transition-transform active:scale-95"
           >
@@ -2471,7 +2506,7 @@ export default function App() {
                   <p><strong>Last Updated: October 2026</strong></p>
                   <p>Welcome to Sheetly 2.0. By purchasing and downloading our Google Sheets business operating system, you agree to these Terms and Conditions.</p>
                   <h4 className={`font-bold ${textPrimary}`}>1. License & Commercial Usage</h4>
-                  <p>When you purchase Sheetly 2.0 for a one-time fee of ₹899, you receive a non-exclusive, perpetual, single-user license to use the system for your personal business, freelance work, or internal company operations. You may customize, duplicate, and modify the sheets freely for your own business.</p>
+                  <p>When you purchase Sheetly 2.0 for a one-time fee of ₹499, you receive a non-exclusive, perpetual, single-user license to use the system for your personal business, freelance work, or internal company operations. You may customize, duplicate, and modify the sheets freely for your own business.</p>
                   <h4 className={`font-bold ${textPrimary}`}>2. Restrictions</h4>
                   <p>You may NOT re-sell, redistribute, sublicense, lease, or publicly share access to Sheetly 2.0 or its bonus templates as a standalone digital product or course asset.</p>
                   <h4 className={`font-bold ${textPrimary}`}>3. Support & Updates</h4>
@@ -2486,7 +2521,7 @@ export default function App() {
                   <h4 className={`font-bold ${textPrimary}`}>1. 100% Private Business Data</h4>
                   <p>Sheetly 2.0 operates entirely inside your private Google Drive account. We NEVER have access to your spreadsheet, financial figures, client records, or invoices. Your business data remains completely confidential under your own Google Workspace security.</p>
                   <h4 className={`font-bold ${textPrimary}`}>2. Payment Information</h4>
-                  <p>Payments are processed securely via encrypted, PCI-DSS compliant Indian payment gateways (Razorpay / UPI / Superprofile). We never store or handle your credit card numbers or UPI PINs.</p>
+                  <p>Payments are processed securely via encrypted, PCI-DSS compliant Indian payment gateways (SuperProfile (UPI / Cards / Netbanking)). We never store or handle your credit card numbers or UPI PINs.</p>
                   <h4 className={`font-bold ${textPrimary}`}>3. Communications</h4>
                   <p>We only use your purchase email to send your product copy link, setup walkthrough video, and product update notifications. We never sell or share your contact info with third parties.</p>
                 </>
@@ -2501,7 +2536,7 @@ export default function App() {
                   <h4 className={`font-bold ${textPrimary}`}>2. 7-Day Working-System Guarantee</h4>
                   <p>You are protected by our <strong>7-Day Working-System Guarantee</strong>: if you experience accidental duplicate billing or a verifiable technical/formula defect in the unmodified master sheet within <strong>7 calendar days</strong> of purchase that our team ({CONFIG.supportEmail} / WhatsApp) cannot resolve within <strong>48 business hours</strong> of receiving your screenshot/video report, you receive a 100% full refund.</p>
                   <h4 className={`font-bold ${textPrimary}`}>3. Resolution & 100% Refund Process</h4>
-                  <p>To report an issue, simply send your order details and a screenshot or short video demonstrating the defect to our team via WhatsApp ({CONFIG.whatsappNumber}) or email ({CONFIG.supportEmail}). If our technical team cannot resolve the verified issue within 48 business hours of receiving your report, your full 100% refund of ₹899 will be initiated back to your original payment method (UPI / Bank Account / Card).</p>
+                  <p>To report an issue, simply send your order details and a screenshot or short video demonstrating the defect to our team via WhatsApp ({CONFIG.whatsappNumber}) or email ({CONFIG.supportEmail}). If our technical team cannot resolve the verified issue within 48 business hours of receiving your report, your full 100% refund of ₹499 will be initiated back to your original payment method (UPI / Bank Account / Card).</p>
                 </>
               )}
             </div>
