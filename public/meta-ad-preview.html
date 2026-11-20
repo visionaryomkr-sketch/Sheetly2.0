@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sheetly 2.0 - Meta Ads Video Studio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen py-8 px-4 flex flex-col items-center">
+  <div class="max-w-2xl w-full flex flex-col items-center">
+    
+    <!-- Header -->
+    <div class="text-center mb-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold mb-3">
+        ⚡ Meta Ads (Instagram Reels / Stories) 9:16 Creatives
+      </div>
+      <h1 class="text-2xl sm:text-4xl font-black text-white">Sheetly 2.0 • Ad Creatives Studio</h1>
+      <p class="text-slate-400 text-xs sm:text-sm mt-1">
+        High-Converting Vertical Video Creatives Rendered with Remotion & ElevenLabs Voiceover
+      </p>
+    </div>
+
+    <!-- Ad Selector Tabs -->
+    <div class="flex items-center gap-2 p-1.5 bg-slate-900 border border-slate-800 rounded-2xl mb-6 w-full max-w-md">
+      <button
+        id="tabAd2"
+        onclick="switchAd(2)"
+        class="flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-extrabold transition bg-emerald-500 text-white shadow-lg shadow-emerald-500/25"
+      >
+        🔥 Ad 2: Payment Hack (63s)
+      </button>
+      <button
+        id="tabAd1"
+        onclick="switchAd(1)"
+        class="flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-extrabold transition text-slate-400 hover:text-white"
+      >
+        Ad 1: Admin Fatigue (84s)
+      </button>
+    </div>
+
+    <!-- Phone Mockup Frame for 9:16 Preview -->
+    <div class="relative w-[340px] sm:w-[380px] rounded-[44px] p-3.5 bg-gradient-to-b from-slate-800 to-slate-900 border-4 border-slate-700/60 shadow-2xl shadow-emerald-500/10">
+      
+      <!-- Top Dynamic Island / Speaker -->
+      <div class="absolute top-6 left-1/2 -translate-x-1/2 w-28 h-4 bg-slate-950 rounded-full z-20"></div>
+
+      <!-- 9:16 Video Container -->
+      <div class="relative w-full aspect-[9/16] rounded-[32px] overflow-hidden bg-black flex items-center justify-center">
+        <video
+          id="adPlayer"
+          controls
+          autoplay
+          muted
+          playsinline
+          class="w-full h-full object-cover"
+        >
+          <source id="videoSource" src="/Sheetly_MetaAd2_PaymentHack_9x16.mp4" type="video/mp4">
+          Your browser does not support video playback.
+        </video>
+      </div>
+
+    </div>
+
+    <!-- Details Card -->
+    <div class="mt-8 bg-slate-900 border border-slate-800 rounded-2xl p-5 w-full text-xs space-y-3">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+        <span class="text-slate-400">Current Creative</span>
+        <span id="adTitle" class="font-bold text-emerald-400">Script 2: "Casual Billing vs Dynamic UPI QR"</span>
+      </div>
+      <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+        <span class="text-slate-400">Duration & Specs</span>
+        <span id="adSpecs" class="font-bold text-white">63.4s • 1080x1920 (9:16 Vertical Reel @ 30fps)</span>
+      </div>
+      <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+        <span class="text-slate-400">Voiceover</span>
+        <span class="font-bold text-emerald-400">ElevenLabs Studio Voice + Background Music Mix</span>
+      </div>
+      <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+        <span class="text-slate-400">Key Features Showcased</span>
+        <span id="adFeatures" class="font-bold text-sky-400">WhatsApp Chat Simulation + Dynamic UPI QR + Payment Received Pop</span>
+      </div>
+      <div class="flex items-center justify-between">
+        <span class="text-slate-400">Offer Featured</span>
+        <span class="font-bold text-amber-400">Founding 100 • ₹499 One-Time Lifetime Access</span>
+      </div>
+    </div>
+
+    <!-- Download Action Button -->
+    <div class="mt-6 flex flex-col sm:flex-row items-center gap-3">
+      <a
+        id="downloadBtn"
+        href="/Sheetly_MetaAd2_PaymentHack_9x16.mp4"
+        download="Sheetly_MetaAd2_PaymentHack_9x16.mp4"
+        class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-extrabold text-sm shadow-lg shadow-emerald-500/25 transition"
+      >
+        ⬇️ Download Selected Video (MP4)
+      </a>
+
+      <a
+        href="/audit-gallery.html"
+        class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs border border-slate-700 transition"
+      >
+        🖼️ View Frame-by-Frame Gallery
+      </a>
+    </div>
+
+  </div>
+
+  <script>
+    const ads = {
+      1: {
+        title: 'Script 1: "Sach Batao... Admin Work Mein Thak Jaate Ho?"',
+        specs: '83.96s • 1080x1920 (9:16 Vertical Reel @ 30fps)',
+        features: 'Kinetic Typography + 19-Tab Drive Tour + GST Command Center',
+        src: '/Sheetly_MetaAd1_Reel_9x16.mp4'
+      },
+      2: {
+        title: 'Script 2: "The Payment Hack & Casual Billing Trap"',
+        specs: '63.4s • 1080x1920 (9:16 Vertical Reel @ 30fps)',
+        features: 'WhatsApp Chat Simulation + Dynamic UPI QR + Payment Received Pop',
+        src: '/Sheetly_MetaAd2_PaymentHack_9x16.mp4'
+      }
+    };
+
+    function switchAd(adNum) {
+      const data = ads[adNum];
+      const player = document.getElementById('adPlayer');
+      const source = document.getElementById('videoSource');
+      const tab1 = document.getElementById('tabAd1');
+      const tab2 = document.getElementById('tabAd2');
+      const downloadBtn = document.getElementById('downloadBtn');
+
+      if (adNum === 2) {
+        tab2.className = 'flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-extrabold transition bg-emerald-500 text-white shadow-lg shadow-emerald-500/25';
+        tab1.className = 'flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-extrabold transition text-slate-400 hover:text-white';
+      } else {
+        tab1.className = 'flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-extrabold transition bg-emerald-500 text-white shadow-lg shadow-emerald-500/25';
+        tab2.className = 'flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-extrabold transition text-slate-400 hover:text-white';
+      }
+
+      document.getElementById('adTitle').innerText = data.title;
+      document.getElementById('adSpecs').innerText = data.specs;
+      document.getElementById('adFeatures').innerText = data.features;
+      downloadBtn.href = data.src;
+      downloadBtn.download = data.src.replace('/', '');
+
+      source.src = data.src;
+      player.load();
+      player.play().catch(() => {});
+    }
+  </script>
+</body>
+</html>

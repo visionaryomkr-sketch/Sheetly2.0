@@ -45,7 +45,9 @@ google_exported.xlsx
 
 # Large video & audio build intermediates
 *.wav
-public/Sheetly_Homepage_Video_16x9_web.mp4
-public/sample_openai_*.mp3
+*.mp3
+public/*.mp4
+video-engine/public/clips/
 video-engine/public/Images
+public/audit/
 
